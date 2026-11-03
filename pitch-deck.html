@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ByabshaGhor — Investor Pitch</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --accent: #22c55e;
+    --accent2: #38bdf8;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', 'Hind Siliguri', sans-serif; background: #e2e8f0; color: var(--text); }
+  .slide {
+    width: 1120px; min-height: 630px; margin: 24px auto; padding: 56px 64px;
+    background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+    border-radius: 16px; display: flex; flex-direction: column; justify-content: center;
+    page-break-after: always; position: relative; overflow: hidden;
+  }
+  .slide::before {
+    content: ''; position: absolute; top: -120px; right: -120px;
+    width: 340px; height: 340px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(34,197,94,.15), transparent 70%);
+  }
+  .kicker { color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+  h2 { font-size: 38px; font-weight: 700; line-height: 1.15; margin-bottom: 24px; }
+  .sub { font-size: 20px; color: var(--muted); line-height: 1.5; max-width: 800px; }
+  .grid { display: grid; gap: 18px; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .card {
+    background: rgba(30,41,59,.85); border: 1px solid rgba(148,163,184,.15);
+    border-radius: 14px; padding: 22px 24px;
+  }
+  .card .num { font-size: 34px; font-weight: 800; color: var(--accent); }
+  .card .num.blue { color: var(--accent2); }
+  .card .lbl { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+  .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th { text-align: left; color: var(--accent); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 14px; border-bottom: 2px solid rgba(34,197,94,.4); }
+  td { padding: 11px 14px; border-bottom: 1px solid rgba(148,163,184,.12); color: #e2e8f0; }
+  td.dim { color: var(--muted); }
+  .pill { display: inline-block; background: rgba(34,197,94,.12); color: var(--accent); border: 1px solid rgba(34,197,94,.35); border-radius: 999px; padding: 6px 16px; font-size: 14px; font-weight: 600; margin: 4px 6px 4px 0; }
+  .quote { font-size: 22px; line-height: 1.55; color: #e2e8f0; border-left: 4px solid var(--accent); padding-left: 24px; max-width: 900px; }
+  .footnote { position: absolute; bottom: 26px; left: 64px; font-size: 11px; color: #64748b; }
+  .footnote a { color: #7dd3fc; text-decoration: none; }
+  .footnote a:hover { text-decoration: underline; }
+  .funnel { display: flex; align-items: stretch; gap: 0; margin-top: 8px; }
+  .stage { flex: 1; text-align: center; padding: 26px 14px; border-radius: 12px; }
+  .stage .v { font-size: 30px; font-weight: 800; }
+  .stage .l { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .stage.tam { background: rgba(56,189,248,.10); } .stage.tam .v { color: var(--accent2); }
+  .stage.sam { background: rgba(34,197,94,.10); } .stage.sam .v { color: var(--accent); }
+  .stage.som { background: rgba(34,197,94,.22); border: 1px solid rgba(34,197,94,.4); } .stage.som .v { color: var(--accent); }
+  .arrow { align-self: center; color: var(--muted); font-size: 26px; padding: 0 8px; }
+  ul.feat { list-style: none; }
+  ul.feat li { padding: 7px 0 7px 26px; position: relative; font-size: 15.5px; color: #e2e8f0; }
+  ul.feat li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  ul.feat li span { color: var(--muted); }
+  @media print {
+    body { background: #fff; }
+    .slide { margin: 0; border-radius: 0; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide">
+  <div class="kicker">Investor Presentation · 2026</div>
+  <h1>ByabshaGhor</h1>
+  <p class="sub">The offline-first, multi-platform POS &amp; business OS for Bangladesh's
+  high-value retail shops — starting with the mobile &amp; electronics segment.</p>
+  <div style="margin-top:40px">
+    <span class="pill">POS &amp; Inventory</span>
+    <span class="pill">EMI &amp; Warranty</span>
+    <span class="pill">IMEI / Serial Tracking</span>
+    <span class="pill">Repair Job Orders</span>
+    <span class="pill">Offline-First</span>
+    <span class="pill">Android · Windows · Web</span>
+  </div>
+  <div class="footnote">ByabshaGhor · Confidential</div>
+</div>
+
+<!-- Slide 2: Problem -->
+<div class="slide">
+  <div class="kicker">The Problem</div>
+  <h2>Bangladesh's shops still run on paper ledgers<br>— and it's costing them.</h2>
+  <div class="grid grid-3" style="margin-top:20px">
+    <div class="card"><h3>Manual khata</h3><p>Sales, dues and EMI tracked in notebooks. Reconciliation takes days each month; errors and theft go unnoticed.</p></div>
+    <div class="card"><h3>Serialized inventory</h3><p>Mobile &amp; electronics shops must track every IMEI/serial, warranty and repair job — generic khata apps can't do this.</p></div>
+    <div class="card"><h3>Unreliable internet</h3><p>Cloud-only POS tools stop when connectivity drops. Shops need to sell offline and sync later.</p></div>
+  </div>
+  <div class="footnote">Source: field interviews (in progress), BBS Wholesale &amp; Retail Trade Survey</div>
+</div>
+
+<!-- Slide 3: Solution -->
+<div class="slide">
+  <div class="kicker">The Solution</div>
+  <h2>A complete business OS for retail shops.</h2>
+  <div class="grid grid-2">
+    <div>
+      <ul class="feat">
+        <li>POS, purchase, returns, stock transfer <span>— full inventory lifecycle</span></li>
+        <li>IMEI/serial tracking, warranty, exchange <span>— built for phone &amp; electronics retail</span></li>
+        <li>EMI / installment sales &amp; credit limits <span>— how BD customers actually buy</span></li>
+        <li>Repair job orders &amp; servicing <span>— the mobile shop's second business</span></li>
+        <li>HRM, CRM, expenses, khata reports <span>— one system, not five apps</span></li>
+        <li>AI purchase entry &amp; WhatsApp/SMS gateway <span>— modern differentiators</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:16px"><h3>Offline-first sync</h3><p>Sell with zero connectivity; local DB syncs to the cloud when back online. Built for real infrastructure conditions.</p></div>
+      <div class="card" style="margin-bottom:16px"><h3>True multi-tenant SaaS</h3><p>Schema-per-tenant isolation, AES-256-GCM encrypted PII, subscription plans — built to scale to thousands of shops.</p></div>
+      <div class="card"><h3>Every device they own</h3><p>Android app, Windows desktop installer, web app — plus a ready-made storefront website per shop.</p></div>
+    </div>
+  </div>
+  <div class="footnote">All features above are implemented and in production builds</div>
+</div>
+
+<!-- Slide 3.5: Product -->
+<div class="slide">
+  <div class="kicker">The Product</div>
+  <h2>Live and in the shopkeeper's pocket.</h2>
+  <div style="display:flex; gap:48px; align-items:center">
+    <div style="flex-shrink:0">
+      <img src="assets/app-dashboard.png" alt="ByabshaGhor app dashboard" style="height:430px; border-radius:28px; border:3px solid rgba(148,163,184,.25); box-shadow:0 20px 60px rgba(0,0,0,.5)">
+    </div>
+    <div>
+      <ul class="feat">
+        <li>Bangla-first dashboard <span>— today's sales, dues, bills at a glance</span></li>
+        <li>One-tap new sale <span>— counter speed matters</span></li>
+        <li>Customer dues &amp; receivables <span>— the khata they actually need</span></li>
+        <li>7-day sales trend <span>— the owner's daily pulse</span></li>
+        <li>Same data on phone, PC &amp; web <span>— offline-first sync</span></li>
+      </ul>
+      <p class="sub" style="margin-top:18px; font-size:14px">Real screenshot from the production Android app.</p>
+    </div>
+  </div>
+  <div class="footnote">ByabshaGhor · Confidential</div>
+</div>
+
+<!-- Slide 4: Market -->
+<div class="slide">
+  <div class="kicker">Market Size</div>
+  <h2>A massive, proven, underserved market.</h2>
+  <div class="funnel">
+    <div class="stage tam"><div class="v">3.95M</div><div class="l">Retail &amp; wholesale shops<br>(TAM — BBS)</div></div>
+    <div class="arrow">→</div>
+    <div class="stage sam"><div class="v">100–200K</div><div class="l">Digital-ready, high-value inventory shops<br>(SAM)</div></div>
+    <div class="arrow">→</div>
+    <div class="stage som"><div class="v">1–2K</div><div class="l">Paying shops in 3 years<br>(SOM — 1–2%)</div></div>
+  </div>
+  <div class="grid grid-3" style="margin-top:26px">
+    <div class="card"><div class="num">1M+</div><div class="lbl">Monthly active shops on TallyKhata — proof that Bangladeshi shopkeepers adopt digital tools at scale</div></div>
+    <div class="card"><div class="num blue">~20K</div><div class="lbl">Authorized mobile retailers + tens of thousands more traders — our beachhead niche</div></div>
+    <div class="card"><div class="num blue">Tk 400Cr+</div><div class="lbl">/month theoretical subscription market across all retail (TAM at Tk 1,000 ARPU)</div></div>
+  </div>
+  <div class="footnote">Sources: <a href="https://www.adb.org/sites/default/files/linked-documents/36200-024-ssa.pdf">BBS Economic Census 2024 (via ADB)</a>, <a href="https://www.thedailystar.net/business/economy/industries/news/395-lakh-trading-firms-contribute-14pc-gdp-2206521">BBS Wholesale &amp; Retail Trade Survey</a>, <a href="https://en.techworldbd.com/mobile-phone/138">MIOB</a>, <a href="https://www.tallykhata.com">TallyKhata</a></div>
+</div>
+
+<!-- Slide 5: Tailwind -->
+<div class="slide">
+  <div class="kicker">Why Now</div>
+  <h2>Regulation is turning our niche's pain<br>into a mandate.</h2>
+  <div class="quote" style="margin-top:10px">BTRC's NEIR handset registration makes IMEI-level inventory tracking
+  essential for every mobile retailer — trade bodies call it an "existential crisis" for shops
+  running on paper.</div>
+  <div class="grid grid-3" style="margin-top:30px">
+    <div class="card"><h3>3.2–3.5M</h3><p>smartphones sold every month — every one carries an IMEI shops must track</p></div>
+    <div class="card"><h3>60%+</h3><p>of handsets historically grey-market — inventory compliance pressure is only rising</p></div>
+    <div class="card"><h3>We're ready</h3><p>IMEI tracking, warranty, job orders already shipped in production</p></div>
+  </div>
+  <div class="footnote">Sources: <a href="https://www.dhakatribune.com/feature/tech/400169/mobile-retailers-neir-rollout-and-future-of">Dhaka Tribune</a>, <a href="https://www.tbsnews.net/economy/smartphones-must-now-too-high-tax-makes-them-unaffordable-many-1306936">The Business Standard</a>, <a href="https://en.techworldbd.com/mobile-phone/138">TechWorldBD</a></div>
+</div>
+
+<!-- Slide 6: Competition -->
+<div class="slide">
+  <div class="kicker">Competition</div>
+  <h2>Crowded market — but nobody owns our niche.</h2>
+  <table style="margin-top:8px">
+    <tr><th>Category</th><th>Players</th><th>Gap we exploit</th></tr>
+    <tr><td>Khata apps</td><td class="dim">TallyKhata (1M+ MAU), Hishabee, Bisnesy, HishabPati</td><td class="dim">Ledger-first — no IMEI, EMI, warranty or service workflows</td></tr>
+    <tr><td>Local POS vendors</td><td class="dim">Mediasoft, SK POS, Smart Dokani, AmarSolution, Sunshine IT</td><td class="dim">Generic retail or single-PC — weak offline, no mobile+desktop+web, no serialized inventory</td></tr>
+    <tr><td>Retail ERPs</td><td class="dim">Managerium (iBOS), Odoo, TallyPrime</td><td class="dim">Built for chains — heavy setup fees, overkill for a shop</td></tr>
+    <tr><td>Paper / Excel</td><td class="dim">The real incumbent</td><td class="dim">Errors, no reports, no EMI/IMEI tracking, no backup</td></tr>
+  </table>
+  <p class="sub" style="margin-top:22px; font-size:16px">Khata apps digitized the <b style="color:#e2e8f0">ledger</b>; ERPs serve <b style="color:#e2e8f0">chains</b>. Nobody gives the mobile/electronics shop a complete business OS — <b style="color:#22c55e">that's us</b>.</p>
+  <div class="footnote">Analysis: <a href="https://itlab.solutions/blog/the-ultimate-guide-to-pos-and-shop-management-system-in-bangladesh">IT Lab</a>, <a href="https://bisnesy.com/compare">Bisnesy</a>, <a href="https://financfy.com/blog/pos-software-in-bangladesh/">Financfy</a>, <a href="https://www.softeko.co/software/pos/bangladesh/">Softeko</a>, <a href="https://ibos.io/top-10-pos-software-in-bangladesh-2026-managerium-retail-erp-1-ranked/">iBOS</a> + field research</div>
+</div>
+
+<!-- Slide 7: Business model -->
+<div class="slide">
+  <div class="kicker">Business Model</div>
+  <h2>Subscription now. Platform revenue next.</h2>
+  <div class="grid grid-3" style="margin-top:10px">
+    <div class="card"><div class="num">Tk 1–1.5K</div><div class="lbl">/month per shop — tiered plans (Starter / Pro / Business)</div></div>
+    <div class="card"><div class="num blue">~Tk 2.9Cr</div><div class="lbl">ARR at 2,000 paying shops (base case, year 3)</div></div>
+    <div class="card"><div class="num blue">Multi-line</div><div class="lbl">Expansion: payments margin, SMS/WhatsApp credits, storefront websites, partner API, data-based credit referrals</div></div>
+  </div>
+  <div class="grid grid-2" style="margin-top:22px">
+    <div class="card"><h3>Go-to-market</h3><p>Field sales in mobile/electronics market clusters → 14-day assisted trial (we migrate their stock) → referral incentives → commission-based district agents via our Partner API.</p></div>
+    <div class="card"><h3>Moat</h3><p>Migration cost (inventory + IMEI history), daily operational dependence, offline data sync, and accumulated sales/credit data powering future fintech products.</p></div>
+  </div>
+  <div class="footnote">Subscription architecture and plans already implemented in the backend</div>
+</div>
+
+<!-- Slide 8: Roadmap + Ask -->
+<div class="slide">
+  <div class="kicker">Roadmap &amp; The Ask</div>
+  <h2>Traction first, then capital.</h2>
+  <div class="grid grid-4" style="margin-top:10px">
+    <div class="card"><h3>Months 1–2</h3><p>20 shop interviews → 5 pilot shops live (free)</p></div>
+    <div class="card"><h3>Months 3–4</h3><p>Pilots convert to paid · pricing finalized</p></div>
+    <div class="card"><h3>Months 5–8</h3><p>30–50 paying shops · 1 district agent · referral program</p></div>
+    <div class="card"><h3>Months 9–12</h3><p>100 paying shops · Tk 1.5L+ MRR · churn &lt;5%</p></div>
+  </div>
+  <div class="card" style="margin-top:26px; border-color: rgba(34,197,94,.4)">
+    <h3 style="color:var(--accent); font-size:19px">What we're raising</h3>
+    <p style="font-size:15.5px">Pre-seed / angel round after pilot traction — targeting <b style="color:#e2e8f0">US$50–150K</b> to fund
+    field sales expansion, onboarding ops, and product hardening. Open to conversations now with
+    angels who know the Bangladeshi retail market.</p>
+  </div>
+  <div class="footnote">ByabshaGhor · Confidential · figures are targets, not commitments</div>
+</div>
+
+</body>
+</html>

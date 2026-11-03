@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ব্যবসাঘর — প্রতিদ্বন্দ্বী Battlecards (Internal)</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f172a; --card: #1e293b; --accent: #22c55e; --accent2: #38bdf8;
+    --warn: #f59e0b; --text: #f1f5f9; --muted: #94a3b8; --line: rgba(148,163,184,.15);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Hind Siliguri', sans-serif; background: #0b1120; color: var(--text); padding: 40px 20px; }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 40px; }
+  .badge { display: inline-block; background: rgba(245,158,11,.12); color: var(--warn); border: 1px solid rgba(245,158,11,.4); border-radius: 999px; padding: 5px 18px; font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+  h1 { font-size: 34px; font-weight: 700; }
+  .sub { color: var(--muted); margin-top: 8px; font-size: 16px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 30px 34px; margin-bottom: 28px;
+  }
+  .card h2 { font-size: 25px; font-weight: 700; margin-bottom: 4px; }
+  .card .tag { color: var(--accent2); font-size: 14px; font-weight: 600; margin-bottom: 18px; display: block; }
+  .row { display: grid; grid-template-columns: 190px 1fr; gap: 6px 20px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; line-height: 1.6; }
+  .row:last-child { border-bottom: none; }
+  .row .k { color: var(--muted); font-weight: 600; font-size: 14.5px; }
+  .row .v b { color: #e2e8f0; }
+  .good { color: #86efac; }
+  .bad { color: #fca5a5; }
+  .killer {
+    background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.3);
+    border-radius: 12px; padding: 16px 20px; margin-top: 16px;
+    font-size: 16.5px; font-style: italic; color: #d1fae5; line-height: 1.6;
+  }
+  .killer::before { content: '⚔ Killer line: '; font-style: normal; color: var(--accent); font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 15px; }
+  th { text-align: left; color: var(--accent); padding: 9px 12px; font-size: 13px; border-bottom: 2px solid rgba(34,197,94,.4); }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--line); color: #e2e8f0; }
+  td.dim { color: var(--muted); }
+  tr.us td { background: rgba(34,197,94,.08); font-weight: 600; }
+  .note { background: rgba(56,189,248,.07); border: 1px solid rgba(56,189,248,.25); border-radius: 12px; padding: 14px 18px; margin-top: 14px; font-size: 14.5px; color: #bae6fd; line-height: 1.6; }
+  @media print { body { background: #fff; } .card { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="badge">INTERNAL — শুধু টিমের জন্য, ইনভেস্টরকে দেবেন না</div>
+  <h1>প্রতিদ্বন্দ্বী Battlecards</h1>
+  <p class="sub">সেলস ভিজিট ও পিচে "X-এর থেকে তোমরা কেন ভালো?" প্রশ্নের উত্তর — ডিসেম্বর ২০২৬ পর্যন্ত ভেরিফাইড রিসার্চ</p>
+</header>
+
+<!-- Smart Dokani -->
+<div class="card">
+  <h2>Smart Dokani</h2>
+  <span class="tag">Smart Software Ltd. · সবচেয়ে কাছের সরাসরি প্রতিদ্বন্দ্বী</span>
+  <div class="row"><div class="k">তারা কী</div><div class="v">মোবাইল+ডেস্কটপ POS অ্যাপ, অনলাইন অর্ডারিং/ই-স্টোর সহ</div></div>
+  <div class="row"><div class="k">টার্গেট</div><div class="v">ছোট রিটেইল দোকান, সুপারশপ, ফার্মেসি, রেস্টুরেন্ট</div></div>
+  <div class="row"><div class="k">দাম</div><div class="v">৳৮০০/মাস + <b>৳৫,০০০ ইনস্টলেশন ফি</b>, ১০০% অ্যাডভান্স</div></div>
+  <div class="row"><div class="k">স্কেল</div><div class="v">Play Store মাত্র <b>১K+ ডাউনলোড</b> — ডিস্ট্রিবিউশন দুর্বল</div></div>
+  <div class="row"><div class="k">যেখানে ভালো</div><div class="v good">অনলাইন অর্ডার/কাস্টমার ক্যাটালগ, অফলাইন মোড, লোকাল সাপোর্ট টিম</div></div>
+  <div class="row"><div class="k">যেখানে দুর্বল</div><div class="v bad">IMEI, EMI/কিস্তি, ওয়ারেন্টি, রিপেয়ার জব অর্ডার — একটাও নেই; সেটআপ ফি; ট্র্যাকশন কম</div></div>
+  <div class="killer">"মোবাইল দোকানের জন্য IMEI, EMI, ওয়ারেন্টি আর সার্ভিসিং — সব এক জায়গায়, কোনো সেটআপ ফি ছাড়া। ওদের অ্যাপে এই চারটার একটাও নেই।"</div>
+  <div class="note"><b>কখন হারবো:</b> দোকানদার যদি শুধু কাস্টমার-ফেসিং অনলাইন অর্ডারিং চায় (ওদের স্ট্রং স্যুট) আর দামে খুব সেনসিটিভ হয়।</div>
+</div>
+
+<!-- TallyKhata -->
+<div class="card">
+  <h2>টালিখাতা (TallyKhata)</h2>
+  <span class="tag">খাতা জায়েন্ট — লড়বো না, কমপ্লিমেন্ট হিসেবে বিক্রি করবো</span>
+  <div class="row"><div class="k">তারা কী</div><div class="v">ফ্রি ডিজিটাল খাতা — পেলাম/দিলাম, TallyPay QR পেমেন্ট, লোন</div></div>
+  <div class="row"><div class="k">টার্গেট</div><div class="v">সব ছোট দোকান — ১০ লাখ+ মাসিক অ্যাক্টিভ</div></div>
+  <div class="row"><div class="k">দাম</div><div class="v">ফ্রি (কিছু মানি ট্রান্সফারে ফি)</div></div>
+  <div class="row"><div class="k">স্কেল</div><div class="v">১০ লাখ+ MAU, বাংলাদেশ ব্যাংক PSP লাইসেন্স, Visa Accelerator + SC Ventures</div></div>
+  <div class="row"><div class="k">যেখানে ভালো</div><div class="v good">ব্র্যান্ড, স্কেল, পেমেন্ট ইনফ্রা, ফ্রি — সবাই চেনে</div></div>
+  <div class="row"><div class="k">যেখানে দুর্বল</div><div class="v bad">খাতা+পেমেন্টে ফোকাস — ইনভেন্টরি হালকা; IMEI, EMI, ওয়ারেন্টি, জব অর্ডার, স্টক ট্রান্সফার নেই; শুধু ফোনে</div></div>
+  <div class="killer">"টালিখাতা দিয়ে বাকির হিসাব রাখেন, আমাদের দিয়ে পুরো দোকান চালান — স্টক, IMEI, EMI, রিপেয়ার, স্টাফ, সব।"</div>
+  <div class="note"><b>কখন হারবো:</b> দোকানদার শুধু বাকি-খাতা বা পেমেন্ট/লোন চাইলে। <b>স্ট্র্যাটেজি:</b> "খাতা ওখানেই রাখেন, দোকানের কারবার আমাদের কাছে দিন" — পাশাপাশি থাকার পিচ।</div>
+</div>
+
+<!-- Hishabee -->
+<div class="card">
+  <h2>হিসাবী (Hishabee)</h2>
+  <span class="tag">ফান্ডেড স্টার্টআপ — আসলে লেন্ডিং কোম্পানি, অ্যাপটা ফানেল</span>
+  <div class="row"><div class="k">তারা কী</div><div class="v">ফ্রি রেকর্ড-কিপিং অ্যাপ + এমবেডেড ফাইন্যান্স ("stock now, pay later")</div></div>
+  <div class="row"><div class="k">টার্গেট</div><div class="v">আনব্যাংকড মম-অ্যান্ড-পপ দোকান</div></div>
+  <div class="row"><div class="k">দাম</div><div class="v">ফ্রি এন্ট্রি; লেন্ডিং ~$২০৪/দোকান/বছর, প্রিমিয়াম SaaS ~$৪০/দোকান/বছর</div></div>
+  <div class="row"><div class="k">স্কেল</div><div class="v"><b>৩.২ লাখ+ দোকান</b>, ~$২৫০K ARR, মাসে ১৫% গ্রোথ (Accelerating Asia ডেটা)</div></div>
+  <div class="row"><div class="k">যেখানে ভালো</div><div class="v good">স্মার্ট লেন্ডিং মডেল — ফ্রি অ্যাপে ক্রেডিট স্কোর করে লোন বিক্রি; অনলাইন শপ আছে; ফান্ডেড</div></div>
+  <div class="row"><div class="k">যেখানে দুর্বল</div><div class="v bad">অ্যাপটা লেন্ডিং ফানেলের এন্ট্রি — ডিপ POS ফোকাস না; মোবাইল-ফার্স্ট, ডেস্কটপ দুর্বল; IMEI/EMI/সার্ভিসিং নেই</div></div>
+  <div class="killer">"হিসাবী দোকানকে লোন দেয়, আমরা দোকান চালানোর সিস্টেম দিই — IMEI থেকে EMI, সার্ভিসিং থেকে স্টাফ পর্যন্ত।"</div>
+  <div class="note"><b>কখন হারবো:</b> দোকানদারের মূল চাহিদা ওয়ার্কিং ক্যাপিটাল/স্টক লোন হলে। <b>ভবিষ্যৎ:</b> পার্টনারশিপ যৌক্তিক — আমাদের ট্রানজাকশন ডেটা ওদের ক্রেডিট স্কোরিংয়ে কাজে লাগে।</div>
+</div>
+
+<!-- Mediasoft -->
+<div class="card">
+  <h2>Mediasoft</h2>
+  <span class="tag">Mediasoft Data Systems · ২৫ বছরের লেগেসি, চেইন-ফোকাসড</span>
+  <div class="row"><div class="k">তারা কী</div><div class="v">১৯৯৮ সালের প্রতিষ্ঠিত POS কোম্পানি — Mobile Phone &amp; Accessories Shop POS সহ ইন্ডাস্ট্রি-ভিত্তিক ভার্সন</div></div>
+  <div class="row"><div class="k">টার্গেট</div><div class="v">বড় চেইন, সুপারমার্কেট, হসপিটাল, ফার্মেসি — ৭৫০+ কাস্টমার</div></div>
+  <div class="row"><div class="k">দাম</div><div class="v">কোট-অনলি (সাইটে দাম নেই), VAT আলাদা প্রোডাক্ট, অন-প্রিমিস বা ক্লাউড</div></div>
+  <div class="row"><div class="k">স্কেল</div><div class="v">১,০০০+ ইনস্টলেশন, ৫০+ ক্লায়েন্ট লোগো, ~১% অ্যাট্রিশন দাবি</div></div>
+  <div class="row"><div class="k">যেখানে ভালো</div><div class="v good">অভিজ্ঞতা, প্রুভেন রেকর্ড, বড় সাপোর্ট টিম, NBR-লিস্টেড VAT সফটওয়্যার</div></div>
+  <div class="row"><div class="k">যেখানে দুর্বল</div><div class="v bad">মোবাইল-শপ ভার্সনেও IMEI-লেভেল ট্র্যাকিং, EMI, রিপেয়ার ওয়ার্কফ্লো নেই; লেগেসি আর্কিটেকচার; কোট-অনলি দামে ছোট দোকান বাজেট করতে পারে না</div></div>
+  <div class="killer">"ওরা ২৫ বছরে চেইন স্টোরের জন্য বানিয়েছে; আমরা মোবাইল দোকানের জন্য বানিয়েছি — IMEI, EMI, রিপেয়ার সহ, সোজা মাসিক দামে।"</div>
+  <div class="note"><b>কখন হারবো:</b> মাল্টি-আউটলেট চেইন যারা প্রুভেন ভেন্ডর+VAT কমপ্লায়েন্স চায় — ওটা ওদের নিচ, আমরা সিঙ্গল/স্মল-চেইনে জিতি।</div>
+</div>
+
+<!-- Pricing landscape -->
+<div class="card">
+  <h2>দামের ল্যান্ডস্কেপ</h2>
+  <span class="tag">আমাদের পজিশনিং — মিড-টিয়ার sweet spot</span>
+  <table>
+    <tr><th>প্রতিদ্বন্দ্বী</th><th>মাসিক খরচ</th><th>সেটআপ</th><th>নোট</th></tr>
+    <tr><td>টালিখাতা</td><td class="dim">ফ্রি</td><td class="dim">নেই</td><td class="dim">ট্রান্সফার ফি আলাদা</td></tr>
+    <tr><td>হিসাবী</td><td class="dim">ফ্রি এন্ট্রি</td><td class="dim">নেই</td><td class="dim">লেন্ডিং+প্রিমিয়ামে আয়</td></tr>
+    <tr><td>Bisnesy</td><td class="dim">৳৪৯৯–১,৪৯৯</td><td class="dim">নেই</td><td class="dim">পাবলিশড প্রাইসিং</td></tr>
+    <tr><td>Smart Dokani</td><td class="dim">৳৮০০</td><td class="dim">৳৫,০০০</td><td class="dim">১০০% অ্যাডভান্স</td></tr>
+    <tr><td>Financfy</td><td class="dim">৳১,৮০০–১০,৮০০</td><td class="dim">—</td><td class="dim">বেসিকে ইনভেন্টরি বাদ</td></tr>
+    <tr><td>MondayPOS</td><td class="dim">৳৩,৪৯৫–৩,৯৯৫/আউটলেট</td><td class="dim">নেই</td><td class="dim">প্রিমিয়াম টিয়ার</td></tr>
+    <tr><td>Mediasoft/SK POS</td><td class="dim">কোট-অনলি</td><td class="dim">আছে</td><td class="dim">লেগেসি মডেল</td></tr>
+    <tr class="us"><td>আমাদের সুযোগ</td><td>৳১,০০০–১,৫০০</td><td>নেই (ফ্রি অনবোর্ডিং)</td><td>খাতা অ্যাপের চেয়ে ডিপ, ERP-র চেয়ে সস্তা</td></tr>
+  </table>
+</div>
+
+</div>
+</body>
+</html>
