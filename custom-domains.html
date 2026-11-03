@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Domains & Subdomains — ByabshaGhor Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
+    --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Hind Siliguri','Inter',sans-serif; background:#0b1120; color:var(--text); }
+  .bar {
+    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:12px 24px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand { font-weight:700; color:var(--accent); font-size:16px; }
+  .bar a { color:var(--accent2); font-size:13.5px; text-decoration:none; }
+  .bar a:hover { text-decoration:underline; }
+  .bar button {
+    margin-left:auto; background:rgba(34,197,94,.12); color:var(--accent);
+    border:1px solid rgba(34,197,94,.4); border-radius:10px;
+    padding:7px 14px; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .content { max-width:960px; margin:0 auto; padding:40px 28px 80px; }
+  h1 { font-size:32px; color:var(--accent); margin:0 0 18px; border-bottom:2px solid rgba(34,197,94,.3); padding-bottom:12px; }
+  h2 { font-size:23px; color:var(--accent2); margin:34px 0 14px; }
+  h3 { font-size:18px; color:#e2e8f0; margin:24px 0 10px; }
+  p, li { font-size:15.5px; line-height:1.75; color:#dbe4f0; }
+  p { margin:10px 0; }
+  ul, ol { padding-left:26px; margin:10px 0; }
+  li { margin:5px 0; }
+  blockquote {
+    border-left:4px solid var(--accent); background:rgba(34,197,94,.07);
+    padding:14px 18px; border-radius:0 10px 10px 0; margin:14px 0;
+  }
+  blockquote p { color:#d1fae5; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
+  th { text-align:left; color:var(--accent); background:rgba(34,197,94,.08); padding:10px 12px; font-size:13px; border:1px solid var(--line); }
+  td { padding:9px 12px; border:1px solid var(--line); color:#dbe4f0; vertical-align:top; }
+  tr:nth-child(even) td { background:rgba(30,41,59,.5); }
+  code { background:#0b1120; padding:2px 7px; border-radius:5px; font-size:13.5px; color:#fbbf24; }
+  pre { background:#0b1120; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; margin:14px 0; }
+  pre code { background:none; padding:0; color:#e2e8f0; font-size:13.5px; line-height:1.6; }
+  a { color:var(--accent2); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  hr { border:none; border-top:1px solid var(--line); margin:26px 0; }
+  strong { color:#fff; }
+  @media print {
+    .bar { display:none; }
+    body { background:#fff; }
+    .content { padding:0; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color:#111; }
+    td, th { border-color:#ccc; }
+    th { background:#eee; }
+    blockquote { background:#f5f5f5; }
+    a { color:#0369a1; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand">ব্যবসাঘর Docs</span>
+  <a href="viewer.html">সব ডকের লিস্ট</a>
+  <a href="custom-domains.md">custom-domains.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>Custom Domains &amp; Subdomains</h1>
+<p>Tenants can reach the platform on their own hostname — either an assigned
+subdomain (<code>acme.byabshaghor.com</code>) or their own domain (<code>pos.acme.com</code>).</p>
+<p>Tenancy is resolved by JWT, not by hostname — no backend change is needed for
+routing. The domain layer only provides:</p>
+<ul>
+<li><strong>TLS approval</strong> — Caddy asks the backend before issuing a cert</li>
+<li><strong>White-label branding</strong> — verified domains show the shop's name/logo on
+  the login page (<code>GET /api/v1/platform/domain-info?host=...</code>)</li>
+</ul>
+<h2>Flow</h2>
+<ol>
+<li>Super admin adds the domain: <code>/admin/tenants/&lt;id&gt;</code> → <strong>Custom Domains</strong></li>
+<li>Customer creates DNS records:
+   - <code>CNAME  pos.acme.com → app.byabshaghor.com</code>
+   - <code>TXT   pos.acme.com → byabshaghor-verify=&lt;token&gt;</code> (shown in admin UI)</li>
+<li>Admin clicks <strong>Verify</strong> → <code>verified_at</code> is set → TLS + branding activate.</li>
+</ol>
+<h2>Caddyfile</h2>
+<p>The production config lives in <code>deploy/Caddyfile</code> — it routes <code>/api/v1/*</code>
+and <code>/uploads/*</code> to the backend and everything else to Next.js, on the same
+origin. Full setup steps: <code>deploy/README.md</code>.</p>
+<pre><code class="language-caddy">{
+    on_demand_tls {
+        ask http://localhost:4000/api/v1/platform/tls-ask
+        interval 2m
+        burst 5
+    }
+}
+
+byabshaghor.com, app.byabshaghor.com, *.byabshaghor.com {
+    tls {
+        dns cloudflare {env.CF_API_TOKEN}   # wildcard needs DNS challenge
+    }
+    @api path /api/v1/* /uploads/*
+    handle @api { reverse_proxy localhost:4000 }
+    handle { reverse_proxy localhost:3000 }
+}
+
+:443 {
+    tls { on_demand }
+    @api path /api/v1/* /uploads/*
+    handle @api { reverse_proxy localhost:4000 }
+    handle { reverse_proxy localhost:3000 }
+}
+</code></pre>
+<p>The web app resolves the API from <code>window.location.origin</code> + <code>/api/v1</code> in
+production (see <code>shop-app-web/src/lib/api.ts</code>), so a custom domain like
+<code>pos.acme.com</code> calls <code>pos.acme.com/api/v1</code> — same origin, no CORS, and no
+<code>NEXT_PUBLIC_API_URL</code> needed. Leave it empty in production builds.</p>
+<h2>Customer checklist</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Record</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>CNAME</td>
+<td><code>pos.acme.com</code> → <code>app.byabshaghor.com</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>TXT</td>
+<td><code>pos.acme.com</code> → <code>byabshaghor-verify=&lt;token&gt;</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>—</td>
+<td>Wait for DNS propagation (minutes–hours), ask admin to Verify</td>
+</tr>
+</tbody>
+</table>
+<p>Cloudflare users: the CNAME must be <strong>DNS only</strong> (grey cloud) — proxied mode
+breaks on-demand TLS issuance.</p>
+</div>
+</body>
+</html>

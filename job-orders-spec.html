@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Orders — Core Model Spec (Phase 0 + Phase 1) — ByabshaGhor Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
+    --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Hind Siliguri','Inter',sans-serif; background:#0b1120; color:var(--text); }
+  .bar {
+    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:12px 24px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand { font-weight:700; color:var(--accent); font-size:16px; }
+  .bar a { color:var(--accent2); font-size:13.5px; text-decoration:none; }
+  .bar a:hover { text-decoration:underline; }
+  .bar button {
+    margin-left:auto; background:rgba(34,197,94,.12); color:var(--accent);
+    border:1px solid rgba(34,197,94,.4); border-radius:10px;
+    padding:7px 14px; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .content { max-width:960px; margin:0 auto; padding:40px 28px 80px; }
+  h1 { font-size:32px; color:var(--accent); margin:0 0 18px; border-bottom:2px solid rgba(34,197,94,.3); padding-bottom:12px; }
+  h2 { font-size:23px; color:var(--accent2); margin:34px 0 14px; }
+  h3 { font-size:18px; color:#e2e8f0; margin:24px 0 10px; }
+  p, li { font-size:15.5px; line-height:1.75; color:#dbe4f0; }
+  p { margin:10px 0; }
+  ul, ol { padding-left:26px; margin:10px 0; }
+  li { margin:5px 0; }
+  blockquote {
+    border-left:4px solid var(--accent); background:rgba(34,197,94,.07);
+    padding:14px 18px; border-radius:0 10px 10px 0; margin:14px 0;
+  }
+  blockquote p { color:#d1fae5; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
+  th { text-align:left; color:var(--accent); background:rgba(34,197,94,.08); padding:10px 12px; font-size:13px; border:1px solid var(--line); }
+  td { padding:9px 12px; border:1px solid var(--line); color:#dbe4f0; vertical-align:top; }
+  tr:nth-child(even) td { background:rgba(30,41,59,.5); }
+  code { background:#0b1120; padding:2px 7px; border-radius:5px; font-size:13.5px; color:#fbbf24; }
+  pre { background:#0b1120; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; margin:14px 0; }
+  pre code { background:none; padding:0; color:#e2e8f0; font-size:13.5px; line-height:1.6; }
+  a { color:var(--accent2); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  hr { border:none; border-top:1px solid var(--line); margin:26px 0; }
+  strong { color:#fff; }
+  @media print {
+    .bar { display:none; }
+    body { background:#fff; }
+    .content { padding:0; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color:#111; }
+    td, th { border-color:#ccc; }
+    th { background:#eee; }
+    blockquote { background:#f5f5f5; }
+    a { color:#0369a1; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand">ব্যবসাঘর Docs</span>
+  <a href="viewer.html">সব ডকের লিস্ট</a>
+  <a href="job-orders-spec.md">job-orders-spec.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>Job Orders — Core Model Spec (Phase 0 + Phase 1)</h1>
+<p>Status: DRAFT for implementation
+Scope: rename <code>service_jobs</code> → <code>job_orders</code>, add work-breakdown (tasks), multi-employee
+assignments, cost ledger, payout ledger, business-profile attributes, DB-driven
+workflow tables. Phase 1 wires tasks + assignments end-to-end. Costs/payouts/workflow
+tables are created in Phase 0 but only get their APIs in Phase 2/3/4.</p>
+<p>Decisions already taken (do not re-open):
+1. Full rename — DB tables, module folder, API path, web route, doc-type keys. Old
+   <code>/service-jobs</code> web route stays as a redirect only.
+2. Payouts support both payroll push and instant expense pay; default = payroll.
+3. Ad-hoc (non-catalogue) lines are allowed; on delivery they bill against a hidden
+   system product <code>SYS-SERVICE-CHARGE</code> (item_type = 'service').
+4. Workflow tables are created now; the hardcoded transition map stays the runtime
+   source of truth until Phase 4 flips to DB-driven.</p>
+<hr />
+<h2>0. Naming map (rename)</h2>
+<table>
+<thead>
+<tr>
+<th>Old</th>
+<th>New</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>table <code>service_jobs</code></td>
+<td><code>job_orders</code></td>
+</tr>
+<tr>
+<td>table <code>service_job_items</code></td>
+<td><code>job_order_items</code></td>
+</tr>
+<tr>
+<td>table <code>service_job_status_history</code></td>
+<td><code>job_order_status_history</code></td>
+</tr>
+<tr>
+<td>table <code>service_job_outsources</code></td>
+<td><code>job_order_outsources</code></td>
+</tr>
+<tr>
+<td>table <code>service_job_devices</code></td>
+<td>dropped → rows copied into <code>job_order_attributes</code> (profile_key = 'device')</td>
+</tr>
+<tr>
+<td>column <code>sales.service_job_id</code></td>
+<td><code>sales.job_order_id</code></td>
+</tr>
+<tr>
+<td>column <code>job_orders.service_product_id</code></td>
+<td>keep name (still "catalogue service product")</td>
+</tr>
+<tr>
+<td><code>payments.reference_type = 'service_job'</code></td>
+<td><code>'job_order'</code> (data UPDATE)</td>
+</tr>
+<tr>
+<td><code>cashbox_transactions.reference_type = 'service_job'</code></td>
+<td><code>'job_order'</code> (data UPDATE)</td>
+</tr>
+<tr>
+<td>number-series <code>doc_type = 'service_job'</code></td>
+<td><code>'job_order'</code> (data UPDATE + code <code>DocType</code>), prefix default stays <code>SRV</code>? → <strong>change default prefix to <code>JOB</code></strong> for new tenants; existing rows keep whatever prefix they have</td>
+</tr>
+<tr>
+<td>template doc type <code>service_job_pdf</code></td>
+<td><code>job_order_pdf</code> (data UPDATE on templates table + code)</td>
+</tr>
+<tr>
+<td>index names <code>idx_&lt;schema&gt;_service_job*</code></td>
+<td><code>idx_&lt;schema&gt;_job_order*</code></td>
+</tr>
+<tr>
+<td>backend module <code>src/modules/service-job/</code></td>
+<td><code>src/modules/job-order/</code> (<code>job-order.service.ts</code>, <code>job-order-shared.ts</code>, <code>job-order.schema.ts</code>, <code>job-order.controller.ts</code>, <code>job-order.routes.ts</code>)</td>
+</tr>
+<tr>
+<td>API mount <code>/service-jobs</code> (app.ts)</td>
+<td><code>/job-orders</code></td>
+</tr>
+<tr>
+<td>web <code>src/lib/service-jobs.ts</code></td>
+<td><code>src/lib/job-orders.ts</code></td>
+</tr>
+<tr>
+<td>web route <code>/service-jobs/*</code></td>
+<td><code>/job-orders/*</code>; <code>/service-jobs/*</code> and <code>/service-cases/*</code> → redirect pages</td>
+</tr>
+<tr>
+<td>menu seed hrefs / keys <code>service_jobs.create</code>, <code>pos.service_job</code>, <code>/reports?tab=service-jobs</code></td>
+<td><code>job_orders.create</code>, <code>pos.job_order</code>, <code>/reports?tab=job-orders</code></td>
+</tr>
+<tr>
+<td>unit-inspection schema <code>context: 'service_job'</code></td>
+<td><code>'job_order'</code></td>
+</tr>
+<tr>
+<td><code>customer.controller</code> job history endpoint</td>
+<td>rename internal identifiers only, path unchanged</td>
+</tr>
+<tr>
+<td><code>sale-tx.ts</code> <code>serviceJobId</code> param, <code>sale.service.ts</code> reopen hook</td>
+<td><code>jobOrderId</code></td>
+</tr>
+</tbody>
+</table>
+<p>Rename is done in ONE migration (<code>101_job_orders_core.ts</code>) using <code>ALTER TABLE ... RENAME</code>
+so no data copy is needed except the devices → attributes move.</p>
+<hr />
+<h2>1. Migration <code>tenant/101_job_orders_core.ts</code></h2>
+<p>Single transaction. Order matters.</p>
+<h3>1.1 Renames</h3>
+<pre><code class="language-sql">ALTER TABLE &quot;${schema}&quot;.service_jobs                RENAME TO job_orders;
+ALTER TABLE &quot;${schema}&quot;.service_job_items           RENAME TO job_order_items;
+ALTER TABLE &quot;${schema}&quot;.service_job_status_history  RENAME TO job_order_status_history;
+ALTER TABLE &quot;${schema}&quot;.service_job_outsources      RENAME TO job_order_outsources;
+ALTER TABLE &quot;${schema}&quot;.sales RENAME COLUMN service_job_id TO job_order_id;
+
+-- indexes (Postgres keeps old names after table rename; rename explicitly)
+ALTER INDEX IF EXISTS &quot;${schema}&quot;.idx_${schema}_service_jobs_status      RENAME TO idx_${schema}_job_orders_status;
+ALTER INDEX IF EXISTS &quot;${schema}&quot;.idx_${schema}_service_jobs_customer    RENAME TO idx_${schema}_job_orders_customer;
+ALTER INDEX IF EXISTS &quot;${schema}&quot;.idx_${schema}_service_jobs_employee    RENAME TO idx_${schema}_job_orders_employee;
+ALTER INDEX IF EXISTS &quot;${schema}&quot;.idx_${schema}_service_jobs_promised    RENAME TO idx_${schema}_job_orders_promised;
+ALTER INDEX IF EXISTS &quot;${schema}&quot;.idx_${schema}_service_jobs_client_ref  RENAME TO idx_${schema}_job_orders_client_ref;
+ALTER INDEX IF EXISTS &quot;${schema}&quot;.idx_${schema}_service_job_items_job    RENAME TO idx_${schema}_job_order_items_job;
+ALTER INDEX IF EXISTS &quot;${schema}&quot;.idx_${schema}_service_job_history_job  RENAME TO idx_${schema}_job_order_history_job;
+
+UPDATE &quot;${schema}&quot;.payments             SET reference_type = 'job_order' WHERE reference_type = 'service_job';
+UPDATE &quot;${schema}&quot;.cashbox_transactions SET reference_type = 'job_order' WHERE reference_type = 'service_job';
+UPDATE &quot;${schema}&quot;.number_series        SET doc_type = 'job_order'       WHERE doc_type = 'service_job';
+UPDATE &quot;${schema}&quot;.templates            SET doc_type = 'job_order_pdf'   WHERE doc_type = 'service_job_pdf';
+</code></pre>
+<blockquote>
+<p>Verify actual column names for <code>cashbox_transactions</code> / <code>number_series</code> / <code>templates</code>
+before writing the UPDATEs (check <code>032_finance_module.ts</code>, <code>072_number_series.ts</code>,
+<code>073_templates.ts</code>). If a table has a CHECK constraint on doc_type, drop/re-add it.</p>
+</blockquote>
+<h3>1.2 <code>job_orders</code> — new columns</h3>
+<pre><code class="language-sql">ALTER TABLE &quot;${schema}&quot;.job_orders
+  ADD COLUMN IF NOT EXISTS workflow_id  UUID,                         -- FK added after job_workflows exists
+  ADD COLUMN IF NOT EXISTS template_id  UUID,                         -- Phase 4, nullable now
+  ADD COLUMN IF NOT EXISTS profile_key  VARCHAR(30) NOT NULL DEFAULT 'generic',  -- 'generic'|'device'|'garment'|'print'|'vehicle'|...
+  ADD COLUMN IF NOT EXISTS items_total  DECIMAL(12,2) NOT NULL DEFAULT 0,        -- denormalised Σ job_order_items.total
+  ADD COLUMN IF NOT EXISTS cost_total   DECIMAL(12,2) NOT NULL DEFAULT 0,        -- denormalised Σ job_order_costs.amount
+  ADD COLUMN IF NOT EXISTS payout_total DECIMAL(12,2) NOT NULL DEFAULT 0;        -- denormalised Σ payouts.final_amount (status&lt;&gt;cancelled)
+
+-- existing rows that have a device row → profile_key = 'device'
+UPDATE &quot;${schema}&quot;.job_orders j SET profile_key = 'device'
+  WHERE EXISTS (SELECT 1 FROM &quot;${schema}&quot;.service_job_devices d WHERE d.job_id = j.id);
+
+UPDATE &quot;${schema}&quot;.job_orders j SET items_total =
+  COALESCE((SELECT SUM(total) FROM &quot;${schema}&quot;.job_order_items i WHERE i.job_id = j.id), 0);
+</code></pre>
+<p><code>assigned_employee_id</code> stays: it is the <strong>lead</strong> assignee and is kept in sync by the
+service layer (see §3.4). Existing list/report queries keep working.</p>
+<h3>1.3 <code>job_order_items</code> — extend</h3>
+<pre><code class="language-sql">ALTER TABLE &quot;${schema}&quot;.job_order_items
+  ALTER COLUMN product_id DROP NOT NULL,     -- was nullable already via ON DELETE SET NULL; make sure
+  ADD COLUMN IF NOT EXISTS task_id     UUID,            -- FK added after tasks table
+  ADD COLUMN IF NOT EXISTS cost_amount DECIMAL(12,2) NOT NULL DEFAULT 0,   -- per-line cost snapshot (qty * unit cost)
+  ADD COLUMN IF NOT EXISTS seq         INT NOT NULL DEFAULT 0;
+
+-- widen line_type: 'service' | 'part' | 'labour' | 'fee' | 'material' | 'other'
+ALTER TABLE &quot;${schema}&quot;.job_order_items DROP CONSTRAINT IF EXISTS job_order_items_line_type_check;
+ALTER TABLE &quot;${schema}&quot;.job_order_items
+  ADD CONSTRAINT job_order_items_line_type_check
+  CHECK (line_type IN ('service','part','labour','fee','material','other'));
+</code></pre>
+<p>Rules:
+- <code>part</code> and <code>material</code> lines <strong>must</strong> have <code>product_id</code> (they hit inventory).
+- <code>service</code>/<code>labour</code>/<code>fee</code>/<code>other</code> may have <code>product_id = NULL</code> (ad-hoc). Delivery maps
+  them to the system product (see §1.9).
+- Only <code>part</code> lines are reserved / deducted from stock (unchanged). <code>material</code> is a
+  non-stock consumable charged to the customer, tracked in costs only.</p>
+<h3>1.4 <code>job_order_tasks</code> (NEW)</h3>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS &quot;${schema}&quot;.job_order_tasks (
+  id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  job_id            UUID NOT NULL REFERENCES &quot;${schema}&quot;.job_orders(id) ON DELETE CASCADE,
+  parent_task_id    UUID REFERENCES &quot;${schema}&quot;.job_order_tasks(id) ON DELETE CASCADE,
+  seq               INT NOT NULL DEFAULT 0,
+  title             VARCHAR(255) NOT NULL,
+  description       TEXT,
+  status            VARCHAR(20) NOT NULL DEFAULT 'pending'
+                    CHECK (status IN ('pending','in_progress','blocked','done','skipped')),
+  item_id           UUID REFERENCES &quot;${schema}&quot;.job_order_items(id) ON DELETE SET NULL,  -- billable line this task delivers
+  quantity          DECIMAL(12,3) NOT NULL DEFAULT 1,      -- for per_unit payouts (e.g. 3 shirts)
+  estimated_minutes INT,
+  actual_minutes    INT,
+  started_at        TIMESTAMPTZ,
+  completed_at      TIMESTAMPTZ,
+  completed_by      UUID,
+  -- Payout rule for whoever is assigned. NULL → fall back to employee default (Phase 3).
+  -- {&quot;basis&quot;:&quot;fixed&quot;,&quot;rate&quot;:200} | {&quot;basis&quot;:&quot;percent_of_line&quot;,&quot;rate&quot;:30}
+  -- | {&quot;basis&quot;:&quot;percent_of_job_total&quot;,&quot;rate&quot;:5} | {&quot;basis&quot;:&quot;per_unit&quot;,&quot;rate&quot;:50}
+  -- | {&quot;basis&quot;:&quot;hourly&quot;,&quot;rate&quot;:150}
+  payout_rule       JSONB,
+  note              VARCHAR(500),
+  created_by        UUID,
+  created_at        TIMESTAMPTZ DEFAULT NOW(),
+  updated_at        TIMESTAMPTZ DEFAULT NOW(),
+  deleted_at        TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS idx_${schema}_job_order_tasks_job
+  ON &quot;${schema}&quot;.job_order_tasks(job_id) WHERE deleted_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_${schema}_job_order_tasks_status
+  ON &quot;${schema}&quot;.job_order_tasks(status) WHERE deleted_at IS NULL;
+
+ALTER TABLE &quot;${schema}&quot;.job_order_items
+  ADD CONSTRAINT job_order_items_task_fk FOREIGN KEY (task_id)
+  REFERENCES &quot;${schema}&quot;.job_order_tasks(id) ON DELETE SET NULL;
+</code></pre>
+<p>Task status rules (service layer):
+- <code>pending → in_progress | blocked | done | skipped</code>
+- <code>in_progress → blocked | done | pending</code>
+- <code>blocked → in_progress | pending | skipped</code>
+- <code>done → in_progress</code> (reopen; only while job not delivered)
+- <code>skipped → pending</code>
+- Setting <code>in_progress</code> sets <code>started_at</code> if null; <code>done</code> sets <code>completed_at</code>,
+  <code>completed_by</code>, and <code>actual_minutes</code> if null and <code>started_at</code> set
+  (<code>(NOW()-started_at)</code> in minutes).
+- A task cannot be edited/added when the job is <code>delivered</code> or <code>cancelled</code>.
+- Sub-task depth max = 1 (parent may not itself have a parent).</p>
+<h3>1.5 <code>job_order_assignments</code> (NEW)</h3>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS &quot;${schema}&quot;.job_order_assignments (
+  id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  job_id         UUID NOT NULL REFERENCES &quot;${schema}&quot;.job_orders(id) ON DELETE CASCADE,
+  task_id        UUID REFERENCES &quot;${schema}&quot;.job_order_tasks(id) ON DELETE CASCADE,  -- NULL = job-level
+  employee_id    UUID NOT NULL REFERENCES &quot;${schema}&quot;.employees(id),
+  role           VARCHAR(30) NOT NULL DEFAULT 'worker'
+                 CHECK (role IN ('lead','worker','helper','qc','sales')),
+  share_percent  DECIMAL(5,2) NOT NULL DEFAULT 100 CHECK (share_percent &gt; 0 AND share_percent &lt;= 100),
+  assigned_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  unassigned_at  TIMESTAMPTZ,
+  assigned_by    UUID,
+  unassigned_by  UUID,
+  note           VARCHAR(500),
+  created_at     TIMESTAMPTZ DEFAULT NOW()
+);
+-- one active assignment per (task, employee); task_id NULL handled with COALESCE sentinel
+CREATE UNIQUE INDEX IF NOT EXISTS idx_${schema}_job_order_assign_active
+  ON &quot;${schema}&quot;.job_order_assignments(job_id, COALESCE(task_id, '00000000-0000-0000-0000-000000000000'::uuid), employee_id)
+  WHERE unassigned_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_${schema}_job_order_assign_employee
+  ON &quot;${schema}&quot;.job_order_assignments(employee_id) WHERE unassigned_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_${schema}_job_order_assign_job
+  ON &quot;${schema}&quot;.job_order_assignments(job_id);
+
+-- backfill: existing assigned_employee_id → job-level 'lead' assignment
+INSERT INTO &quot;${schema}&quot;.job_order_assignments (job_id, task_id, employee_id, role, assigned_at, assigned_by)
+SELECT id, NULL, assigned_employee_id, 'lead', COALESCE(received_at, created_at), created_by
+FROM &quot;${schema}&quot;.job_orders WHERE assigned_employee_id IS NOT NULL;
+</code></pre>
+<p>Rules:
+- Unassign = set <code>unassigned_at</code> (never delete) — history is the audit trail.
+- At most <strong>one active job-level <code>lead</code></strong> per job. Creating a new lead auto-unassigns the
+  previous one and updates <code>job_orders.assigned_employee_id</code>.
+- Σ <code>share_percent</code> of active assignments on the same task must be ≤ 100 (validation
+  error otherwise). Used by Phase 3 to split payouts.
+- Employee must be <code>status = 'Active'</code> and not deleted.</p>
+<h3>1.6 <code>job_order_costs</code> (NEW — API in Phase 2)</h3>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS &quot;${schema}&quot;.job_order_costs (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  job_id       UUID NOT NULL REFERENCES &quot;${schema}&quot;.job_orders(id) ON DELETE CASCADE,
+  task_id      UUID REFERENCES &quot;${schema}&quot;.job_order_tasks(id) ON DELETE SET NULL,
+  cost_type    VARCHAR(20) NOT NULL
+               CHECK (cost_type IN ('part','material','labour','outsource','transport','consumable','other')),
+  source_type  VARCHAR(20) NOT NULL DEFAULT 'manual'
+               CHECK (source_type IN ('manual','sale_item','outsource','payout','expense')),
+  source_id    UUID,                         -- sale_items.id / job_order_outsources.id / job_order_payouts.id / expenses.id
+  description  VARCHAR(255) NOT NULL,
+  quantity     DECIMAL(12,3) NOT NULL DEFAULT 1,
+  unit_cost    DECIMAL(12,2) NOT NULL DEFAULT 0,
+  amount       DECIMAL(12,2) NOT NULL DEFAULT 0,   -- quantity * unit_cost (stored, not computed)
+  is_billable  BOOLEAN NOT NULL DEFAULT false,     -- true → also expected to appear as an item line
+  employee_id  UUID REFERENCES &quot;${schema}&quot;.employees(id) ON DELETE SET NULL,
+  payee_id     UUID REFERENCES &quot;${schema}&quot;.payees(id) ON DELETE SET NULL,
+  expense_id   UUID REFERENCES &quot;${schema}&quot;.expenses(id) ON DELETE SET NULL,
+  incurred_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  note         VARCHAR(500),
+  created_by   UUID,
+  created_at   TIMESTAMPTZ DEFAULT NOW(),
+  updated_at   TIMESTAMPTZ DEFAULT NOW(),
+  deleted_at   TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS idx_${schema}_job_order_costs_job
+  ON &quot;${schema}&quot;.job_order_costs(job_id) WHERE deleted_at IS NULL;
+CREATE UNIQUE INDEX IF NOT EXISTS idx_${schema}_job_order_costs_source
+  ON &quot;${schema}&quot;.job_order_costs(source_type, source_id) WHERE source_id IS NOT NULL AND deleted_at IS NULL;
+
+-- backfill from returned outsources
+INSERT INTO &quot;${schema}&quot;.job_order_costs
+  (job_id, cost_type, source_type, source_id, description, amount, unit_cost, payee_id, expense_id, incurred_at, created_by)
+SELECT job_id, 'outsource', 'outsource', id, 'Outsourced repair', cost, cost, payee_id, expense_id,
+       COALESCE(returned_at, sent_at), created_by
+FROM &quot;${schema}&quot;.job_order_outsources WHERE status = 'returned' AND cost &gt; 0 AND deleted_at IS NULL;
+</code></pre>
+<h3>1.7 <code>job_order_payouts</code> (NEW — API in Phase 3)</h3>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS &quot;${schema}&quot;.job_order_payouts (
+  id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  job_id           UUID NOT NULL REFERENCES &quot;${schema}&quot;.job_orders(id) ON DELETE CASCADE,
+  task_id          UUID REFERENCES &quot;${schema}&quot;.job_order_tasks(id) ON DELETE SET NULL,
+  assignment_id    UUID REFERENCES &quot;${schema}&quot;.job_order_assignments(id) ON DELETE SET NULL,
+  employee_id      UUID NOT NULL REFERENCES &quot;${schema}&quot;.employees(id),
+  basis            VARCHAR(30) NOT NULL
+                   CHECK (basis IN ('fixed','percent_of_line','percent_of_job_total','percent_of_labour','per_unit','hourly','manual')),
+  basis_amount     DECIMAL(12,2) NOT NULL DEFAULT 0,   -- the number the rate was applied to
+  rate             DECIMAL(12,4) NOT NULL DEFAULT 0,
+  share_percent    DECIMAL(5,2)  NOT NULL DEFAULT 100,
+  computed_amount  DECIMAL(12,2) NOT NULL DEFAULT 0,
+  adjustment       DECIMAL(12,2) NOT NULL DEFAULT 0,
+  final_amount     DECIMAL(12,2) NOT NULL DEFAULT 0,   -- computed + adjustment
+  status           VARCHAR(20) NOT NULL DEFAULT 'draft'
+                   CHECK (status IN ('draft','approved','in_payroll','paid','cancelled')),
+  pay_mode         VARCHAR(20) NOT NULL DEFAULT 'payroll' CHECK (pay_mode IN ('payroll','instant')),
+  payroll_item_id  UUID REFERENCES &quot;${schema}&quot;.payroll_items(id) ON DELETE SET NULL,
+  expense_id       UUID REFERENCES &quot;${schema}&quot;.expenses(id) ON DELETE SET NULL,
+  approved_by      UUID,
+  approved_at      TIMESTAMPTZ,
+  paid_at          TIMESTAMPTZ,
+  note             VARCHAR(500),
+  created_by       UUID,
+  created_at       TIMESTAMPTZ DEFAULT NOW(),
+  updated_at       TIMESTAMPTZ DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_${schema}_job_order_payouts_job      ON &quot;${schema}&quot;.job_order_payouts(job_id);
+CREATE INDEX IF NOT EXISTS idx_${schema}_job_order_payouts_employee ON &quot;${schema}&quot;.job_order_payouts(employee_id, status);
+
+ALTER TABLE &quot;${schema}&quot;.payroll_items ADD COLUMN IF NOT EXISTS job_payout DECIMAL(14,2) DEFAULT 0;
+ALTER TABLE &quot;${schema}&quot;.payrolls      ADD COLUMN IF NOT EXISTS total_job_payout DECIMAL(14,2) DEFAULT 0;
+
+-- employee default payout rule (Phase 3 uses it; column added now so the form can expose it)
+ALTER TABLE &quot;${schema}&quot;.employees ADD COLUMN IF NOT EXISTS job_payout_rule JSONB;  -- same shape as tasks.payout_rule
+</code></pre>
+<h3>1.8 <code>job_order_attributes</code> (NEW) + devices migration</h3>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS &quot;${schema}&quot;.job_order_attributes (
+  job_id       UUID PRIMARY KEY REFERENCES &quot;${schema}&quot;.job_orders(id) ON DELETE CASCADE,
+  profile_key  VARCHAR(30) NOT NULL DEFAULT 'generic',
+  data         JSONB NOT NULL DEFAULT '{}'::jsonb,
+  -- encrypted secrets kept out of `data` so it can be logged/searched safely
+  secrets      JSONB NOT NULL DEFAULT '{}'::jsonb,      -- {&quot;lockValue&quot;:&quot;&lt;aes-gcm&gt;&quot;}
+  -- searchable denormalised keys (kept in sync by service layer)
+  search_1     VARCHAR(100),   -- device: imei1 | vehicle: reg_no | garment: order tag
+  search_2     VARCHAR(100),   -- device: serial_number
+  search_3     VARCHAR(255),   -- device: model_name
+  created_at   TIMESTAMPTZ DEFAULT NOW(),
+  updated_at   TIMESTAMPTZ DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_${schema}_job_order_attr_search1 ON &quot;${schema}&quot;.job_order_attributes(search_1) WHERE search_1 IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_${schema}_job_order_attr_search2 ON &quot;${schema}&quot;.job_order_attributes(search_2) WHERE search_2 IS NOT NULL;
+
+INSERT INTO &quot;${schema}&quot;.job_order_attributes (job_id, profile_key, data, secrets, search_1, search_2, search_3, created_at, updated_at)
+SELECT job_id, 'device',
+  jsonb_strip_nulls(jsonb_build_object(
+    'brandId', brand_id, 'modelName', model_name, 'color', color,
+    'imei1', imei1, 'imei2', imei2, 'serialNumber', serial_number,
+    'productUnitId', product_unit_id, 'saleItemId', sale_item_id, 'unitWarrantyId', unit_warranty_id,
+    'isWarrantyClaim', is_warranty_claim, 'warrantySnapshot', warranty_snapshot,
+    'lockType', lock_type, 'physicalCondition', physical_condition,
+    'accessoriesReceived', accessories_received, 'inspection', inspection)),
+  CASE WHEN lock_value IS NULL THEN '{}'::jsonb ELSE jsonb_build_object('lockValue', lock_value) END,
+  imei1, serial_number, model_name, created_at, updated_at
+FROM &quot;${schema}&quot;.service_job_devices;
+
+DROP TABLE &quot;${schema}&quot;.service_job_devices;
+</code></pre>
+<p>Profile registry (code, <code>job-order.profiles.ts</code>) — one zod schema per <code>profile_key</code>:</p>
+<table>
+<thead>
+<tr>
+<th>profile_key</th>
+<th>fields (data)</th>
+<th>secrets</th>
+<th>search_1/2/3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>generic</code></td>
+<td><code>{}</code> free-form <code>notes?</code></td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td>exactly the old device schema</td>
+<td><code>lockValue</code></td>
+<td>imei1 / serialNumber / modelName</td>
+</tr>
+<tr>
+<td><code>garment</code></td>
+<td><code>measurements: Record&lt;string,number&gt;</code>, <code>fabricProvidedBy: 'customer'\|'shop'</code>, <code>fabricDetails?</code>, <code>styleNotes?</code>, <code>pieces: [{name, qty}]</code></td>
+<td>–</td>
+<td>– / – / styleNotes</td>
+</tr>
+<tr>
+<td><code>vehicle</code></td>
+<td><code>regNo</code>, <code>make</code>, <code>model</code>, <code>year?</code>, <code>odometer?</code>, <code>fuelLevel?</code>, <code>damageNotes?</code></td>
+<td>–</td>
+<td>regNo / – / model</td>
+</tr>
+<tr>
+<td><code>print</code></td>
+<td><code>sizeSpec</code>, <code>material</code>, <code>finish?</code>, <code>colorMode?</code>, <code>artworkUrls: string[]</code>, <code>quantity</code></td>
+<td>–</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<p>Phase 0/1 ships <code>generic</code> + <code>device</code> only (device keeps 100% of current UI). Others in
+Phase 4 when template/profile forms land. The <code>unit lookup</code> + warranty-claim logic from
+<code>upsertDeviceTx</code> moves into the <code>device</code> profile handler unchanged.</p>
+<h3>1.9 System product for ad-hoc lines</h3>
+<pre><code class="language-sql">-- once per tenant; idempotent
+INSERT INTO &quot;${schema}&quot;.products (name, sku/code?, item_type, selling_price, is_system, ...)
+VALUES ('Service Charge', 'SYS-SERVICE-CHARGE', 'service', 0, true, ...)
+ON CONFLICT DO NOTHING;
+</code></pre>
+<blockquote>
+<p>Check <code>products</code> columns + unique keys (<code>code</code>/<code>sku</code>) and whether an <code>is_system</code> /
+hidden flag exists. If not, add <code>ALTER TABLE products ADD COLUMN IF NOT EXISTS is_system BOOLEAN NOT NULL DEFAULT false</code>
+and filter <code>is_system = false</code> in product list/search endpoints and POS search.</p>
+</blockquote>
+<p>Delivery (<code>deliverJobTx</code>) maps <code>product_id IS NULL</code> lines → this product id, keeps
+<code>item_name</code> as the sale line name (check <code>processSaleItems</code> supports a name override; if
+not, add <code>itemNameOverride?: string</code> to <code>SaleItemInput</code> and write it to <code>sale_items.item_name</code>
+or equivalent column).</p>
+<h3>1.10 Workflow tables (NEW — runtime use in Phase 4)</h3>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS &quot;${schema}&quot;.job_workflows (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  key           VARCHAR(50) UNIQUE NOT NULL,        -- 'default', 'repair', 'tailoring', ...
+  name          VARCHAR(100) NOT NULL,
+  is_default    BOOLEAN NOT NULL DEFAULT false,
+  is_active     BOOLEAN NOT NULL DEFAULT true,
+  created_at    TIMESTAMPTZ DEFAULT NOW(),
+  updated_at    TIMESTAMPTZ DEFAULT NOW()
+);
+CREATE TABLE IF NOT EXISTS &quot;${schema}&quot;.job_workflow_states (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  workflow_id   UUID NOT NULL REFERENCES &quot;${schema}&quot;.job_workflows(id) ON DELETE CASCADE,
+  key           VARCHAR(30) NOT NULL,
+  label         VARCHAR(100) NOT NULL,
+  label_bn      VARCHAR(100),
+  color         VARCHAR(20),
+  seq           INT NOT NULL DEFAULT 0,
+  kind          VARCHAR(20) NOT NULL DEFAULT 'open'
+                CHECK (kind IN ('initial','open','ready','done','cancelled')),
+  allowed_next  TEXT[] NOT NULL DEFAULT '{}',
+  notify_customer BOOLEAN NOT NULL DEFAULT false,
+  UNIQUE (workflow_id, key)
+);
+-- seed 'default' workflow = today's 8 hardcoded states + JOB_TRANSITIONS
+-- job_orders.workflow_id FK + backfill every row to default
+ALTER TABLE &quot;${schema}&quot;.job_orders
+  ADD CONSTRAINT job_orders_workflow_fk FOREIGN KEY (workflow_id) REFERENCES &quot;${schema}&quot;.job_workflows(id);
+UPDATE &quot;${schema}&quot;.job_orders SET workflow_id = (SELECT id FROM &quot;${schema}&quot;.job_workflows WHERE key = 'default');
+</code></pre>
+<p>Invariant (all phases): exactly one state with <code>kind='done'</code> (<code>delivered</code>) and one
+<code>kind='cancelled'</code>; <code>done</code> is only reachable through <code>deliverJobTx</code>, <code>cancelled</code> only
+through <code>cancelJobOrder</code>.</p>
+<h3>1.11 <code>down()</code></h3>
+<p>Reverse order: drop new tables, drop new columns, recreate <code>service_job_devices</code> from
+attributes (profile_key='device'), rename tables/indexes/column back, reverse the data
+UPDATEs. Must be exact so <code>migrate down</code> on a dev DB works.</p>
+<hr />
+<h2>2. Backend module <code>src/modules/job-order/</code></h2>
+<p>Files (renamed + new):</p>
+<pre><code>job-order.schema.ts        zod
+job-order-shared.ts        state machine, reservations, advance, deliverJobTx, reopen hook
+job-order.service.ts       CRUD, status, items, advance, deliver, cancel, outsource, lookup, report, stats
+job-order-tasks.service.ts tasks + assignments (NEW)
+job-order.profiles.ts      profile registry (NEW)
+job-order.controller.ts
+job-order.routes.ts
+</code></pre>
+<h3>2.1 Shared helpers (<code>job-order-shared.ts</code>)</h3>
+<ul>
+<li><code>recomputeJobTotalsTx(client, schema, jobId)</code> — updates <code>items_total</code>, <code>cost_total</code>,
+  <code>payout_total</code> on <code>job_orders</code>. Call after any item/cost/payout write.</li>
+<li><code>syncLeadAssigneeTx(client, schema, jobId)</code> — sets <code>job_orders.assigned_employee_id</code>
+  = active job-level <code>lead</code> assignment employee (or NULL).</li>
+<li><code>assertJobOpen(job)</code> — throws unless status ∉ {delivered, cancelled}.</li>
+<li><code>deliverJobTx</code> changes:</li>
+<li>ad-hoc lines → system product mapping (§1.9)</li>
+<li>after <code>insertCompletedSaleTx</code>, insert <code>job_order_costs</code> rows
+    <code>(cost_type='part', source_type='sale_item', source_id=sale_item.id, amount=qty*cost_price)</code>
+    for every part line — pull cost from the returned <code>saleItems</code> (they already carry
+    cost for profit). Then <code>recomputeJobTotalsTx</code>.</li>
+<li>Phase 3 will add payout generation here; leave a clearly named hook
+    <code>afterDeliverHooks: Array&lt;(ctx) =&gt; Promise&lt;void&gt;&gt;</code> so it is one insertion point.</li>
+<li><code>reopenJobFromVoidedSaleTx</code>: also soft-delete <code>job_order_costs WHERE source_type='sale_item' AND source_id IN (voided sale's items)</code> and recompute totals.</li>
+</ul>
+<h3>2.2 Items (<code>replaceJobItems</code>) changes</h3>
+<ul>
+<li>Accept new <code>lineType</code> values; <code>productId</code> optional except <code>part</code>/<code>material</code>.</li>
+<li>Optional <code>taskId</code> per line (must belong to same job).</li>
+<li><code>costAmount</code> optional (manual) — for <code>part</code> lines default from
+  <code>products.cost_price</code> (or variant cost) × qty if not supplied.</li>
+<li>After replace: recompute totals; re-reserve only <code>part</code> lines (unchanged logic).</li>
+<li>Items cannot be replaced when job is delivered/cancelled (already true — keep).</li>
+</ul>
+<h3>2.3 Tasks API (<code>job-order-tasks.service.ts</code>)</h3>
+<p>All routes under <code>/job-orders/:id/tasks</code>. All require job open unless noted.</p>
+<table>
+<thead>
+<tr>
+<th>Method &amp; path</th>
+<th>Body</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /job-orders/:id/tasks</code></td>
+<td>–</td>
+<td>Tree (parents with <code>children[]</code>), each with <code>assignments[]</code> (active only unless <code>?includeHistory=1</code>), item link summary</td>
+</tr>
+<tr>
+<td><code>POST /job-orders/:id/tasks</code></td>
+<td><code>createTaskSchema</code></td>
+<td>Insert; <code>seq</code> defaults to max+1 among siblings; optional <code>assignments: [{employeeId, role, sharePercent}]</code> created atomically</td>
+</tr>
+<tr>
+<td><code>PATCH /job-orders/:id/tasks/:taskId</code></td>
+<td><code>updateTaskSchema</code></td>
+<td>title/description/quantity/estimatedMinutes/itemId/payoutRule/note/seq</td>
+</tr>
+<tr>
+<td><code>POST /job-orders/:id/tasks/:taskId/status</code></td>
+<td><code>{status, note?, actualMinutes?}</code></td>
+<td>Transition per §1.4 rules; if all top-level tasks are <code>done|skipped</code> and job status is <code>in_progress</code>/<code>waiting_parts</code>, response includes <code>suggestStatus: 'ready'</code> (no auto-change)</td>
+</tr>
+<tr>
+<td><code>DELETE /job-orders/:id/tasks/:taskId</code></td>
+<td>–</td>
+<td>Soft delete; cascades soft-delete to children; unassigns active assignments (<code>unassigned_at = NOW()</code>); fails if task has approved/paid payouts (Phase 3)</td>
+</tr>
+<tr>
+<td><code>PUT /job-orders/:id/tasks/reorder</code></td>
+<td><code>{order: [{taskId, seq, parentTaskId?}]}</code></td>
+<td>Bulk reorder</td>
+</tr>
+<tr>
+<td><code>POST /job-orders/:id/tasks/bulk</code></td>
+<td><code>{tasks: [createTask...]}</code></td>
+<td>Used by template apply (Phase 4) and by the "add several" UI</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4 Assignments API</h3>
+<table>
+<thead>
+<tr>
+<th>Method &amp; path</th>
+<th>Body</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /job-orders/:id/assignments</code></td>
+<td><code>?includeHistory=1</code></td>
+<td>Flat list (job-level + task-level) with employee name, task title</td>
+</tr>
+<tr>
+<td><code>POST /job-orders/:id/assignments</code></td>
+<td><code>{taskId?: uuid\|null, employeeId, role, sharePercent?, note?}</code></td>
+<td>Create; enforces one active lead (job-level), unique active (task, employee), Σ share ≤ 100 per task; calls <code>syncLeadAssigneeTx</code> when role='lead' &amp;&amp; taskId null</td>
+</tr>
+<tr>
+<td><code>PATCH /job-orders/:id/assignments/:aid</code></td>
+<td><code>{role?, sharePercent?, note?}</code></td>
+<td>Only active assignments</td>
+</tr>
+<tr>
+<td><code>DELETE /job-orders/:id/assignments/:aid</code></td>
+<td><code>{note?}</code> (body optional)</td>
+<td>Sets <code>unassigned_at</code>, <code>unassigned_by</code>; sync lead</td>
+</tr>
+<tr>
+<td><code>GET /job-orders/my-tasks</code></td>
+<td><code>?status=&amp;from=&amp;to=</code></td>
+<td>For logged-in user → <code>employees.user_id = req.user.id</code>; returns tasks (with job header) where employee has active assignment, task-level or job-level. Route defined <strong>before</strong> <code>/:id</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>createJobOrder</code> / <code>updateJobOrder</code> keep accepting <code>assignedEmployeeId</code> for backward
+compat: it is translated into a job-level <code>lead</code> assignment (create) or lead replacement
+(update). Also accept optional <code>tasks: [...]</code> in create payload (same shape as bulk).</p>
+<h3>2.5 Read model changes</h3>
+<ul>
+<li><code>getJobOrderById</code> returns additionally: <code>attributes</code> (profile_key, data, secrets
+  decrypted only for roles owner/manager/technician — same rule as today's lock_value),
+  <code>tasks</code> (tree), <code>assignments</code> (active), <code>costs</code> (list; Phase 2 fills UI),
+  <code>payouts</code> (list; Phase 3), <code>totals: {items, costs, payouts, profit = items - costs - payouts}</code>.</li>
+<li><code>listJobOrders</code>: add filters <code>employeeId</code> (any active assignment, not just lead),
+  <code>taskStatus</code>, <code>profileKey</code>; keep <code>assignedEmployeeId</code> (lead only). <code>search</code> now hits
+  <code>job_order_attributes.search_1/2/3</code> instead of device columns.</li>
+<li><code>getJobOrderStats</code>: add <code>myOpenTasks</code> when the caller maps to an employee.</li>
+</ul>
+<h3>2.6 Zod additions (<code>job-order.schema.ts</code>)</h3>
+<pre><code class="language-ts">export const LINE_TYPES = ['service','part','labour','fee','material','other'] as const;
+export const TASK_STATUSES = ['pending','in_progress','blocked','done','skipped'] as const;
+export const ASSIGNMENT_ROLES = ['lead','worker','helper','qc','sales'] as const;
+export const PAYOUT_BASES = ['fixed','percent_of_line','percent_of_job_total','percent_of_labour','per_unit','hourly'] as const;
+
+export const payoutRuleSchema = z.object({ basis: z.enum(PAYOUT_BASES), rate: z.number().min(0) });
+
+const jobItemSchema = z.object({
+  lineType: z.enum(LINE_TYPES).default('service'),
+  productId: uuid.optional().nullable(),
+  variantId: uuid.optional().nullable(),
+  itemName: z.string().max(255).optional().nullable(),
+  quantity: z.number().positive(),
+  unitPrice: z.number().min(0),
+  discount: z.number().min(0).default(0),
+  costAmount: z.number().min(0).optional().nullable(),
+  taskId: uuid.optional().nullable(),
+  unitIds: z.array(uuid).optional().default([]),
+  isWarrantyCovered: z.boolean().optional().default(false),
+}).superRefine((v, ctx) =&gt; {
+  if ((v.lineType === 'part' || v.lineType === 'material') &amp;&amp; !v.productId)
+    ctx.addIssue({ code: 'custom', path: ['productId'], message: 'Parts/materials must reference a product' });
+  if (!v.productId &amp;&amp; !v.itemName)
+    ctx.addIssue({ code: 'custom', path: ['itemName'], message: 'Ad-hoc lines need a name' });
+});
+
+export const assignmentInputSchema = z.object({
+  taskId: uuid.optional().nullable(),
+  employeeId: uuid,
+  role: z.enum(ASSIGNMENT_ROLES).default('worker'),
+  sharePercent: z.number().gt(0).max(100).default(100),
+  note: z.string().max(500).optional().nullable(),
+});
+
+export const createTaskSchema = z.object({
+  parentTaskId: uuid.optional().nullable(),
+  title: z.string().min(1).max(255),
+  description: z.string().max(2000).optional().nullable(),
+  quantity: z.number().positive().default(1),
+  estimatedMinutes: z.number().int().min(0).optional().nullable(),
+  itemId: uuid.optional().nullable(),
+  payoutRule: payoutRuleSchema.optional().nullable(),
+  note: z.string().max(500).optional().nullable(),
+  assignments: z.array(assignmentInputSchema.omit({ taskId: true })).max(10).optional().default([]),
+});
+export const updateTaskSchema = createTaskSchema.omit({ assignments: true, parentTaskId: true }).partial().extend({ seq: z.number().int().min(0).optional() });
+export const changeTaskStatusSchema = z.object({ status: z.enum(TASK_STATUSES), note: z.string().max(500).optional().nullable(), actualMinutes: z.number().int().min(0).optional().nullable() });
+export const reorderTasksSchema = z.object({ order: z.array(z.object({ taskId: uuid, seq: z.number().int().min(0), parentTaskId: uuid.optional().nullable() })).max(200) });
+
+// createJobOrderSchema: replace `device` with
+//   profileKey: z.enum(['generic','device']).default('generic'),
+//   attributes: z.record(z.unknown()).optional().default({}),   // validated against profile registry in service
+// keep `device` accepted for one release as alias → { profileKey:'device', attributes: device }
+// add: tasks: z.array(createTaskSchema).max(50).optional().default([])
+</code></pre>
+<h3>2.7 Other backend touch points for the rename</h3>
+<ul>
+<li><code>app.ts</code> mount <code>/job-orders</code>; keep <code>app.use('/service-jobs', jobOrderRoutes)</code> alias
+  for one release (partner-api consumers) — log deprecation.</li>
+<li><code>number-series</code>: <code>DocType 'job_order'</code>, default <code>{ name: 'Job Order', prefix: 'JOB' }</code>,
+  table map <code>{ table: 'job_orders', column: 'job_no' }</code>, ordering CASE.</li>
+<li><code>templates</code>: <code>job_order_pdf</code> in types/schema/controller/routes/render; <code>document-context.ts</code>
+  reads <code>job_orders</code>, <code>job_order_items</code>, attributes (device fields from <code>data</code>).</li>
+<li><code>sale-tx.ts</code> <code>serviceJobId</code> → <code>jobOrderId</code>, column <code>job_order_id</code>.</li>
+<li><code>sale.service.ts</code> void hook import path.</li>
+<li><code>customer.controller.ts</code> job history query → <code>job_orders</code>.</li>
+<li><code>unit-inspection.schema.ts</code> context <code>'job_order'</code>.</li>
+<li><code>seeds/menus.ts</code> labels "Job Orders", hrefs <code>/job-orders</code>, keys <code>job_orders.create</code>,
+  <code>pos.job_order</code>, <code>/reports?tab=job-orders</code>. Also add <code>{ label: 'My Tasks', href: '/job-orders/my-tasks' }</code>
+  child for all roles.</li>
+</ul>
+<hr />
+<h2>3. Frontend (<code>shop-app-web</code>)</h2>
+<h3>3.1 Rename</h3>
+<ul>
+<li><code>src/lib/service-jobs.ts</code> → <code>src/lib/job-orders.ts</code> (API base <code>/job-orders</code>, types renamed
+  <code>JobOrder</code>, <code>JobOrderItem</code>, <code>JobOrderTask</code>, <code>JobOrderAssignment</code>, …).</li>
+<li><code>app/(dashboard)/service-jobs/*</code> → <code>app/(dashboard)/job-orders/*</code>.</li>
+<li><code>app/(dashboard)/service-jobs/page.tsx</code>, <code>service-jobs/new/page.tsx</code>,
+  <code>service-jobs/[id]/page.tsx</code>, <code>service-cases/*</code> → tiny redirect components to the
+  matching <code>/job-orders/...</code> path (preserve <code>[id]</code>).</li>
+<li>Update references: <code>sidebar.tsx</code>, <code>pos/_components/payment-panel.tsx</code>, <code>customers/page.tsx</code>,
+  <code>settings/page.tsx</code>, <code>settings/templates/_components/template-editor.tsx</code>, <code>lib/templates.ts</code>,
+  <code>lib/number-series.ts</code>, <code>lib/unit-inspection.ts</code>, <code>reports/page.tsx</code> (tab key <code>job-orders</code>),
+  dashboard <code>page.tsx</code>.</li>
+<li>UI copy: "Service Job" → "Job Order" (en), "জব অর্ডার" (bn) — check translation module keys.</li>
+</ul>
+<h3>3.2 New / changed screens (Phase 1)</h3>
+<p><strong><code>/job-orders/[id]</code> — add "Work" tab</strong> (between Overview and Items):
+- Task list (tree, drag reorder), each row: seq, title, status pill, assignees (avatar
+  chips with role), linked item name, est/actual minutes, quantity.
+- Row actions: start / done / block / skip / reopen; edit; add sub-task; delete.
+- "Add task" inline form: title, quantity, estimated minutes, link to item (select from
+  job items), assign employees (multi-select with role + share %), payout rule (basis +
+  rate — visible only to owner/manager).
+- Banner when all tasks done and job not ready: "All tasks complete — mark job Ready?"
+  (calls existing status endpoint).</p>
+<p><strong>Assignments panel</strong> (Overview tab, replaces the single "Assigned to" select):
+- Lead (single select, writes role=lead job-level).
+- "Team" list: job-level workers + per-task assignees, with unassign.
+- Reassign lead → confirm dialog (history preserved).</p>
+<p><strong>Items tab</strong>:
+- Line type select gets <code>labour</code>, <code>fee</code>, <code>material</code>, <code>other</code>.
+- Product picker optional for non-part lines; free-text name required then.
+- Optional "task" column (link line to a task).
+- Cost column (owner/manager only), default filled for parts.</p>
+<p><strong>Intake (<code>/job-orders/new</code>)</strong>:
+- Profile switch: <code>generic</code> | <code>device</code> (device only offered when business category ∈
+  MOBILE_SHOP / electronics — reuse the same <code>categories</code> gating the menu seed uses;
+  otherwise default generic and hide the switch).
+- Optional "Tasks" section (repeatable rows: title, qty, assign) sent as <code>tasks[]</code>.
+- Lead employee select stays (maps to <code>assignedEmployeeId</code>).</p>
+<p><strong><code>/job-orders/my-tasks</code></strong> (new page, all roles):
+- List of the current user's tasks grouped by job; quick status buttons; filter by
+  status/date. Uses <code>GET /job-orders/my-tasks</code>.</p>
+<p><strong>Employee form (finance → employees)</strong>: add "Default job payout rule" (basis + rate)
+field bound to <code>employees.job_payout_rule</code>. Display only; Phase 3 consumes it.</p>
+<h3>3.3 Components to add under <code>src/components/job-orders/</code></h3>
+<p><code>task-tree.tsx</code>, <code>task-row.tsx</code>, <code>task-form-dialog.tsx</code>, <code>assignee-picker.tsx</code>
+(employee multi-select with role/share), <code>payout-rule-field.tsx</code>, <code>profile-fields/device.tsx</code>
+(moved out of the 1088-line new page), <code>profile-fields/generic.tsx</code>.</p>
+<p>Use existing UI primitives (<code>Button</code>, <code>Dialog</code>, <code>Badge</code>, <code>Table</code>, <code>EmptyState</code>, …) and
+theme tokens only — no hardcoded colors (see <code>AGENTS.md</code>).</p>
+<hr />
+<h2>4. Verification checklist</h2>
+<p>Backend
+- <code>npx tsc --noEmit</code> clean.
+- Fresh tenant: run all migrations → <code>job_orders*</code> tables exist, <code>service_job*</code> do not,
+  default workflow seeded, system product exists.
+- Existing tenant snapshot: run <code>101</code> up → row counts equal before/after for jobs, items,
+  history, outsources; every old device row has a matching attributes row with
+  <code>profile_key='device'</code> and identical IMEI/serial; every <code>assigned_employee_id</code> has a
+  matching active lead assignment; <code>payments.reference_type='service_job'</code> count = 0.
+- <code>migrate down</code> then <code>up</code> again on a dev DB succeeds.
+- Smoke (curl / REST client): create job with <code>tasks[]</code> + <code>assignedEmployeeId</code> → GET shows
+  lead assignment + tasks; add ad-hoc <code>labour</code> line without productId → deliver → sale
+  created with system product line named from <code>item_name</code>; part line → cost row exists
+  with <code>source_type='sale_item'</code>; void sale → job back to <code>ready</code>, cost row soft-deleted.
+- Assignment rules: second lead replaces first (history has 2 rows, 1 active); share &gt;100
+  on a task → 400; inactive employee → 400.
+- Task rules: <code>done → in_progress</code> allowed while open, rejected after deliver; delete
+  task unassigns.
+- Old <code>/service-jobs</code> API alias still answers.</p>
+<p>Frontend
+- <code>npm run build</code> clean.
+- <code>/service-jobs</code>, <code>/service-jobs/&lt;id&gt;</code>, <code>/service-cases</code> redirect to <code>/job-orders/...</code>.
+- Intake → detail → Work tab → assign → mark done → banner → Ready → Deliver full path
+  works in browser for both <code>generic</code> and <code>device</code> profile.
+- Sidebar shows "Job Orders" + "My Tasks"; reports tab <code>job-orders</code> loads.</p>
+<hr />
+<h2>5. Out of scope for Phase 0/1 (later phases, tables already exist)</h2>
+<ul>
+<li>Phase 2: costs API + manual cost entry + profitability panel/report; outsource returned →
+  auto cost row (hook in <code>updateOutsource</code>).</li>
+<li>Phase 3: payout generation on deliver (rule resolution: task.payout_rule →
+  employee.job_payout_rule → none), approve/adjust/cancel, payroll pull (<code>payroll_items.job_payout</code>),
+  instant pay → expense + cashbox, void → cancel payouts.</li>
+<li>Phase 4: workflow CRUD + DB-driven transitions, job templates, extra profiles
+  (garment/vehicle/print) with schema-driven forms.</li>
+<li>Phase 5: estimate approval, milestone invoicing (<code>job_order_invoices</code>), time tracking.</li>
+</ul>
+</div>
+</body>
+</html>

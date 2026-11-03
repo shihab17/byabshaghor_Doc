@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ByabshaGhor — Market Research & Sizing — ByabshaGhor Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
+    --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Hind Siliguri','Inter',sans-serif; background:#0b1120; color:var(--text); }
+  .bar {
+    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:12px 24px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand { font-weight:700; color:var(--accent); font-size:16px; }
+  .bar a { color:var(--accent2); font-size:13.5px; text-decoration:none; }
+  .bar a:hover { text-decoration:underline; }
+  .bar button {
+    margin-left:auto; background:rgba(34,197,94,.12); color:var(--accent);
+    border:1px solid rgba(34,197,94,.4); border-radius:10px;
+    padding:7px 14px; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .content { max-width:960px; margin:0 auto; padding:40px 28px 80px; }
+  h1 { font-size:32px; color:var(--accent); margin:0 0 18px; border-bottom:2px solid rgba(34,197,94,.3); padding-bottom:12px; }
+  h2 { font-size:23px; color:var(--accent2); margin:34px 0 14px; }
+  h3 { font-size:18px; color:#e2e8f0; margin:24px 0 10px; }
+  p, li { font-size:15.5px; line-height:1.75; color:#dbe4f0; }
+  p { margin:10px 0; }
+  ul, ol { padding-left:26px; margin:10px 0; }
+  li { margin:5px 0; }
+  blockquote {
+    border-left:4px solid var(--accent); background:rgba(34,197,94,.07);
+    padding:14px 18px; border-radius:0 10px 10px 0; margin:14px 0;
+  }
+  blockquote p { color:#d1fae5; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
+  th { text-align:left; color:var(--accent); background:rgba(34,197,94,.08); padding:10px 12px; font-size:13px; border:1px solid var(--line); }
+  td { padding:9px 12px; border:1px solid var(--line); color:#dbe4f0; vertical-align:top; }
+  tr:nth-child(even) td { background:rgba(30,41,59,.5); }
+  code { background:#0b1120; padding:2px 7px; border-radius:5px; font-size:13.5px; color:#fbbf24; }
+  pre { background:#0b1120; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; margin:14px 0; }
+  pre code { background:none; padding:0; color:#e2e8f0; font-size:13.5px; line-height:1.6; }
+  a { color:var(--accent2); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  hr { border:none; border-top:1px solid var(--line); margin:26px 0; }
+  strong { color:#fff; }
+  @media print {
+    .bar { display:none; }
+    body { background:#fff; }
+    .content { padding:0; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color:#111; }
+    td, th { border-color:#ccc; }
+    th { background:#eee; }
+    blockquote { background:#f5f5f5; }
+    a { color:#0369a1; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand">ব্যবসাঘর Docs</span>
+  <a href="viewer.html">সব ডকের লিস্ট</a>
+  <a href="market-research.md">market-research.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>ByabshaGhor — Market Research &amp; Sizing</h1>
+<blockquote>
+<p>Investor pitch-এর জন্য market data, TAM/SAM/SOM ক্যালকুলেশন ও সোর্স।
+শেষ আপডেট: নভেম্বর ২০২৬</p>
+</blockquote>
+<h2>১. মার্কেট ডেটা (সোর্সসহ)</h2>
+<table>
+<thead>
+<tr>
+<th>ডেটা</th>
+<th>সংখ্যা</th>
+<th>সোর্স</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>মোট ব্যবসায়িক প্রতিষ্ঠান (Economic Census 2024)</td>
+<td>১.১৯ কোটি</td>
+<td>BBS via ADB</td>
+</tr>
+<tr>
+<td>পাইকারি-খুচরা বাণিজ্য প্রতিষ্ঠান</td>
+<td>~৩৯.৫ লাখ (GDP-এর ১৪%)</td>
+<td>BBS Wholesale &amp; Retail Trade Survey</td>
+</tr>
+<tr>
+<td>ঢাকা বিভাগে প্রতিষ্ঠান</td>
+<td>৩২ লাখ (মোটের ২৬.৯%)</td>
+<td>BBS Census 2024</td>
+</tr>
+<tr>
+<td>অথরাইজড মোবাইল রিটেইলার</td>
+<td>~২০,০০০ (+ "tens of thousands" ছোট/গ্রে ট্রেডার, MBCB অনুযায়ী)</td>
+<td>MIOB</td>
+</tr>
+<tr>
+<td>মাসিক স্মার্টফোন বিক্রি</td>
+<td>৩২–৩৫ লাখ ইউনিট</td>
+<td>The Business Standard</td>
+</tr>
+<tr>
+<td>মোবাইল হ্যান্ডসেট মার্কেট সাইজ</td>
+<td>~২০,০০০ কোটি টাকা/বছর</td>
+<td>The Daily Campus</td>
+</tr>
+<tr>
+<td>টালিখাতা মাসিক অ্যাক্টিভ ইউজার</td>
+<td>১০ লাখ+</td>
+<td>TallyKhata / Daily Star</td>
+</tr>
+</tbody>
+</table>
+<h3>সোর্স লিংক</h3>
+<ul>
+<li>BBS Economic Census / ADB SME assessment:
+  https://www.adb.org/sites/default/files/linked-documents/36200-024-ssa.pdf</li>
+<li>BBS Wholesale &amp; Retail Trade Survey 2020:
+  https://objectstorage.ap-dcc-gazipur-1.oraclecloud15.com/n/axvjbnqprylg/b/V2Ministry/o/office-bbs/2024/12/d2d7fc053aed4c96a6eed18d8fda8211.pdf</li>
+<li>Daily Star — 39.5 lakh trading firms, 14% GDP:
+  https://www.thedailystar.net/business/economy/industries/news/395-lakh-trading-firms-contribute-14pc-gdp-2206521</li>
+<li>Smartphone sales / market size:
+  https://www.tbsnews.net/economy/smartphones-must-now-too-high-tax-makes-them-unaffordable-many-1306936
+  https://english.thedailycampus.com/economy/1247</li>
+<li>মোবাইল রিটেইলার সংখ্যা (MIOB): https://en.techworldbd.com/mobile-phone/138</li>
+<li>NEIR crisis (Dhaka Tribune):
+  https://www.dhakatribune.com/feature/tech/400169/mobile-retailers-neir-rollout-and-future-of</li>
+<li>টালিখাতা 1M+ MAU:
+  https://www.thedailystar.net/supplements/app-savvy-bangladesh/news/millions-shopkeepers-using-tallykhata-app-records-and-payments-3622596</li>
+</ul>
+<h2>২. TAM → SAM → SOM</h2>
+<h3>TAM — Total Addressable Market</h3>
+<ul>
+<li>~৩৯.৫ লাখ খুচরা/পাইকার দোকান</li>
+<li>গড় ১,০০০ টাকা/মাস সাবস্ক্রিপশন ধরলে → <strong>~৪০০ কোটি টাকা/মাস</strong> সম্ভাব্য মার্কেট</li>
+</ul>
+<h3>SAM — Serviceable Addressable Market</h3>
+<p>ডিজিটালি প্রস্তুত + হাই-ভ্যালু/সিরিয়ালাইজড ইনভেন্টরির দোকান:</p>
+<ul>
+<li>মোবাইল শপ: ~২০,০০০ অথরাইজড + হাজার হাজার ছোট/গ্রে ট্রেডার → <strong>~৩০-৫০ হাজার</strong></li>
+<li>ইলেকট্রনিক্স/অ্যাপ্লায়েন্স, ফার্মেসি, গার্মেন্টস/ফ্যাশন: <strong>~৫০ হাজার-১ লাখ</strong></li>
+<li>কনজারভেটিভ SAM: <strong>১-২ লাখ দোকান</strong> → ১০-২০ কোটি টাকা/মাস মার্কেট</li>
+</ul>
+<h3>SOM — ৩ বছরে অর্জনযোগ্য</h3>
+<ul>
+<li>SAM-এর ১-২% = <strong>১,০০০-২,০০০ পেইং দোকান</strong></li>
+<li>ARPU ১,২০০ টাকা/মাস ধরলে:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>দৃশ্য</th>
+<th>দোকান</th>
+<th>MRR</th>
+<th>ARR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>কনজারভেটিভ</td>
+<td>১,০০০</td>
+<td>১২ লাখ টাকা</td>
+<td>১.৪৪ কোটি (~$120k)</td>
+</tr>
+<tr>
+<td>বেস কেস</td>
+<td>২,০০০</td>
+<td>২৪ লাখ টাকা</td>
+<td>২.৯ কোটি (~$240k)</td>
+</tr>
+<tr>
+<td>অপটিমিস্টিক</td>
+<td>৫,০০০</td>
+<td>৬০ লাখ টাকা</td>
+<td>৭.২ কোটি (~$600k)</td>
+</tr>
+</tbody>
+</table>
+<h2>৩. Expansion Revenue (সাবস্ক্রিপশনের পরে)</h2>
+<p>ডেটা জমা হলে নতুন রেভেনিউ লাইন খুলে (টালিখাতার মডেল: bookkeeping → payments → lending):</p>
+<ul>
+<li>পেমেন্ট মার্জিন / QR settlement</li>
+<li>SMS/WhatsApp ক্রেডিট (messaging-gateway আছে)</li>
+<li>দোকানের নিজস্ব ওয়েবসাইট + কাস্টম ডোমেইন (websites/ আছে)</li>
+<li>partner-api দিয়ে থার্ড-পার্টি ইন্টিগ্রেশন</li>
+<li>ট্রানজাকশন ডেটা-বেসড ক্রেডিট স্কোরিং / মার্চেন্ট লোন রেফারেল</li>
+</ul>
+<h2>৪. টেইলউইন্ড</h2>
+<ul>
+<li><strong>NEIR</strong>: BTRC-র হ্যান্ডসেট রেজিস্ট্রেশন এনফোর্সমেন্টে মোবাইল দোকানদের IMEI-লেভেল ইনভেন্টরি ট্র্যাকিং বাধ্যতামূলক হচ্ছে। আমাদের কোডে IMEI/সিরিয়াল ট্র্যাকিং, warranty, job order আছেই।</li>
+<li><strong>স্মার্টফোন পেনিট্রেশন</strong>: মাসে ৩২-৩৫ লাখ ফোন বিক্রি; দোকানদারদের হাতেই স্মার্টফোন।</li>
+<li><strong>টালিখাতার প্রুভ</strong>: ১০ লাখ+ MAU প্রমাণ করে দোকানদার অ্যাপে হিসাব রাখে — "দোকানদার অ্যাপ চালাবে কিনা" রিস্ক আলাদা।</li>
+</ul>
+<h2>৫. প্রতিদ্বন্দ্বী ম্যাপ</h2>
+<table>
+<thead>
+<tr>
+<th>প্রতিদ্বন্দ্বী</th>
+<th>শক্তি</th>
+<th>দুর্বলতা (আমাদের সুযোগ)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>টালিখাতা</td>
+<td>১০ লাখ MAU, ফিনটেক লাইসেন্স</td>
+<td>খাতা/পেমেন্ট-কেন্দ্রিক; গভীর ইনভেন্টরি/POS না</td>
+</tr>
+<tr>
+<td>হিসাবী/অন্যান্য খাতা অ্যাপ</td>
+<td>সহজ, ফ্রি</td>
+<td>IMEI, warranty, EMI, multi-device নেই</td>
+</tr>
+<tr>
+<td>ট্র্যাডিশনাল ডেস্কটপ POS</td>
+<td>ফিচার সমৃদ্ধ</td>
+<td>পুরনো UI, ক্লাউড/মোবাইল/অফলাইন সিঙ্ক দুর্বল</td>
+</tr>
+<tr>
+<td>এক্সেল/খাতা</td>
+<td>ফ্রি, পরিচিত</td>
+<td>ভুল, কোনো রিপোর্ট/ব্যাকআপ/EMI ট্র্যাকিং না</td>
+</tr>
+</tbody>
+</table>
+<h2>৬. পিচের এক-লাইন ভার্সন</h2>
+<blockquote>
+<p>"বাংলাদেশে ৩৯.৫ লাখ খুচরা দোকান। টালিখাতা সাধারণ খাতা ডিজিটাইজ করেছে (১০ লাখ MAU), কিন্তু হাই-ভ্যালু ইনভেন্টরির দোকান — মোবাইল, ইলেকট্রনিক্স — এখনো আনসার্ভড। NEIR রেগুলেশনে IMEI ট্র্যাকিং বাধ্যতামূলক হচ্ছে। আমরা সেই নিচে অফলাইন-ফার্স্ট, মাল্টি-প্ল্যাটফর্ম POS দিচ্ছি। ৩ বছরে ১-২% মার্কেট ধরলে ~৩ কোটি টাকা ARR — আর সাবস্ক্রিপশন শুধু প্রবেশদ্বার, আসল খেলা পেমেন্ট ও ডেটা।"</p>
+</blockquote>
+<h2>৭. যা আরও প্রুভ করা বাকি (next data to collect)</h2>
+<ul>
+<li>[ ] পাইলট দোকানদের ইন্টারভিউ: মাসে কত সময়/টাকা বাঁচে</li>
+<li>[ ] Churn ও willingness-to-pay ডেটা (ট্রায়াল → পেইড রেট)</li>
+<li>[ ] প্রতিদ্বন্দ্বীদের প্রাইসিং রিসার্চ (শপ ভিজিটে জিজ্ঞেস করুন)</li>
+<li>[ ] MBCB-এর কাছাকাছি ডেটা: মোবাইল শপের প্রকৃত সংখ্যা জেলাভিত্তিক</li>
+</ul>
+</div>
+</body>
+</html>

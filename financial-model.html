@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Model — ByabshaGhor — ByabshaGhor Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
+    --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Hind Siliguri','Inter',sans-serif; background:#0b1120; color:var(--text); }
+  .bar {
+    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:12px 24px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand { font-weight:700; color:var(--accent); font-size:16px; }
+  .bar a { color:var(--accent2); font-size:13.5px; text-decoration:none; }
+  .bar a:hover { text-decoration:underline; }
+  .bar button {
+    margin-left:auto; background:rgba(34,197,94,.12); color:var(--accent);
+    border:1px solid rgba(34,197,94,.4); border-radius:10px;
+    padding:7px 14px; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .content { max-width:960px; margin:0 auto; padding:40px 28px 80px; }
+  h1 { font-size:32px; color:var(--accent); margin:0 0 18px; border-bottom:2px solid rgba(34,197,94,.3); padding-bottom:12px; }
+  h2 { font-size:23px; color:var(--accent2); margin:34px 0 14px; }
+  h3 { font-size:18px; color:#e2e8f0; margin:24px 0 10px; }
+  p, li { font-size:15.5px; line-height:1.75; color:#dbe4f0; }
+  p { margin:10px 0; }
+  ul, ol { padding-left:26px; margin:10px 0; }
+  li { margin:5px 0; }
+  blockquote {
+    border-left:4px solid var(--accent); background:rgba(34,197,94,.07);
+    padding:14px 18px; border-radius:0 10px 10px 0; margin:14px 0;
+  }
+  blockquote p { color:#d1fae5; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
+  th { text-align:left; color:var(--accent); background:rgba(34,197,94,.08); padding:10px 12px; font-size:13px; border:1px solid var(--line); }
+  td { padding:9px 12px; border:1px solid var(--line); color:#dbe4f0; vertical-align:top; }
+  tr:nth-child(even) td { background:rgba(30,41,59,.5); }
+  code { background:#0b1120; padding:2px 7px; border-radius:5px; font-size:13.5px; color:#fbbf24; }
+  pre { background:#0b1120; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; margin:14px 0; }
+  pre code { background:none; padding:0; color:#e2e8f0; font-size:13.5px; line-height:1.6; }
+  a { color:var(--accent2); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  hr { border:none; border-top:1px solid var(--line); margin:26px 0; }
+  strong { color:#fff; }
+  @media print {
+    .bar { display:none; }
+    body { background:#fff; }
+    .content { padding:0; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color:#111; }
+    td, th { border-color:#ccc; }
+    th { background:#eee; }
+    blockquote { background:#f5f5f5; }
+    a { color:#0369a1; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand">ব্যবসাঘর Docs</span>
+  <a href="viewer.html">সব ডকের লিস্ট</a>
+  <a href="financial-model.md">financial-model.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>Financial Model — ByabshaGhor</h1>
+<blockquote>
+<p>Google Sheets-এ কপি করার মতো কাঠামো। সব সংখ্যা হাইপোথিসিস — পাইলট ডেটা এলে রিপ্লেস করুন।
+ভার্সন ১.০ · নভেম্বর ২০২৬</p>
+</blockquote>
+<h2>১. মাসিক খরচ (চালু অবস্থায়)</h2>
+<table>
+<thead>
+<tr>
+<th>খাত</th>
+<th>টাকা/মাস</th>
+<th>নোট</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>সার্ভার (VPS/ক্লাউড)</td>
+<td>৮,০০০–১৫,০০০</td>
+<td>PostgreSQL, Redis, অ্যাপ সার্ভার, ব্যাকআপ</td>
+</tr>
+<tr>
+<td>মনিটরিং/টুলস</td>
+<td>২,০০০–৫,০০০</td>
+<td>Sentry, uptime, ডোমেইন</td>
+</tr>
+<tr>
+<td>SMS/WhatsApp গেটওয়ে খরচ</td>
+<td>৩,০০০–৮,০০০</td>
+<td>স্কেলে বাড়ে</td>
+</tr>
+<tr>
+<td>ফাউন্ডার স্যালারি (২ জন × ৩০ হাজার)</td>
+<td>৬০,০০০</td>
+<td>ন্যূনতম; আগে ০ রাখতে পারেন</td>
+</tr>
+<tr>
+<td>১ জন সাপোর্ট/অনবোর্ডিং</td>
+<td>২০,০০০</td>
+<td>২০+ দোকানের পরে</td>
+</tr>
+<tr>
+<td>১ জন ফিল্ড সেলস (বেস + কমিশন)</td>
+<td>২৫,০০০</td>
+<td>মাস ৩+ থেকে</td>
+</tr>
+<tr>
+<td>বিক্রি যাতায়াত/মার্কেটিং</td>
+<td>১০,০০০</td>
+<td>ভিজিট, প্রিন্ট, ফেসবুক বুস্ট</td>
+</tr>
+<tr>
+<td>অফিস/বিবিধ</td>
+<td>৫,০০০</td>
+<td>শুরুতে ঘর থেকে চলবে</td>
+</tr>
+<tr>
+<td><strong>মোট (লিন)</strong></td>
+<td><strong>~৯০,০০০–১,১০,০০০</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>মোট (শুধু ফাউন্ডার, লিন মোড)</strong></td>
+<td><strong>~২৫,০০০–৪০,০০০</strong></td>
+<td>স্যালারি না নিলে</td>
+</tr>
+</tbody>
+</table>
+<h2>২. রেভেনিউ প্রজেকশন (বেস কেস)</h2>
+<p>ধরে নিন: ARPU ৳১,১০০/মাস (Pro ৳১,১৯৯ ও Starter ৳৫৯৯-এর মিশ্রণ), নতুন দোকান বিক্রি নিচের মতো, মাসিক চার্ন ৫%।</p>
+<table>
+<thead>
+<tr>
+<th>মাস</th>
+<th>নতুন দোকান</th>
+<th>মোট পেইং</th>
+<th>MRR (৳)</th>
+<th>নোট</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>১-২</td>
+<td>০ (৫টা পাইলট ফ্রি)</td>
+<td>০</td>
+<td>০</td>
+<td>ইন্টারভিউ + পাইলট</td>
+</tr>
+<tr>
+<td>৩</td>
+<td>৩</td>
+<td>৩</td>
+<td>৩,৩০০</td>
+<td>পাইলট → পেইড</td>
+</tr>
+<tr>
+<td>৪</td>
+<td>৫</td>
+<td>৮</td>
+<td>৮,৮০০</td>
+<td></td>
+</tr>
+<tr>
+<td>৫</td>
+<td>৬</td>
+<td>১৪</td>
+<td>১৫,৪০০</td>
+<td>১ সেলস যোগ</td>
+</tr>
+<tr>
+<td>৬</td>
+<td>৭</td>
+<td>২০</td>
+<td>২২,০০০</td>
+<td></td>
+</tr>
+<tr>
+<td>৭</td>
+<td>৮</td>
+<td>২৭</td>
+<td>২৯,৭০০</td>
+<td></td>
+</tr>
+<tr>
+<td>৮</td>
+<td>৯</td>
+<td>৩৫</td>
+<td>৩৮,৫০০</td>
+<td>প্রথম এজেন্ট</td>
+</tr>
+<tr>
+<td>৯</td>
+<td>১১</td>
+<td>৪৪</td>
+<td>৪৮,৪০০</td>
+<td></td>
+</tr>
+<tr>
+<td>১০</td>
+<td>১৩</td>
+<td>৫৫</td>
+<td>৬০,৫০০</td>
+<td></td>
+</tr>
+<tr>
+<td>১১</td>
+<td>১৫</td>
+<td>৬৭</td>
+<td>৭৩,৭০০</td>
+<td></td>
+</tr>
+<tr>
+<td>১২</td>
+<td>১৮</td>
+<td>৮১</td>
+<td>৮৯,১০০</td>
+<td>~৫% চার্ন বাদ দেওয়া হয়েছে</td>
+</tr>
+</tbody>
+</table>
+<p><strong>১২ মাসে</strong>: ~৮০ পেইং দোকান, ~৯০ হাজার টাকা MRR ≈ <strong>১০.৮ লাখ টাকা ARR</strong></p>
+<h2>৩. ব্রেক-ইভেন</h2>
+<table>
+<thead>
+<tr>
+<th>সিনারিও</th>
+<th>মাসিক খরচ</th>
+<th>দরকার দোকান (৳১,১০০ ARPU)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>লিন মোড (ফাউন্ডার স্যালারি ছাড়া)</td>
+<td>~৩০,০০০</td>
+<td><strong>~২৭ দোকান</strong></td>
+</tr>
+<tr>
+<td>ফুল টিম</td>
+<td>~১,০০,০০০</td>
+<td><strong>~৯১ দোকান</strong></td>
+</tr>
+</tbody>
+</table>
+<p>মানে: <strong>৮০-১০০ দোকানে সেলফ-সাসটেইনেবল</strong> — তারপর ইনভেস্টমেন্ট শুধু গ্রোথের জন্য লাগে, বাঁচার জন্য না। এটা অ্যাঞ্জেলদের কাছে শক্ত কথা।</p>
+<h2>৪. Unit Economics (টার্গেট)</h2>
+<table>
+<thead>
+<tr>
+<th>মেট্রিক</th>
+<th>ভ্যালু</th>
+<th>কীভাবে হিসাব</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARPU</td>
+<td>৳১,১০০/মাস</td>
+<td>প্ল্যান মিশ্রণ</td>
+</tr>
+<tr>
+<td>গ্রস মার্জিন</td>
+<td>~৮০%</td>
+<td>সার্ভার খরচ দোকান-প্রতি ~৳২০০</td>
+</tr>
+<tr>
+<td>CAC</td>
+<td>৳৩,০০০–৫,০০০</td>
+<td>সেলস খরচ ÷ নতুন দোকান (ট্রায়ালে যে সময় দেয়)</td>
+</tr>
+<tr>
+<td>LTV (চার্ন ৫%)</td>
+<td>~৳২২,০০০</td>
+<td>ARPU × মার্জিন ÷ চার্ন = গড় ২০ মাস</td>
+</tr>
+<tr>
+<td><strong>LTV:CAC</strong></td>
+<td><strong>৪–৭×</strong></td>
+<td>৩×-এর ওপরে হলে হেলদি</td>
+</tr>
+<tr>
+<td>পে-ব্যাক</td>
+<td>৩–৪ মাস</td>
+<td>CAC ÷ মাসিক মার্জিন</td>
+</tr>
+</tbody>
+</table>
+<h2>৫. ইনভেস্টমেন্ট ব্যবহার (যদি $50K ≈ ৬০ লাখ টাকা তোলেন)</h2>
+<table>
+<thead>
+<tr>
+<th>খাত</th>
+<th>%</th>
+<th>টাকা</th>
+<th>কীতে</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>সেলস ও অনবোর্ডিং</td>
+<td>৪৫%</td>
+<td>২৭ লাখ</td>
+<td>৩ জন ফিল্ড সেলস, ৫টা জেলায় এজেন্ট, ট্রায়াল সাপোর্ট</td>
+</tr>
+<tr>
+<td>প্রোডাক্ট</td>
+<td>৩০%</td>
+<td>১৮ লাখ</td>
+<td>১ ডেভেলপার, বাগ/পারফরম্যান্স, রিকোয়েস্টেড ফিচার</td>
+</tr>
+<tr>
+<td>মার্কেটিং</td>
+<td>১৫%</td>
+<td>৯ লাখ</td>
+<td>ভিডিও, ফেসবুক, মার্কেট ইভেন্ট, রেফারেল প্রোগ্রাম</td>
+</tr>
+<tr>
+<td>অপস/রিজার্ভ</td>
+<td>১০%</td>
+<td>৬ লাখ</td>
+<td>সার্ভার স্কেল, লিগ্যাল, বাফার</td>
+</tr>
+<tr>
+<td><strong>রানওয়ে</strong></td>
+<td></td>
+<td></td>
+<td>~১৮ মাসে ৫০০+ দোকানের লক্ষ্য</td>
+</tr>
+</tbody>
+</table>
+<h2>৬. কোন নম্বর ইনভেস্টরকে দেখাবেন (আর কোনটা না)</h2>
+<ul>
+<li>✅ দেখাবেন: MRR গ্রোথ, চার্ন, পেইং দোকান সংখ্যা, CAC vs LTV</li>
+<li>❌ ভান করবেন না: প্রজেকশনকে "আমাদের হবেই" বলবেন না — বলুন "আমাদের হাইপোথিসিস, প্রথম ৩ মাসের ডেটা দিয়ে প্রুভ করছি"</li>
+<li>🔑 ইনভেস্টর যা খুঁজবে: পাইলটে ট্রায়াল→পেইড কনভার্সন রেট (৩০%+ হলে ভালো সিগন্যাল)</li>
+</ul>
+</div>
+</body>
+</html>

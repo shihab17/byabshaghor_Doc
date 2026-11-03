@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Agreement Guide — ByabshaGhor — ByabshaGhor Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
+    --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Hind Siliguri','Inter',sans-serif; background:#0b1120; color:var(--text); }
+  .bar {
+    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:12px 24px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand { font-weight:700; color:var(--accent); font-size:16px; }
+  .bar a { color:var(--accent2); font-size:13.5px; text-decoration:none; }
+  .bar a:hover { text-decoration:underline; }
+  .bar button {
+    margin-left:auto; background:rgba(34,197,94,.12); color:var(--accent);
+    border:1px solid rgba(34,197,94,.4); border-radius:10px;
+    padding:7px 14px; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .content { max-width:960px; margin:0 auto; padding:40px 28px 80px; }
+  h1 { font-size:32px; color:var(--accent); margin:0 0 18px; border-bottom:2px solid rgba(34,197,94,.3); padding-bottom:12px; }
+  h2 { font-size:23px; color:var(--accent2); margin:34px 0 14px; }
+  h3 { font-size:18px; color:#e2e8f0; margin:24px 0 10px; }
+  p, li { font-size:15.5px; line-height:1.75; color:#dbe4f0; }
+  p { margin:10px 0; }
+  ul, ol { padding-left:26px; margin:10px 0; }
+  li { margin:5px 0; }
+  blockquote {
+    border-left:4px solid var(--accent); background:rgba(34,197,94,.07);
+    padding:14px 18px; border-radius:0 10px 10px 0; margin:14px 0;
+  }
+  blockquote p { color:#d1fae5; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
+  th { text-align:left; color:var(--accent); background:rgba(34,197,94,.08); padding:10px 12px; font-size:13px; border:1px solid var(--line); }
+  td { padding:9px 12px; border:1px solid var(--line); color:#dbe4f0; vertical-align:top; }
+  tr:nth-child(even) td { background:rgba(30,41,59,.5); }
+  code { background:#0b1120; padding:2px 7px; border-radius:5px; font-size:13.5px; color:#fbbf24; }
+  pre { background:#0b1120; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; margin:14px 0; }
+  pre code { background:none; padding:0; color:#e2e8f0; font-size:13.5px; line-height:1.6; }
+  a { color:var(--accent2); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  hr { border:none; border-top:1px solid var(--line); margin:26px 0; }
+  strong { color:#fff; }
+  @media print {
+    .bar { display:none; }
+    body { background:#fff; }
+    .content { padding:0; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color:#111; }
+    td, th { border-color:#ccc; }
+    th { background:#eee; }
+    blockquote { background:#f5f5f5; }
+    a { color:#0369a1; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand">ব্যবসাঘর Docs</span>
+  <a href="viewer.html">সব ডকের লিস্ট</a>
+  <a href="investor-agreement-guide.md">investor-agreement-guide.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>Investor Agreement Guide — ByabshaGhor</h1>
+<blockquote>
+<p>ইনভেস্টমেন্ট ডিলের পুরো প্রসেস, টার্ম শিটের প্রতিটা ক্লজ বাংলায় ব্যাখ্যা,
+আর কোথায় সাবধান থাকতে হবে।
+⚠️ এটা সাধারণ গাইড — আসল ডিলে অবশ্যই করপোরেট আইনজীবী দিয়ে রিভিউ করাবেন।</p>
+</blockquote>
+<hr />
+<h2>১. পুরো ফ্লো এক নজরে</h2>
+<pre><code>পিচ/মিটিং → Term Sheet → Due Diligence → SSA + SHA → ব্যাংকে টাকা → RJSC ফাইলিং
+   আপনি      (নন-বাইন্ডিং)   (ওরা যাচাই করে)   (আইনি কাগজ)      (শেয়ার ইস্যু)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>ধাপ</th>
+<th>কতদিন লাগে (সাধারণত)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>প্রথম মিটিং → Term Sheet</td>
+<td>২-৬ সপ্তাহ</td>
+</tr>
+<tr>
+<td>Term Sheet → কাগজ সাইন</td>
+<td>৪-৮ সপ্তাহ</td>
+</tr>
+<tr>
+<td>সাইন → টাকা ব্যাংকে</td>
+<td>১-৪ সপ্তাহ</td>
+</tr>
+<tr>
+<td><strong>মোট</strong></td>
+<td><strong>২-৪ মাস</strong> — প্ল্যান সেই অনুযায়ী</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>২. Term Sheet — প্রতিটা ক্লজ ব্যাখ্যা</h2>
+<p>Term Sheet হলো শর্তের সারসংক্ষেপ। নন-বাইন্ডিং (শুধু exclusivity আর confidentiality বাইন্ডিং)।</p>
+<h3>২.১ দাম ও শেয়ার</h3>
+<table>
+<thead>
+<tr>
+<th>টার্ম</th>
+<th>মানে</th>
+<th>কী মেনে নেবেন</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pre-money valuation</strong></td>
+<td>টাকা ঢোকার আগে কোম্পানির দাম</td>
+<td>উদাহরণ: $50K ইনভেস্ট @ $450K pre = ইনভেস্টর পায় ১০%</td>
+</tr>
+<tr>
+<td><strong>Post-money</strong></td>
+<td>pre + ইনভেস্টমেন্ট</td>
+<td>ইনভেস্টর % = টাকা ÷ post-money</td>
+</tr>
+<tr>
+<td><strong>শেয়ারের ধরন</strong></td>
+<td>Ordinary (সাধারণ) vs Preference</td>
+<td>অ্যাঞ্জেলে সাধারণত Preference — নিচের লিকুইডেশন দেখুন</td>
+</tr>
+<tr>
+<td><strong>কত % দেবেন</strong></td>
+<td>প্রি-সিডে ১০-২০%</td>
+<td>২৫%+ দিলে পরের রাউন্ডে আপনার কিছু থাকবে না</td>
+</tr>
+</tbody>
+</table>
+<h3>২.২ টাকা ফেরত পাওয়ার শর্ত</h3>
+<table>
+<thead>
+<tr>
+<th>টার্ম</th>
+<th>মানে</th>
+<th>সাবধানতা</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Liquidation preference</strong></td>
+<td>কোম্পানি বিক্রি/বন্ধ হলে আগে ইনভেস্টর টাকা পায়</td>
+<td><strong>১x non-participating</strong> স্ট্যান্ডার্ড। ২x+ বা participating চাইলে 🚩 — মানে বিক্রির টাকা আগে ওরা নেবে, তারপর আবার % পাবে</td>
+</tr>
+<tr>
+<td><strong>Anti-dilution</strong></td>
+<td>পরের রাউন্ড কম দামে হলে ওর শেয়ার বাড়ে</td>
+<td>"broad-based weighted average" ঠিক। <strong>"full ratchet" 🚩</strong> — একটা কম দামে শেয়ার বিক্রি করলেই ওর পুরো দাম রিসেট</td>
+</tr>
+</tbody>
+</table>
+<h3>২.৩ নিয়ন্ত্রণ</h3>
+<table>
+<thead>
+<tr>
+<th>টার্ম</th>
+<th>মানে</th>
+<th>কী মেনে নেবেন</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Board seat</strong></td>
+<td>বোর্ডে ভোট পাবে</td>
+<td>ছোট অ্যাঞ্জেলে <strong>board observer</strong> দিন — কথা বলবে, ভোট পাবে না</td>
+</tr>
+<tr>
+<td><strong>Protective provisions</strong></td>
+<td>কোন সিদ্ধান্তে ইনভেস্টরের veto লাগবে</td>
+<td>শেয়ার বিক্রি, নতুন রাউন্ড, কোম্পানি বন্ধ — ওকে। কিন্তু <strong>দৈনন্দিন সিদ্ধান্তে (হায়ারিং, খরচের সীমা) veto চাইলে 🚩</strong></td>
+</tr>
+<tr>
+<td><strong>Information rights</strong></td>
+<td>মাসিক/ত্রৈমাসিক রিপোর্ট চাইতে পারে</td>
+<td>মেনে নিন — ভালো অভ্যাসও</td>
+</tr>
+<tr>
+<td><strong>Founder vesting</strong></td>
+<td>আপনার শেয়ার আবার ভেস্টিং-এ দেবে</td>
+<td>সাধারণত ৪ বছর/১ ক্লিফ — আপনার founders' agreement-এ আছেই। পাশ-টাইম ক্রেডিট চান (আগের কাজের)</td>
+</tr>
+</tbody>
+</table>
+<h3>২.৪ শেয়ার সার্ভিস</h3>
+<table>
+<thead>
+<tr>
+<th>টার্ম</th>
+<th>মানে</th>
+<th>নোট</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ESOP pool</strong></td>
+<td>কর্মচারীর শেয়ার পুল (৫-১০%)</td>
+<td><strong>প্রশ্ন করুন: pre-money নাকি post-money থেকে?</strong> pre থেকে কাটলে খরচ পুরোটা আপনার</td>
+</tr>
+<tr>
+<td><strong>Pro-rata rights</strong></td>
+<td>পরের রাউন্ডে % ধরে রাখতে আবার দিতে পারে</td>
+<td>স্ট্যান্ডার্ড, দিন</td>
+</tr>
+<tr>
+<td><strong>ROFR / Co-sale</strong></td>
+<td>আপনি শেয়ার বিক্রি করলে আগে কোম্পানি/ইনভেস্টর পাবে</td>
+<td>স্ট্যান্ডার্ড</td>
+</tr>
+<tr>
+<td><strong>Drag-along</strong></td>
+<td>ম্যাজোরিটি বিক্রি করলে আপনাকেও যেতে হবে</td>
+<td>দিন — কিন্তু ম্যাজোরিটির সংজ্ঞা দেখুন</td>
+</tr>
+<tr>
+<td><strong>Tag-along</strong></td>
+<td>ওরা বিক্রি করলে আপনিও সমানুপাতে বিক্রি করতে পারবেন</td>
+<td>আপনার পক্ষে, রাখুন</td>
+</tr>
+<tr>
+<td><strong>Exclusivity</strong></td>
+<td>X দিন অন্য ইনভেস্টরের সাথে কথা বলা যাবে না</td>
+<td>৩০-৪৫ দিনের বেশি দেবেন না</td>
+</tr>
+<tr>
+<td><strong>No-shop / নন-কমপিট (আপনার ওপর)</strong></td>
+<td>আপনি অন্য ব্যবসা করতে পারবেন না</td>
+<td>যুক্তিসঙ্গত সীমায় রাখুন</td>
+</tr>
+</tbody>
+</table>
+<h3>২.৫ Conditions Precedent (টাকা দেওয়ার আগে শর্ত)</h3>
+<p>সাধারণত চায়: কোম্পানি রেজিস্ট্রেশন ✓, IP অ্যাসাইনমেন্ট ✓ (আপনার founders' agreement-এ আছে), কর্পোরেট ব্যাংক অ্যাকাউন্ট, বোর্ড রেজোলিউশন, ফাউন্ডারদের employment agreement।</p>
+<hr />
+<h2>৩. লাল পতাকা — এগুলো দেখলে থামুন</h2>
+<ul>
+<li>🚩 টাকার বদলে ৩০%+ শেয়ার ছোট অ্যাঞ্জেলে</li>
+<li>🚩 ইনভেস্টরের veto দৈনন্দিন সিদ্ধান্তে (কে রাখবেন, কত দামে বিক্রি করবেন)</li>
+<li>🚩 Full ratchet anti-dilution</li>
+<li>🚩 Participating liquidation preference (double-dipping)</li>
+<li>🚩 "কোম্পানি না চললে ব্যক্তিগতভাবে টাকা ফেরত দেবেন" — ইক্যুইটি কখনো ফেরতযোগ্য না; ফেরতযোগ্য চাইলে সেটা ঋণ, শেয়ার না</li>
+<li>🚩 ক্লজ লেখা ছাড়া শুধু মুখের কথা — সব লেখায় আনুন</li>
+</ul>
+<hr />
+<h2>৪. Due Diligence — ওরা কী যাচাই করবে (আপনার প্রস্তুতি)</h2>
+<table>
+<thead>
+<tr>
+<th>যা দেখবে</th>
+<th>আপনার হাতে কী আছে</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>কোম্পানি রেজিস্ট্রেশন, TIN, ট্রেড লাইসেন্স</td>
+<td>রেজিস্ট্রেশন করানো লাগবে আগে</td>
+</tr>
+<tr>
+<td>ক্যাপ টেবিল — কার কত শেয়ার</td>
+<td>founders-agreement.md</td>
+</tr>
+<tr>
+<td>IP মালিকানা — কোড কার</td>
+<td>founders-agreement-এর IP ধারা + সব রেপো git-এ ✓</td>
+</tr>
+<tr>
+<td>ফিন্যান্সিয়াল</td>
+<td>financial-model.md + খরচের হিসাব</td>
+</tr>
+<tr>
+<td>ট্র্যাকশন</td>
+<td>metrics-tracker.csv — পাইলট ডেটা</td>
+</tr>
+<tr>
+<td>কাস্টমার কন্ট্রাক্ট</td>
+<td>পাইলট দোকানদের সাথে লিখিত চুক্তি রাখুন</td>
+</tr>
+<tr>
+<td>প্রতিদ্বন্দ্বী বোঝে কিনা</td>
+<td>competitor-analysis.md + battlecards ✓</td>
+</tr>
+<tr>
+<td>মার্কেট সাইজ প্রুভ</td>
+<td>market-research.md — BBS/সরকারি সোর্স ✓</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>৫. সাইন হওয়া কাগজগুলো</h2>
+<table>
+<thead>
+<tr>
+<th>ডকুমেন্ট</th>
+<th>কী</th>
+<th>কে লিখবে</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Term Sheet</strong></td>
+<td>শর্তের সারসংক্ষেপ</td>
+<td>ইনভেস্টর দেবে — আপনি নেগোশিয়েট করবেন</td>
+</tr>
+<tr>
+<td><strong>SSA</strong> (Share Subscription Agreement)</td>
+<td>নতুন শেয়ার ইস্যু — দাম, সংখ্যা, শর্ত, warranty</td>
+<td>আইনজীবী</td>
+</tr>
+<tr>
+<td><strong>SHA</strong> (Shareholders' Agreement)</td>
+<td>চলমান সম্পর্ক — বোর্ড, ভোট, ট্রান্সফার, ফাউন্ডার অব্লিগেশন</td>
+<td>আইনজীবী</td>
+</tr>
+<tr>
+<td><strong>Articles of Association সংশোধন</strong></td>
+<td>preference শেয়ারের অধিকার বসাতে</td>
+<td>আইনজীবী + RJSC ফাইলিং</td>
+</tr>
+<tr>
+<td><strong>Founder Employment Agreement</strong></td>
+<td>আপনার রোল, স্যালারি, IP অ্যাসাইনমেন্ট ফরমাল করে</td>
+<td>আইনজীবী</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RJSC ফাইলিং</strong>: টাকা আসার পর Return of Allotment (Form XV), Share Register আপডেট, শেয়ার সার্টিফিকেট ইস্যু। <strong>বিদেশি ইনভেস্টর হলে BIDA রেজিস্ট্রেশন</strong> আলাদা লাগে।</p>
+<hr />
+<h2>৬. SAFI / SAFE অপশন (ছোট ডিলের শর্টকাট)</h2>
+<p>ভ্যালুয়েশন ঠিক না করেই টাকা নেওয়ার উপায়:</p>
+<ul>
+<li><strong>কী</strong>: এখন টাকা দিলে, পরের priced রাউন্ডে শেয়ারে কনভার্ট হবে — <strong>discount</strong> (যেমন ২০% কম দামে) + <strong>valuation cap</strong> (সর্বোচ্চ দাম যার ওপরে কনভার্ট হবে না)</li>
+<li><strong>কবে ভালো</strong>: ডিল ছোট ($10-50K), দ্রুত দরকার, ভ্যালুয়েশনে ঝগড়া করতে চান না</li>
+<li><strong>সাবধানতা</strong>: cap কম রাখলে পরে বড় dilution হবে — cap আপনার ট্রাকশনের প্রতি ন্যায্য রাখুন</li>
+<li>বাংলাদেশে কিছু অ্যাঞ্জেল এটা ব্যবহার করে; আইনজীবী দিয়ে স্থানীয় ফরম্যাটে লিখান</li>
+</ul>
+<hr />
+<h2>৭. খরচ ও টাইমলাইন</h2>
+<table>
+<thead>
+<tr>
+<th>খাত</th>
+<th>খরচ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>করপোরেট আইনজীবী (টার্ম শিট রিভিউ → সাইনিং)</td>
+<td>৳৫০ হাজার – ২ লাখ</td>
+</tr>
+<tr>
+<td>RJSC ফাইলিং ও সরকারি ফি</td>
+<td>৳১০–৩০ হাজার</td>
+</tr>
+<tr>
+<td>অ্যাকাউন্টেন্ট/অডিট</td>
+<td>৳২০–৫০ হাজার/বছর</td>
+</tr>
+</tbody>
+</table>
+<p><strong>কার আইনজীবী</strong>: ইনভেস্টরের দেওয়া ড্রাফটে নিজের আইনজীবী দিয়ে রিভিউ করান — ওদের ড্রাফট ওদের পক্ষে লেখা থাকে। এটা মানে, নেগোশিয়েবল।</p>
+<hr />
+<h2>৮. চেকলিস্ট — ডিলে যাওয়ার আগে</h2>
+<ul>
+<li>[ ] কোম্পানি রেজিস্ট্রেশন (RJSC) + TIN + ট্রেড লাইসেন্স</li>
+<li>[ ] Founders' agreement সাইনড (ভেস্টিং সহ) ✓</li>
+<li>[ ] সব কোড/IP কোম্পানির নামে, git-এ ✓</li>
+<li>[ ] মেট্রিক্স শিটে আসল ডেটা (পাইলট চালু)</li>
+<li>[ ] ফিন্যান্সিয়াল মডেল শিটে বসানো (copy-paste Google Sheets-এ)</li>
+<li>[ ] নিজের আইনজীবী শর্টলিস্টেড</li>
+<li>[ ] Cap table শিট — কে কত % (শুধু দুজনের হলেও লিখে রাখুন)</li>
+</ul>
+</div>
+</body>
+</html>

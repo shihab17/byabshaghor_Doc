@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>কোম্পানি সেটআপ চেকলিস্ট — ব্যবসাঘর</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f172a; --card: #1e293b; --accent: #22c55e; --accent2: #38bdf8;
+    --warn: #f59e0b; --text: #f1f5f9; --muted: #94a3b8; --line: rgba(148,163,184,.15);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Hind Siliguri', sans-serif; background: #0b1120; color: var(--text); padding: 36px 18px 60px; }
+  .wrap { max-width: 920px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 34px; }
+  h1 { font-size: 32px; font-weight: 700; }
+  .sub { color: var(--muted); margin-top: 8px; font-size: 16px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+  .progress { margin: 18px auto 0; max-width: 500px; }
+  .bar { height: 10px; background: var(--card); border-radius: 999px; overflow: hidden; border: 1px solid var(--line); }
+  .bar i { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent2), var(--accent)); transition: width .3s; }
+  .ptext { font-size: 13px; color: var(--muted); margin-top: 6px; text-align: center; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 26px 30px; margin-bottom: 22px; }
+  .card h2 { font-size: 21px; color: var(--accent2); margin-bottom: 14px; }
+  .card h2 b { color: var(--muted); font-weight: 600; font-size: 15px; }
+  .item { display: flex; gap: 14px; padding: 9px 4px; border-bottom: 1px solid var(--line); align-items: flex-start; cursor: pointer; }
+  .item:last-child { border-bottom: none; }
+  .item input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+  .item .txt { font-size: 15.5px; line-height: 1.6; color: #dbe4f0; }
+  .item .txt small { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .item input:checked + .txt { color: var(--muted); text-decoration: line-through; }
+  .cost { color: var(--warn); font-weight: 600; white-space: nowrap; font-size: 14px; }
+  .total { background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.35); border-radius: 14px; padding: 20px 26px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .total .t { font-size: 17px; font-weight: 700; color: #d1fae5; }
+  .total .v { font-size: 26px; font-weight: 800; color: var(--accent); }
+  .tip { background: rgba(56,189,248,.07); border: 1px solid rgba(56,189,248,.25); border-radius: 12px; padding: 14px 18px; margin-top: 20px; font-size: 14.5px; color: #bae6fd; line-height: 1.6; }
+  .warnbox { background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.3); border-radius: 12px; padding: 14px 18px; margin-top: 14px; font-size: 14px; color: #fde68a; line-height: 1.6; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card, .total, .tip, .warnbox { break-inside: avoid; background: #f8fafc; }
+    .card h2, .item .txt, .sub, .ptext, .total .t, .total .v { color: #111; }
+    .item .txt small { color: #555; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>কোম্পানি সেটআপ চেকলিস্ট</h1>
+  <p class="sub">Pvt. Ltd. রেজিস্ট্রেশন — যার অধীনে ব্যবসাঘর প্রোডাক্ট + সফটওয়্যার সার্ভিস দুটোই চলবে।
+  চেক করলেই প্রগ্রেস সেভ হয় (এই ব্রাউজারে)।</p>
+  <div class="progress">
+    <div class="bar"><i id="bar"></i></div>
+    <div class="ptext" id="ptext">০% সম্পন্ন</div>
+  </div>
+</header>
+
+<div class="card">
+  <h2>০ · শুরুর আগে ঠিক করুন</h2>
+  <label class="item"><input type="checkbox"><span class="txt">কোম্পানির নাম ২-৩টা অপশনে ঠিক করুন<small>ইংরেজি, ইউনিক — যেমন "____ Technologies Ltd."</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">Paid-up capital ঠিক করুন (প্রস্তাবিত ৳১০ লাখ — এখনই জমা লাগে না)</span></label>
+  <label class="item"><input type="checkbox"><span class="txt">দুজন ফাউন্ডারই ডিরেক্টর + শেয়ারহোল্ডার — শেয়ার ভাগ founders' agreement-এর সাথে মিলান</span></label>
+  <label class="item"><input type="checkbox"><span class="txt">রেজিস্টার্ড অফিসের ঠিকানা ফাইনাল<small>ঘরের ঠিকানাও চলে — ট্রেড লাইসেন্সে লাগবে</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">Object clause চওড়া লিখুন<small>software development, SaaS, ITES, mobile &amp; web app, e-commerce, data services</small></span></label>
+</div>
+
+<div class="card">
+  <h2>১ · RJSC ইনকর্পোরেশন <b>(মূল ধাপ)</b></h2>
+  <label class="item"><input type="checkbox"><span class="txt">নাম ক্লিয়ারেন্স আবেদন<small>rjsc.gov.bd অনলাইন পোর্টাল · ১-৩ দিন</small></span><span class="cost">~৳৬০০</span></label>
+  <label class="item"><input type="checkbox"><span class="txt">MoA + AoA ড্রাফট<small>আইনজীবী বা টেমপ্লেট দিয়ে</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">শেয়ারহোল্ডার/ডিরেক্টরদের কাগজ জোগাড়<small>NID কপি, ছবি, TIN (থাকলে)</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">ইনকর্পোরেশন ফাইলিং — Form VI, IX, XII + ফি জমা<small>RJSC অনলাইন/অফিস · ৩-৭ দিন</small></span><span class="cost">~৳১৫-২৫ হাজার</span></label>
+  <label class="item"><input type="checkbox"><span class="txt">Certificate of Incorporation + শেয়ার সার্টিফিকেট হাতে পান</span></label>
+</div>
+
+<div class="card">
+  <h2>২ · পরের রেজিস্ট্রেশনগুলো <b>(পরপর)</b></h2>
+  <label class="item"><input type="checkbox"><span class="txt">কোম্পানি TIN<small>NBR অনলাইন · ফ্রি · ব্যাংক/চুক্তিতে লাগে</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">ট্রেড লাইসেন্স<small>অফিস এলাকার সিটি কর্পোরেশন/পৌরসভা · বছরে রিনিউ লাগে</small></span><span class="cost">৳৩-১০ হাজার</span></label>
+  <label class="item"><input type="checkbox"><span class="txt">কর্পোরেট ব্যাংক অ্যাকাউন্ট খুলুন<small>সার্টিফিকেট + TIN + ট্রেড লাইসেন্স + MoA/AoA · সব টাকা এখান দিয়ে — পার্সোনালে না</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">BIN/VAT রেজিস্ট্রেশন<small>NBR VAT পোর্টাল · সফটওয়্যার-ITES রেয়াত আছে কিনা অ্যাকাউন্ট্যান্ট দিয়ে চেক করান</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">কোম্পানি সিল + লেটারহেড + সাইনবোর্ড</span><span class="cost">৳২-৫ হাজার</span></label>
+</div>
+
+<div class="card">
+  <h2>৩ · বছরে ভুলবেন না <b>(চলমান)</b></h2>
+  <label class="item"><input type="checkbox"><span class="txt">RJSC Annual Return প্রতি বছর ফাইল<small>না দিলে কোম্পানি struck-off হয়ে যায়</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">ট্রেড লাইসেন্স প্রতি জুলাই রিনিউ<small>না করলে ব্যাংক অ্যাকাউন্ট আটকে যায়</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">Income tax return নভেম্বর-ডিসেম্বর<small>পার্ট-টাইম অ্যাকাউন্ট্যান্ট রাখুন (৳৫-১০ হাজার/মাস)</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">VAT রিটার্ন মাসিক (BIN থাকলে)</span></label>
+</div>
+
+<div class="card">
+  <h2>৪ · অপশনাল কিন্তু দরকারি</h2>
+  <label class="item"><input type="checkbox"><span class="txt">BASIS মেম্বারশিপ নিন<small>ক্রেডিবিলিটি, টেন্ডার, সেক্টর সুবিধা</small></span></label>
+  <label class="item"><input type="checkbox"><span class="txt">ডোমেইন + কর্পোরেট ইমেইল কোম্পানির নামে কিনুন</span></label>
+  <label class="item"><input type="checkbox"><span class="txt">দোকানদার/এজেন্টের সাথে সব চুক্তি কোম্পানির নামে করুন — পার্সোনালি না</span></label>
+  <label class="item"><input type="checkbox"><span class="txt">সার্ভিস আর প্রোডাক্টের আলাদা cost-center হিসাব রাখুন<small>ইনভেস্টরকে ByabshaGhor-এর MRR আলাদা দেখাতে হবে</small></span></label>
+</div>
+
+<div class="card">
+  <h2>৫ · পরে <b>(ইনভেস্টর/বিদেশি ডিল এলে)</b></h2>
+  <label class="item"><input type="checkbox"><span class="txt">BIDA রেজিস্ট্রেশন — বিদেশি টাকা অফিসিয়ালি আনতে লাগে</span></label>
+  <label class="item"><input type="checkbox"><span class="txt">Shareholders' Agreement আইনজীবী দিয়ে ফরমাল করান<small>founders-agreement → SHA</small></span></label>
+</div>
+
+<div class="total">
+  <span class="t">মোট খরচ (আইনজীবী/এজেন্টসহ) আর সময়</span>
+  <span class="v">৳৩০-৫০ হাজার · ২-৪ সপ্তাহ</span>
+</div>
+
+<div class="tip">💡 এজেন্ট ছাড়াও হয়, কিন্তু প্রথমবার হলে RJSC-এর কাছাকাছি ভালো করপোরেট আইনজীবী/এজেন্ট নিলে ভুল কম হয়, সময় বাঁচে।</div>
+<div class="warnbox">⚠️ সরকারি ফি ও নিয়ম বদলায় — জমা দেওয়ার আগে rjsc.gov.bd ও nbr.gov.bd-এ কনফার্ম করুন। এটা সাধারণ গাইড, আইনি পরামর্শের বিকল্প না।</div>
+
+</div>
+
+<script>
+  const boxes = document.querySelectorAll('input[type=checkbox]');
+  const bar = document.getElementById('bar'), ptext = document.getElementById('ptext');
+  function update() {
+    const done = [...boxes].filter(b => b.checked).length;
+    const pct = Math.round(done / boxes.length * 100);
+    bar.style.width = pct + '%';
+    ptext.textContent = pct + '% সম্পন্ন (' + done + '/' + boxes.length + ')';
+    localStorage.setItem('companyChecklist', JSON.stringify([...boxes].map(b => b.checked)));
+  }
+  try {
+    const saved = JSON.parse(localStorage.getItem('companyChecklist') || '[]');
+    boxes.forEach((b, i) => b.checked = !!saved[i]);
+  } catch(e) {}
+  boxes.forEach(b => b.addEventListener('change', update));
+  update();
+</script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Founder Ops — দুজন মিলে সব মেইনটেইন করার সিস্টেম — ByabshaGhor Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
+    --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Hind Siliguri','Inter',sans-serif; background:#0b1120; color:var(--text); }
+  .bar {
+    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:12px 24px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand { font-weight:700; color:var(--accent); font-size:16px; }
+  .bar a { color:var(--accent2); font-size:13.5px; text-decoration:none; }
+  .bar a:hover { text-decoration:underline; }
+  .bar button {
+    margin-left:auto; background:rgba(34,197,94,.12); color:var(--accent);
+    border:1px solid rgba(34,197,94,.4); border-radius:10px;
+    padding:7px 14px; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .content { max-width:960px; margin:0 auto; padding:40px 28px 80px; }
+  h1 { font-size:32px; color:var(--accent); margin:0 0 18px; border-bottom:2px solid rgba(34,197,94,.3); padding-bottom:12px; }
+  h2 { font-size:23px; color:var(--accent2); margin:34px 0 14px; }
+  h3 { font-size:18px; color:#e2e8f0; margin:24px 0 10px; }
+  p, li { font-size:15.5px; line-height:1.75; color:#dbe4f0; }
+  p { margin:10px 0; }
+  ul, ol { padding-left:26px; margin:10px 0; }
+  li { margin:5px 0; }
+  blockquote {
+    border-left:4px solid var(--accent); background:rgba(34,197,94,.07);
+    padding:14px 18px; border-radius:0 10px 10px 0; margin:14px 0;
+  }
+  blockquote p { color:#d1fae5; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
+  th { text-align:left; color:var(--accent); background:rgba(34,197,94,.08); padding:10px 12px; font-size:13px; border:1px solid var(--line); }
+  td { padding:9px 12px; border:1px solid var(--line); color:#dbe4f0; vertical-align:top; }
+  tr:nth-child(even) td { background:rgba(30,41,59,.5); }
+  code { background:#0b1120; padding:2px 7px; border-radius:5px; font-size:13.5px; color:#fbbf24; }
+  pre { background:#0b1120; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; margin:14px 0; }
+  pre code { background:none; padding:0; color:#e2e8f0; font-size:13.5px; line-height:1.6; }
+  a { color:var(--accent2); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  hr { border:none; border-top:1px solid var(--line); margin:26px 0; }
+  strong { color:#fff; }
+  @media print {
+    .bar { display:none; }
+    body { background:#fff; }
+    .content { padding:0; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color:#111; }
+    td, th { border-color:#ccc; }
+    th { background:#eee; }
+    blockquote { background:#f5f5f5; }
+    a { color:#0369a1; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand">ব্যবসাঘর Docs</span>
+  <a href="viewer.html">সব ডকের লিস্ট</a>
+  <a href="founder-ops.md">founder-ops.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>Founder Ops — দুজন মিলে সব মেইনটেইন করার সিস্টেম</h1>
+<blockquote>
+<p>দুজন ফাউন্ডার/শেয়ারহোল্ডার হিসেবে কোম্পানি, কাগজ, টাকা আর কমপ্লায়েন্স চালানোর
+ছোট "অপারেটিং সিস্টেম"। ভার্সন ১.০</p>
+</blockquote>
+<hr />
+<h2>১. দায়িত্ব ভাগ — রোজকার কাজ অনুযায়ী</h2>
+<p>আসল ভাগটা এক লাইনে: <strong>একজন বাইরে (দোকান, টাকা), একজন ভেতরে (প্রোডাক্ট, সার্ভার)।</strong></p>
+<h3>Founder A — CEO (বাইরের কাজ, প্রতিদিন)</h3>
+<table>
+<thead>
+<tr>
+<th>কাজ</th>
+<th>কত ঘন্টা/দিনে</th>
+<th>কী করবে</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>সেলস</td>
+<td>৩-৪ ঘণ্টা</td>
+<td>মার্কেটে দোকান ভিজিট, ডেমো, ফলো-আপ, পাইপলাইন আপডেট</td>
+</tr>
+<tr>
+<td>অনবোর্ডিং</td>
+<td>১-২ ঘণ্টা</td>
+<td>নতুন দোকানের স্টক/ডেটা ঢুকিয়ে দেওয়া, ট্রেনিং</td>
+</tr>
+<tr>
+<td>সাপোর্ট</td>
+<td>১ ঘণ্টা</td>
+<td>WhatsApp সাপোর্ট গ্রুপ — সমস্যা শুনে টেক সাইডে পাঠানো</td>
+</tr>
+<tr>
+<td><strong>কালেকশন</strong></td>
+<td>৩০ মিনিট</td>
+<td>মাসিক সাবস্ক্রিপশনের টাকা তোলা — ইনভয়েস পাঠানো, বাকির রিমাইন্ডার (এটাই সবচেয়ে গুরুত্বপূর্ণ রোজকার কাজ — টাকা না তুললে ব্যবসা নেই)</td>
+</tr>
+<tr>
+<td>মার্কেটিং</td>
+<td>৩০ মিনিট</td>
+<td>ফেসবুক পেজ/গ্রুপ, রেফারেল ফলো-আপ</td>
+</tr>
+<tr>
+<td>হিসাব</td>
+<td>১০ মিনিট</td>
+<td>দিনের খরচ শিটে লেখা</td>
+</tr>
+</tbody>
+</table>
+<h3>Founder B — CTO (ভেতরের কাজ, প্রতিদিন)</h3>
+<table>
+<thead>
+<tr>
+<th>কাজ</th>
+<th>কী করবে</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>প্রোডাক্ট ডেভেলপমেন্ট</td>
+<td>সেলস সাইডের ফিডব্যাক অনুযায়ী ফিচার, বাগ ফিক্স — সপ্তাহে একটা শিপেবল জিনিস</td>
+</tr>
+<tr>
+<td>সাপোর্ট এসক্যালেশন</td>
+<td>CEO পাঠানো টেক সমস্যা — দোকানের ডেটা, সিঙ্ক ইস্যু, বাগ</td>
+</tr>
+<tr>
+<td>সার্ভার ও ডেটা</td>
+<td>আপটাইম, ব্যাকআপ চেক, সিকিউরিটি — পাইলট দোকানের ডেটা হারানো মানে ব্র্যান্ড শেষ</td>
+</tr>
+<tr>
+<td>রিলিজ</td>
+<td>অ্যাপ/ব্যাকএন্ড আপডেট, চেঞ্জলগ — দোকানদারকে কী নতুন পেল জানানো</td>
+</tr>
+</tbody>
+</table>
+<h3>মৌসুমি/এককালীন কাজ (এগুলো দিয়ে রোল না — যার হাতে সময়, সে করে)</h3>
+<ul>
+<li>RJSC রেজিস্ট্রেশন, ট্রেড লাইসেন্স, ট্যাক্স রিটার্ন → CEO-র প্লেটে যায়, কিন্তু বছরে কয়েকটা দিনের কাজ</li>
+<li>চুক্তির টেমপ্লেট, ডোমেইন, অফিস — যে ফ্রি সে সামলাবে</li>
+<li>নিয়ম: <strong>মৌসুমি কাজ যখন আসে, ক্যালেন্ডারে লেখা আছে কার দায়িত্বে</strong> (ধারা ৩)</li>
+</ul>
+<h3>যেটা আলাদা করে ভাগ করবেন না — সিদ্ধান্ত</h3>
+<ul>
+<li><strong>দৈনন্দিন সিদ্ধান্ত</strong> নিজের এলাকায় নিজে নিন — প্রতি ছোট কাজে জিজ্ঞেস করলে দুজনই ধীর হন</li>
+<li><strong>সাপ্তাহিক সিদ্ধান্ত</strong> সিঙ্কে নিন — roadmap, প্রাইসিং, কাকে আগে সার্ভ করবেন</li>
+<li><strong>বড় সিদ্ধান্ত</strong> founders-agreement অনুযায়ী দুজনের সম্মতিতে — মিনিটে লিখুন</li>
+</ul>
+<h2>২. শেয়ার্ড ড্রাইভ স্ট্রাকচার (Google Drive)</h2>
+<pre><code>📁 ByabshaGhor HQ
+├── 📁 01-Legal          → RJSC সার্টিফিকেট, MoA/AoA, TIN, ট্রেড লাইসেন্স, চুক্তি
+├── 📁 02-Finance        → metrics-tracker, খরচের শিট, ব্যাংক স্টেটমেন্ট, ইনভয়েস
+├── 📁 03-Business       → docs/ ফোল্ডারের সবকিছু (ডেক, রিসার্চ, প্লেবুক)
+├── 📁 04-Agreements     → founders agreement (সাইনড স্ক্যান), দোকানদার/এজেন্ট চুক্তি
+├── 📁 05-Minutes        → বোর্ড/ফাউন্ডার মিটিং নোট
+└── 📁 06-Marketing      → স্ক্রিনশট, লোগো, ভিডিও
+</code></pre>
+<p><code>docs/</code> ফোল্ডার git-এ আছে — মাসে একবার <code>03-Business</code>-এ কপি/সিঙ্ক করুন।</p>
+<h2>৩. কমপ্লায়েন্স ক্যালেন্ডার (শেয়ার্ড Google Calendar)</h2>
+<p>রিপিটিং ইভেন্ট বানান, <strong>১৫ দিন আগে রিমাইন্ডারসহ</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>ঘটনা</th>
+<th>ফ্রিকোয়েন্সি</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ট্রেড লাইসেন্স রিনিউ</td>
+<td>প্রতি জুলাই</td>
+</tr>
+<tr>
+<td>RJSC Annual Return</td>
+<td>বছরে একবার</td>
+</tr>
+<tr>
+<td>কোম্পানির ট্যাক্স রিটার্ন</td>
+<td>নভেম্বর-ডিসেম্বর</td>
+</tr>
+<tr>
+<td>VAT রিটার্ন (BIN থাকলে)</td>
+<td>মাসিক</td>
+</tr>
+<tr>
+<td>MRR/metrics আপডেট + খরচের শিট বন্ধ</td>
+<td>মাসিক</td>
+</tr>
+<tr>
+<td>ফাউন্ডার সিঙ্ক (১ ঘণ্টা, আজেন্ডা ফিক্সড)</td>
+<td>সাপ্তাহিক</td>
+</tr>
+</tbody>
+</table>
+<h2>৪. দুজনেরও "বোর্ড মিটিং" — মিনিট টেমপ্লেট</h2>
+<p>দুজনই ডিরেক্টর — বড় সিদ্ধান্তে এক প্যারা নোট রাখুন, <code>05-Minutes</code>-এ:</p>
+<pre><code>তারিখ: _______
+উপস্থিত: Founder A, Founder B
+সিদ্ধান্ত:
+  ১. _______________________________________
+  ২. _______________________________________
+খরচ অনুমোদন: ৳_______ পর্যন্ত
+স্বাক্ষর: _______ / _______
+</code></pre>
+<p>কোন সিদ্ধান্তে মিনিট লাগে: ব্যাংক অ্যাকাউন্ট, বড় খরচ (&gt;৳৫০ হাজার), চুক্তি সাইন, শেয়ার সংক্রান্ত যেকোনো কিছু, নতুন ভাড়া।</p>
+<h2>৫. টুলস — সব ফ্রি/সস্তা</h2>
+<table>
+<thead>
+<tr>
+<th>কাজ</th>
+<th>টুল</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>খরচের হিসাব</td>
+<td>Google Sheet — দিনে ২ মিনিট; পরে পার্ট-টাইম অ্যাকাউন্ট্যান্ট (৳৫-১০ হাজার/মাস)</td>
+</tr>
+<tr>
+<td>মেট্রিক্স</td>
+<td><code>metrics-tracker.csv</code> → Google Sheet-এ নিন, দুজনের ফোন থেকে ভরা যায়</td>
+</tr>
+<tr>
+<td>চুক্তি/সাইন</td>
+<td>প্রিন্ট + স্ক্যান; পরে e-sign টুল</td>
+</tr>
+<tr>
+<td>পাসওয়ার্ড/সিক্রেট</td>
+<td>Bitwarden (ফ্রি) — SMS/ইমেইলে শেয়ার না</td>
+</tr>
+<tr>
+<td>ডকুমেন্ট</td>
+<td>এই <code>docs/</code> ফোল্ডার + <code>viewer.html</code> / build করা HTML</td>
+</tr>
+</tbody>
+</table>
+<h2>৬. লাল রেখা</h2>
+<blockquote>
+<p><strong>কোম্পানির টাকা আর নিজের টাকা কখনো মেশাবেন না।</strong>
+ব্যক্তিগত খরচে কোম্পানির টাকা দিলে হিসাব মেলানো দুঃস্বপ্ন — আর ইনভেস্টর এটাই প্রথম চেক করে।
+কোম্পানির ব্যাংক অ্যাকাউন্টের পরে নিজেদের দেওয়া টাকা <strong>"শেয়ারহোল্ডার লোন"</strong> হিসেবে নোট করুন।</p>
+</blockquote>
+<h2>৭. সাপ্তাহিক সিঙ্কের ফিক্সড আজেন্ডা (৩০-৪৫ মিনিট)</h2>
+<ol start="১">
+<li><strong>নম্বর রিভিউ</strong> — নতুন দোকান, চলে যাওয়া দোকান, MRR, টপ ৩ ফিডব্যাক</li>
+<li><strong>গত সপ্তাহের কাজ</strong> — যা বলেছিলাম, কী হয়েছে</li>
+<li><strong>এই সপ্তাহের ৩টা প্রায়োরিটি</strong> — প্রত্যেকে</li>
+<li><strong>ব্লকার</strong> — কোথায় আটকে আছি, কার সাহায্য লাগবে</li>
+<li><strong>সিদ্ধান্ত</strong> — কিছু নিলে মিনিটে ঢোকান</li>
+</ol>
+</div>
+</body>
+</html>

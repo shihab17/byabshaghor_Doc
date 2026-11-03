@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offline Sync Contract (v1 draft) — ByabshaGhor Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
+    --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Hind Siliguri','Inter',sans-serif; background:#0b1120; color:var(--text); }
+  .bar {
+    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:12px 24px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .brand { font-weight:700; color:var(--accent); font-size:16px; }
+  .bar a { color:var(--accent2); font-size:13.5px; text-decoration:none; }
+  .bar a:hover { text-decoration:underline; }
+  .bar button {
+    margin-left:auto; background:rgba(34,197,94,.12); color:var(--accent);
+    border:1px solid rgba(34,197,94,.4); border-radius:10px;
+    padding:7px 14px; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .content { max-width:960px; margin:0 auto; padding:40px 28px 80px; }
+  h1 { font-size:32px; color:var(--accent); margin:0 0 18px; border-bottom:2px solid rgba(34,197,94,.3); padding-bottom:12px; }
+  h2 { font-size:23px; color:var(--accent2); margin:34px 0 14px; }
+  h3 { font-size:18px; color:#e2e8f0; margin:24px 0 10px; }
+  p, li { font-size:15.5px; line-height:1.75; color:#dbe4f0; }
+  p { margin:10px 0; }
+  ul, ol { padding-left:26px; margin:10px 0; }
+  li { margin:5px 0; }
+  blockquote {
+    border-left:4px solid var(--accent); background:rgba(34,197,94,.07);
+    padding:14px 18px; border-radius:0 10px 10px 0; margin:14px 0;
+  }
+  blockquote p { color:#d1fae5; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
+  th { text-align:left; color:var(--accent); background:rgba(34,197,94,.08); padding:10px 12px; font-size:13px; border:1px solid var(--line); }
+  td { padding:9px 12px; border:1px solid var(--line); color:#dbe4f0; vertical-align:top; }
+  tr:nth-child(even) td { background:rgba(30,41,59,.5); }
+  code { background:#0b1120; padding:2px 7px; border-radius:5px; font-size:13.5px; color:#fbbf24; }
+  pre { background:#0b1120; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; margin:14px 0; }
+  pre code { background:none; padding:0; color:#e2e8f0; font-size:13.5px; line-height:1.6; }
+  a { color:var(--accent2); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  hr { border:none; border-top:1px solid var(--line); margin:26px 0; }
+  strong { color:#fff; }
+  @media print {
+    .bar { display:none; }
+    body { background:#fff; }
+    .content { padding:0; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color:#111; }
+    td, th { border-color:#ccc; }
+    th { background:#eee; }
+    blockquote { background:#f5f5f5; }
+    a { color:#0369a1; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand">ব্যবসাঘর Docs</span>
+  <a href="viewer.html">সব ডকের লিস্ট</a>
+  <a href="offline-sync-contract.md">offline-sync-contract.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>Offline Sync Contract (v1 draft)</h1>
+<p>Contract between the <strong>ByabshaGhor offline POS app</strong> (Flutter, <code>byabshaghor_pos</code>)
+and <strong>shop-app-backend</strong>. Goal: a POS counter must be able to sell with zero
+connectivity and reconcile with the cloud later.</p>
+<p>Scope intentionally covers only <strong>master data pull</strong> + <strong>counter operations
+push</strong>. Reports, purchases, settings, etc. stay online-only in v1.</p>
+<hr />
+<h2>1. Principles</h2>
+<ul>
+<li><strong>Server-authoritative.</strong> Cloud DB is the source of truth. The device holds a
+  read replica of master data + an append-only outbox of its own operations.</li>
+<li><strong>Idempotent push.</strong> Every operation carries a client-generated <code>op_id</code>
+  (UUID). Retries are always safe — the server dedupes by <code>op_id</code>.</li>
+<li><strong>Delta pull.</strong> After the first full snapshot, devices pull only rows changed
+  since their last cursor (<code>updated_at</code> based).</li>
+<li><strong>Independent operations.</strong> A push batch is NOT atomic. Each op gets its own
+  result; one bad op never blocks the rest of the queue.</li>
+<li><strong>Tombstones.</strong> Deleted rows sync via <code>deleted_at</code>, not by disappearing.</li>
+</ul>
+<h2>2. Conventions</h2>
+<ul>
+<li>Base path: <code>/api/v1/sync</code> (new additive module <code>src/modules/sync/</code>).</li>
+<li>Same middleware chain as other routes: <code>authenticate</code> → <code>tenantResolver</code> →
+  <code>branchResolver</code>. Sync is always scoped to one tenant + one branch.</li>
+<li>All timestamps ISO-8601 UTC. All ids UUIDs.</li>
+<li>Device sends <code>X-Device-Id</code> + <code>X-Device-Token</code> headers on every sync call.</li>
+</ul>
+<h2>3. Device registration</h2>
+<pre><code>POST /api/v1/sync/devices/register
+Authorization: Bearer &lt;user jwt&gt;          # owner/manager registers a counter
+{
+  &quot;name&quot;: &quot;Counter-1&quot;,                    # human label
+  &quot;branchId&quot;: &quot;&lt;uuid&gt;&quot;,
+  &quot;platform&quot;: &quot;windows&quot;                   # windows|android
+}
+→ 201
+{
+  &quot;deviceId&quot;: &quot;&lt;uuid&gt;&quot;,
+  &quot;deviceToken&quot;: &quot;&lt;random secret&gt;&quot;,       # stored in flutter_secure_storage
+  &quot;invoicePrefix&quot;: &quot;C1&quot;                   # per-device invoice prefix
+}
+</code></pre>
+<ul>
+<li>One row per physical counter in <code>sync_devices</code>.</li>
+<li><code>deviceToken</code> is long-lived and revocable; shown once at registration.
+  Re-registering an existing <code>name</code>+<code>branchId</code> rotates the token and returns a
+  fresh one (covers a lost token) — never creates a duplicate row.</li>
+<li>Staff login on the device uses the counter PIN (<code>pin_hash</code> already on
+  <code>public.global_users</code> — see public migration 042); no user JWT is needed
+  for <code>/sync/*</code> device calls. When the server is unreachable the app verifies
+  the PIN locally against the pulled <code>pin_hash</code> (bcrypt) and restores the
+  last session profile.</li>
+</ul>
+<h3>Device + conflict management (owner JWT)</h3>
+<pre><code>GET   /api/v1/sync/devices                      # registered counters (with branch name)
+PATCH /api/v1/sync/devices/:id/revoke           # { &quot;revoked&quot;: true|false }
+                                                # suspended devices get 401 on /sync/*
+GET   /api/v1/sync/conflicts?resolved=false     # paginated review queue
+POST  /api/v1/sync/conflicts/:id/resolve        # marks the conflict resolved
+</code></pre>
+<h2>4. Pull — master data</h2>
+<pre><code>GET /api/v1/sync/pull?since=&lt;iso8601&gt;&amp;entities=products,units&amp;cursor=&lt;opaque&gt;
+X-Device-Id, X-Device-Token
+→ 200
+{
+  &quot;serverTime&quot;: &quot;2026-09-27T10:00:00.000Z&quot;,
+  &quot;nextCursor&quot;: &quot;eyJ...&quot;,
+  &quot;hasMore&quot;: true,
+  &quot;changes&quot;: {
+    &quot;products&quot;:  { &quot;upsert&quot;: [...], &quot;delete&quot;: [&quot;&lt;uuid&gt;&quot;, ...] },
+    &quot;units&quot;:     { &quot;upsert&quot;: [...], &quot;delete&quot;: [] }
+  }
+}
+</code></pre>
+<ul>
+<li><code>since</code> omitted → full snapshot (first sync).</li>
+<li><code>cursor</code> paginates large entities (IMEI stock can be thousands of rows).
+  Client keeps pulling until <code>hasMore=false</code>, then stores <code>serverTime</code> as its
+  new <code>since</code> watermark. <strong>Never</strong> use client clock as the watermark.</li>
+<li><code>delete</code> contains ids of rows soft-deleted since <code>since</code>.</li>
+</ul>
+<h3>Syncable entities (v1)</h3>
+<table>
+<thead>
+<tr>
+<th>entity</th>
+<th>source</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>products</code></td>
+<td>products + variants + barcodes</td>
+<td>incl. price, tax fields</td>
+</tr>
+<tr>
+<td><code>units</code></td>
+<td>serialized units / IMEI stock</td>
+<td>the big one — paginate</td>
+</tr>
+<tr>
+<td><code>customers</code></td>
+<td>customers</td>
+<td>incl. due/advance balance snapshot</td>
+</tr>
+<tr>
+<td><code>categories</code>,<code>brands</code>,<code>subcategories</code></td>
+<td>lookups</td>
+<td>small</td>
+</tr>
+<tr>
+<td><code>payment_methods</code></td>
+<td>payment methods + accounts</td>
+<td></td>
+</tr>
+<tr>
+<td><code>users</code></td>
+<td>counter staff</td>
+<td><code>id, name, role, pinHash</code> only — never password hash</td>
+</tr>
+<tr>
+<td><code>settings</code></td>
+<td>branch-scoped invoice/print/tax settings</td>
+<td>single object</td>
+</tr>
+<tr>
+<td><code>sales</code></td>
+<td>completed sales (for returns)</td>
+<td>see §8 — window via tenant settings</td>
+</tr>
+<tr>
+<td><code>sale_items</code></td>
+<td>line items of those sales</td>
+<td>streams by parent sale's <code>updated_at</code> (no own watermark columns)</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Push — operations outbox</h2>
+<pre><code>POST /api/v1/sync/push
+X-Device-Id, X-Device-Token
+{
+  &quot;operations&quot;: [
+    {
+      &quot;opId&quot;: &quot;&lt;uuid&gt;&quot;,            // client-generated, idempotency key
+      &quot;type&quot;: &quot;sale.create&quot;,
+      &quot;clientTs&quot;: &quot;2026-09-27T09:41:12.000Z&quot;,
+      &quot;payload&quot;: { /* same shape as the matching REST schema */ }
+    }
+  ]
+}
+→ 200
+{
+  &quot;results&quot;: [
+    {
+      &quot;opId&quot;: &quot;&lt;uuid&gt;&quot;,
+      &quot;status&quot;: &quot;applied&quot;,          // applied | duplicate | conflict | rejected
+      &quot;serverId&quot;: &quot;&lt;uuid&gt;&quot;,         // created row id (e.g. sale id)
+      &quot;invoiceNo&quot;: &quot;INV-000412&quot;,    // official number where applicable
+      &quot;message&quot;: null               // human-readable reason on conflict/rejected
+    }
+  ]
+}
+</code></pre>
+<h3>Operation types (v1)</h3>
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>maps to</th>
+<th>payload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sale.create</code></td>
+<td><code>sale.service</code> create path</td>
+<td><code>createSaleSchema</code> + <code>clientRef = opId</code></td>
+</tr>
+<tr>
+<td><code>sale.pay</code></td>
+<td><code>POST /sales/:id/pay</code></td>
+<td><code>paySaleSchema</code> + target <code>saleId</code> or <code>clientRef</code></td>
+</tr>
+<tr>
+<td><code>sale.void</code></td>
+<td><code>POST /sales/:id/void</code></td>
+<td><code>voidSaleSchema</code> + target</td>
+</tr>
+<tr>
+<td><code>sale_return.create</code></td>
+<td>sale-return create</td>
+<td>return schema + original sale ref</td>
+</tr>
+<tr>
+<td><code>customer.create</code> / <code>customer.update</code></td>
+<td>customer module</td>
+<td>customer schema</td>
+</tr>
+<tr>
+<td><code>cashbox.deposit</code> / <code>cashbox.withdraw</code></td>
+<td><code>addTransaction</code></td>
+<td>amount + note + paymentAccountId</td>
+</tr>
+</tbody>
+</table>
+<p>Every counter op also carries <code>soldBy</code> (staff user uuid) — audit columns
+can't come from a JWT on device-authenticated calls.</p>
+<p>Payloads reuse the existing zod schemas verbatim — the sync module validates
+then calls the same service functions as the REST routes. No duplicated
+business logic.</p>
+<p>v1 restrictions on push ops:</p>
+<ul>
+<li><code>sale.create</code> with <code>emi</code> set → <code>rejected</code> ("EMI requires connectivity").
+  Exchange/trade-in inside a sale IS allowed.</li>
+<li><code>sale.void</code> is allowed only if the device has offline-void permission —
+  owner/manager PIN required on-device.</li>
+</ul>
+<h3>Result semantics</h3>
+<ul>
+<li><code>applied</code> — committed.</li>
+<li><code>duplicate</code> — <code>opId</code> already applied; <code>serverId</code>/<code>invoiceNo</code> return the
+  original result. Client marks synced, does not retry.</li>
+<li><code>conflict</code> — committed but needs human review (see §6). The op is NOT lost.</li>
+<li><code>rejected</code> — hard failure (invalid payload, voided target, etc.). Client
+  surfaces it to staff; does not auto-retry.</li>
+</ul>
+<p>Ops are applied <strong>in array order</strong> per device, so <code>sale.pay</code> after
+<code>sale.create</code> in one batch sees its own sale.</p>
+<h2>6. Conflicts</h2>
+<table>
+<thead>
+<tr>
+<th>case</th>
+<th>rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Same <code>unitId</code> (IMEI) sold on 2 devices while offline</td>
+<td>Second op applies → <code>conflict</code>, row created with <code>flagged=true</code>, lands in a review queue for owner. Never silently drop a real-world sale.</td>
+</tr>
+<tr>
+<td><code>sale.pay</code>/<code>sale.void</code> targeting a sale that doesn't exist on server (e.g. original was itself voided)</td>
+<td><code>rejected</code> with message.</td>
+</tr>
+<tr>
+<td>Stock goes negative after replay</td>
+<td>Allowed. Sale applies; stock row flagged. Counters must never block a sale.</td>
+</tr>
+<tr>
+<td><code>customer.create</code> with same phone as existing</td>
+<td>Server merges → returns existing <code>serverId</code>, status <code>applied</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><code>sync_conflicts</code> table stores every conflict for owner review in the web UI.</p>
+<h2>7. Invoice numbering</h2>
+<ul>
+<li>Offline invoice shows a provisional number: <code>&lt;prefix&gt;-&lt;local seq&gt;</code>
+  (e.g. <code>C1-000137</code>). Prefix comes from device registration — no cross-device
+  collisions by construction.</li>
+<li>On push, server assigns the official <code>invoiceNo</code> via the existing
+  number-series and returns it in the result. App stores the mapping and
+  reprints/shows official number once synced.</li>
+<li><code>clientRef</code> (already in <code>createSaleSchema</code>) carries <code>opId</code> so a sale can be
+  traced back to its device operation.</li>
+</ul>
+<h2>8. Returns offline</h2>
+<p>A return needs the original sale. Options per sync policy:</p>
+<ul>
+<li>v1: pull <code>sales</code> for the last N days (configurable via tenant settings,
+  default 30) so most returns work offline. Return op carries
+  <code>saleId</code>/<code>invoiceNo</code> — if the original isn't on server yet it must be (it
+  was synced or made online).</li>
+<li>Edge: original sale was made offline on the SAME device → return references
+  <code>clientRef</code>; server resolves after the create op applies (ordering
+  guarantees this within a device queue).</li>
+</ul>
+<h2>9. Client-side requirements (Flutter)</h2>
+<ul>
+<li><code>outbox</code> table: <code>op_id, type, payload_json, status, attempts, created_at</code>.
+  FIFO drain on connectivity (<code>connectivity_plus</code> already present).</li>
+<li>Watermark per entity stored in <code>sync_meta</code> (replaces single <code>lastPulledAt</code>).</li>
+<li>Current full-replace pull (<code>replaceAllProducts</code>) must become upsert/delete
+  merge per entity.</li>
+<li>Exponential backoff on 5xx; never retry on 4xx/<code>rejected</code>.</li>
+<li>Pull on app start + after every successful push + periodic (e.g. 5 min).</li>
+</ul>
+<h2>10. Backend implementation notes</h2>
+<ul>
+<li>New module <code>src/modules/sync/</code> — <code>sync.routes.ts</code>, <code>sync.controller.ts</code>,
+  <code>sync.service.ts</code>, <code>sync.schema.ts</code>, <code>sync.middleware.ts</code>. Mounted at
+  <code>/api/v1/sync</code> <strong>before</strong> the <code>/api/v1</code> catch-all (templateRoutes) — its
+  router-level <code>authenticate</code> would 401 device calls that carry no JWT.</li>
+<li>Device auth: counters hold <code>X-Device-Id</code> + <code>X-Device-Token</code> (bcrypt hash on
+  file), no user JWT. <code>requireDevice</code> resolves tenant schema + branch from the
+  device row itself.</li>
+<li><code>public.sync_devices(tenant_id, branch_id, name, platform, token_hash,
+  invoice_prefix, last_seen_at, revoked_at)</code> — public schema so device auth is
+  self-resolving. Management routes (register/conflicts) still use JWT +
+  tenantResolver.</li>
+<li>Tenant-schema tables:</li>
+<li><code>sync_operations(op_id PK, device_id, type, payload jsonb, status, server_id, invoice_no, applied_at)</code></li>
+<li><code>sync_conflicts(id, op_id, device_id, type, detail jsonb, resolved_at, resolved_by, created_at)</code></li>
+<li>Pull queries filter <code>updated_at &gt; since OR deleted_at &gt; since</code>; require
+  <code>updated_at</code> index on every syncable table — audit schema before build.</li>
+<li>Push handler: per-op <code>for</code> loop, each op in its own transaction, calls the
+  existing service; wrap outcome into result row. Never let one op abort the
+  batch.</li>
+<li>Keep <code>sync_operations</code> for 90+ days for dedupe + audit.</li>
+</ul>
+<h2>11. Decisions</h2>
+<ul>
+<li><strong>New customers offline: allowed.</strong> Server merges by phone number; returns
+  existing <code>serverId</code> with <code>applied</code> if a match exists.</li>
+<li><strong>Offline login: dedicated counter PIN.</strong> <code>users</code> pull carries a <code>pinHash</code>
+  (bcrypt of a 4–6 digit POS PIN set from web Settings) — never the account
+  password hash. Device enforces local rate limiting (5 tries → 5 min lock).</li>
+<li><strong>One device = one branch</strong> for v1. Registration binds device to branch;
+  multi-branch counters deferred.</li>
+<li><strong>EMI sales are online-only.</strong> <code>sale.create</code> carrying <code>emi</code> is <code>rejected</code>
+  on push; the app blocks EMI checkout while offline.</li>
+<li><strong>Exchange/trade-in offline: allowed.</strong> It's just inventory intake +
+  sale-line value; replay-safe.</li>
+<li><strong>Stale price is final.</strong> The <code>unitPrice</code> captured at sale time applies —
+  server never overrides with current price.</li>
+<li><strong>Offline duration soft cap: 7 days.</strong> App shows a staleness warning but
+  keeps selling; no hard block.</li>
+<li><strong>Return window pull: last 30 days of <code>sales</code></strong>, tenant-configurable.</li>
+</ul>
+</div>
+</body>
+</html>
