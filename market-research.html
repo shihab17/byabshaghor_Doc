@@ -107,6 +107,21 @@
 <td>MIOB</td>
 </tr>
 <tr>
+<td>রেজিস্টার্ড ফার্মেসি</td>
+<td><strong>২,২৬,১১৮</strong> (+ ~১ লাখ আনলাইসেন্সড ড্রাগ স্টোর)</td>
+<td>DGDA</td>
+</tr>
+<tr>
+<td>নতুন ফার্মেসি লাইসেন্স</td>
+<td>~২৩৭/মাস</td>
+<td>DGDA</td>
+</tr>
+<tr>
+<td>মডেল ফার্মেসি মানে পূরণ করে</td>
+<td>মাত্র ~৭%</td>
+<td>DGDA / Asia Post</td>
+</tr>
+<tr>
 <td>মাসিক স্মার্টফোন বিক্রি</td>
 <td>৩২–৩৫ লাখ ইউনিট</td>
 <td>The Business Standard</td>
@@ -137,6 +152,9 @@
 <li>মোবাইল রিটেইলার সংখ্যা (MIOB): https://en.techworldbd.com/mobile-phone/138</li>
 <li>NEIR crisis (Dhaka Tribune):
   https://www.dhakatribune.com/feature/tech/400169/mobile-retailers-neir-rollout-and-future-of</li>
+<li>ফার্মেসি সংখ্যা (DGDA data):
+  https://www.asia-post.com/english/business/ap3pb9uvf5yx-100000-Pharmacies-operating-without-registration-237-more-added-every-month
+  https://tob.news/nearly-half-of-pharmacies-lack-required-authorisation-dgda/</li>
 <li>টালিখাতা 1M+ MAU:
   https://www.thedailystar.net/supplements/app-savvy-bangladesh/news/millions-shopkeepers-using-tallykhata-app-records-and-payments-3622596</li>
 </ul>
@@ -149,10 +167,38 @@
 <h3>SAM — Serviceable Addressable Market</h3>
 <p>ডিজিটালি প্রস্তুত + হাই-ভ্যালু/সিরিয়ালাইজড ইনভেন্টরির দোকান:</p>
 <ul>
+<li><strong>ফার্মেসি: ২.২৬ লাখ রেজিস্টার্ড + ~১ লাখ আনলাইসেন্সড</strong> (DGDA) — সবচেয়ে বড় সিঙ্গল সেগমেন্ট</li>
 <li>মোবাইল শপ: ~২০,০০০ অথরাইজড + হাজার হাজার ছোট/গ্রে ট্রেডার → <strong>~৩০-৫০ হাজার</strong></li>
-<li>ইলেকট্রনিক্স/অ্যাপ্লায়েন্স, ফার্মেসি, গার্মেন্টস/ফ্যাশন: <strong>~৫০ হাজার-১ লাখ</strong></li>
-<li>কনজারভেটিভ SAM: <strong>১-২ লাখ দোকান</strong> → ১০-২০ কোটি টাকা/মাস মার্কেট</li>
+<li>ইলেকট্রনিক্স/অ্যাপ্লায়েন্স, গার্মেন্টস/ফ্যাশন: <strong>~৫০ হাজার-১ লাখ</strong></li>
+<li>কনজারভেটিভ SAM (ডিজিটালি রেডি শেয়ার ধরে): <strong>১-২ লাখ দোকান</strong> → ১০-২০ কোটি টাকা/মাস মার্কেট</li>
+<li>লক্ষ করুন: ফার্মেসি একাই দেশের সবচেয়ে ঘন রিটেইল নেটওয়ার্ক — এজেন্ট-ভিত্তিক রোলআউটে আদর্শ</li>
 </ul>
+<h3>দুটো বিচহেড নিচ — কেনো এদের</h3>
+<table>
+<thead>
+<tr>
+<th>নিচ</th>
+<th>সংখ্যা</th>
+<th>ব্যথা</th>
+<th>আমাদের রেডিনেস</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>মোবাইল/ইলেকট্রনিক্স</strong></td>
+<td>~৩০-৫০ হাজার</td>
+<td>IMEI, EMI, ওয়ারেন্টি, রিপেয়ার, NEIR</td>
+<td>সব শিপড — সিরিয়াল ট্র্যাকিং, জব অর্ডার, EMI</td>
+</tr>
+<tr>
+<td><strong>ফার্মেসি</strong></td>
+<td><strong>২.২৬ লাখ+ রেজিস্টার্ড</strong></td>
+<td>ব্যাচ/এক্সপায়ারি লস, স্ট্রিপ-পিস হিসাব, ড্রাগ লাইসেন্স কমপ্লায়েন্স</td>
+<td>কোডে আছে: <code>product_batches.expiry_date</code>, sale-এ <strong>FEFO অ্যালোকেশন</strong>, <code>/reports/expiry-alert</code>, uom-conversion (স্ট্রিপ↔পিস)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>পাইলট স্ট্র্যাটেজি</strong>: দুটো নিচে সমান্তরালে ২-৩টা পাইলট চালান — যেখানে রিটেনশন ভালো, সেই নিচে অল-ইন। দুটোর সাধারণ ব্যাকবোন: হাই-ভ্যালু রেগুলেটেড ইনভেন্টরি — একই কোর সিস্টেম।</p>
 <h3>SOM — ৩ বছরে অর্জনযোগ্য</h3>
 <ul>
 <li>SAM-এর ১-২% = <strong>১,০০০-২,০০০ পেইং দোকান</strong></li>
