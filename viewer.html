@@ -157,17 +157,25 @@
 </div>
 
 <script>
-  // ⚠️ এটা convenience gate, আসল সিকিউরিটি না — ফাইলের সরাসরি URL পাবলিকই থাকে।
-  // PIN এখানেই বদলান:
-  const PIN = '1701';
+  // PIN সোর্সে রাখা নেই — probe decrypt করে ভেরিফাই হয় (protect.py-র মতোই স্কিম)
+  const PROBE = "L3dXQ2Nsb4HtW+wlcBjoDCjSBdO+xqpnyNj5wvWW6zFMSgzUvgAvPMwfIffmiQ==";
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 
-  function unlock() {
-    const v = document.getElementById('pin').value;
-    if (v === PIN) {
+  async function unlock() {
+    const pin = document.getElementById('pin').value;
+    try {
+      const raw = b64(PROBE);
+      const salt = raw.slice(0, 16), iv = raw.slice(16, 28), ct = raw.slice(28);
+      const km = await crypto.subtle.importKey('raw',
+        new TextEncoder().encode(pin), 'PBKDF2', false, ['deriveKey']);
+      const key = await crypto.subtle.deriveKey(
+        { name:'PBKDF2', salt, iterations:100000, hash:'SHA-256' },
+        km, { name:'AES-GCM', length:256 }, false, ['decrypt']);
+      await crypto.subtle.decrypt({ name:'AES-GCM', iv }, key, ct);
       document.getElementById('gate').classList.add('hidden');
       document.getElementById('internal').classList.remove('hidden');
-      sessionStorage.setItem('docsPin', v);
-    } else {
+      sessionStorage.setItem('docsPin', pin);
+    } catch(e) {
       document.getElementById('err').style.display = 'block';
     }
   }
