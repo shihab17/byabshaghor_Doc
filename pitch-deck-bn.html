@@ -67,9 +67,37 @@
   ul.feat li { padding: 7px 0 7px 28px; position: relative; font-size: 16px; color: #e2e8f0; line-height: 1.5; }
   ul.feat li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
   ul.feat li span { color: var(--muted); }
+  .pdfbtn {
+    position: fixed; bottom: 18px; right: 18px; z-index: 50;
+    background: var(--accent); color: #04120a; border: none; border-radius: 999px;
+    padding: 12px 22px; font-weight: 700; font-size: 14px; cursor: pointer;
+    font-family: inherit; box-shadow: 0 8px 24px rgba(0,0,0,.45);
+  }
+  .pdfbtn:hover { filter: brightness(1.1); }
+  @media (max-width: 900px) {
+    .slide { width: 100%; min-height: auto; margin: 0; border-radius: 0; padding: 40px 22px 60px; }
+    .slide::before { display: none; }
+    h1 { font-size: 32px; }
+    h2 { font-size: 23px; }
+    .sub { font-size: 16px; }
+    .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; }
+    .funnel { flex-direction: column; gap: 10px; }
+    .arrow { transform: rotate(90deg); }
+    .stage { padding: 18px 14px; }
+    .card .num { font-size: 26px; }
+    table { display: block; overflow-x: auto; font-size: 13px; white-space: nowrap; }
+    td, th { white-space: normal; min-width: 130px; }
+    .footnote { position: static; margin-top: 22px; }
+    .quote { font-size: 17px; }
+    ul.feat li { font-size: 14px; }
+    .slide [style*="display:flex"] { flex-wrap: wrap !important; }
+    .slide img { height: auto !important; max-width: 240px !important; }
+    .pdfbtn { bottom: 12px; right: 12px; padding: 10px 16px; }
+  }
   @media print {
     body { background: #fff; }
     .slide { margin: 0; border-radius: 0; page-break-after: always; }
+    .pdfbtn { display: none; }
   }
 </style>
 </head>
@@ -236,5 +264,6 @@
   <div class="footnote">ব্যবসাঘর · গোপনীয় · দেওয়া সংখ্যাগুলো লক্ষ্য, প্রতিশ্রুতি নয়</div>
 </div>
 
+<button class="pdfbtn" onclick="window.print()" title="PDF সেভ করুন">⬇ PDF ডাউনলোড</button>
 </body>
 </html>
