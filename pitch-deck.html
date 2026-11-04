@@ -1,310 +1,1534 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="fintech">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ByabshaGhor — Investor Pitch</title>
+<title>ByabshaGhor — Investor Pitch Deck 2026</title>
 <link rel="stylesheet" href="glossary.css">
 <script src="glossary.js" defer></script>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --accent: #22c55e;
+  /* ==========================================================================
+     THEME DEFINITIONS (CSS CUSTOM PROPERTIES)
+     ========================================================================== */
+
+  /* 1. FinTech Obsidian (Default: Stripe / Mercury Inspired) */
+  :root, [data-theme="fintech"] {
+    --bg-page: #050814;
+    --bg-pattern: 
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(0, 242, 169, 0.08), transparent 50%),
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    --slide-bg: linear-gradient(145deg, #090e1f 0%, #050814 100%);
+    --slide-border: rgba(255, 255, 255, 0.09);
+    --slide-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    --glow-1: rgba(0, 242, 169, 0.15);
+    --glow-2: rgba(99, 102, 241, 0.18);
+    --card-bg: rgba(16, 23, 44, 0.65);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-top: rgba(255, 255, 255, 0.14);
+    --card-border-hover: rgba(0, 242, 169, 0.4);
+    --card-highlight-bg: linear-gradient(145deg, rgba(0, 242, 169, 0.12) 0%, rgba(16, 23, 44, 0.7) 100%);
+    --card-highlight-border: rgba(0, 242, 169, 0.4);
+    --accent: #00f2a9;
+    --accent-light: #34d399;
+    --accent-glow: rgba(0, 242, 169, 0.2);
+    --accent-secondary: #818cf8;
     --accent2: #38bdf8;
-    --text: #f1f5f9;
-    --muted: #94a3b8;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --heading-gradient: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
+    --header-border: rgba(255, 255, 255, 0.07);
+    --table-bg: rgba(16, 23, 44, 0.6);
+    --table-header-bg: rgba(24, 34, 64, 0.85);
+    --table-row-hover: rgba(255, 255, 255, 0.03);
+    --table-highlight-cell: rgba(0, 242, 169, 0.1);
+    --dock-bg: rgba(9, 13, 31, 0.88);
+    --dock-border: rgba(255, 255, 255, 0.12);
   }
+
+  /* 2. Executive Institutional Light (Apple / Sequoia Clean Style) */
+  [data-theme="executive"] {
+    --bg-page: #f1f5f9;
+    --bg-pattern: 
+      radial-gradient(circle at 50% 0%, rgba(4, 120, 87, 0.07), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05), transparent 50%),
+      radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+    --slide-bg: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    --slide-border: rgba(15, 23, 42, 0.1);
+    --slide-shadow: 0 20px 50px -15px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.04);
+    --glow-1: rgba(4, 120, 87, 0.08);
+    --glow-2: rgba(37, 99, 235, 0.07);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --card-border: rgba(226, 232, 240, 0.9);
+    --card-border-top: #ffffff;
+    --card-border-hover: rgba(4, 120, 87, 0.4);
+    --card-highlight-bg: linear-gradient(145deg, rgba(4, 120, 87, 0.06) 0%, #ffffff 100%);
+    --card-highlight-border: rgba(4, 120, 87, 0.35);
+    --accent: #047857;
+    --accent-light: #059669;
+    --accent-glow: rgba(4, 120, 87, 0.12);
+    --accent-secondary: #2563eb;
+    --accent2: #0284c7;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --heading-gradient: linear-gradient(135deg, #0f172a 30%, #334155 100%);
+    --header-border: rgba(15, 23, 42, 0.08);
+    --table-bg: #ffffff;
+    --table-header-bg: #f8fafc;
+    --table-row-hover: rgba(15, 23, 42, 0.02);
+    --table-highlight-cell: rgba(4, 120, 87, 0.08);
+    --dock-bg: rgba(255, 255, 255, 0.92);
+    --dock-border: rgba(15, 23, 42, 0.12);
+  }
+
+  /* 3. Cyber Luxury (Linear & Raycast Inspired Pitch Dark & Amber Gold) */
+  [data-theme="cyber"] {
+    --bg-page: #030712;
+    --bg-pattern: 
+      radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.12), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(6, 182, 212, 0.09), transparent 50%),
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    --slide-bg: linear-gradient(145deg, #0c101d 0%, #030712 100%);
+    --slide-border: rgba(245, 158, 11, 0.16);
+    --slide-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(245, 158, 11, 0.12);
+    --glow-1: rgba(245, 158, 11, 0.16);
+    --glow-2: rgba(6, 182, 212, 0.15);
+    --card-bg: rgba(17, 24, 39, 0.7);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-top: rgba(255, 255, 255, 0.15);
+    --card-border-hover: rgba(245, 158, 11, 0.45);
+    --card-highlight-bg: linear-gradient(145deg, rgba(245, 158, 11, 0.12) 0%, rgba(17, 24, 39, 0.75) 100%);
+    --card-highlight-border: rgba(245, 158, 11, 0.4);
+    --accent: #f59e0b;
+    --accent-light: #fbbf24;
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --accent-secondary: #06b6d4;
+    --accent2: #38bdf8;
+    --text-primary: #f9fafb;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --heading-gradient: linear-gradient(135deg, #ffffff 40%, #fbbf24 100%);
+    --header-border: rgba(255, 255, 255, 0.08);
+    --table-bg: rgba(17, 24, 39, 0.6);
+    --table-header-bg: rgba(31, 41, 55, 0.85);
+    --table-row-hover: rgba(255, 255, 255, 0.03);
+    --table-highlight-cell: rgba(245, 158, 11, 0.12);
+    --dock-bg: rgba(17, 24, 39, 0.9);
+    --dock-border: rgba(255, 255, 255, 0.14);
+  }
+
+  /* ==========================================================================
+     BASE STYLES & LAYOUT
+     ========================================================================== */
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Inter', 'Hind Siliguri', sans-serif; background: #e2e8f0; color: var(--text); }
+  
+  body {
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+    background-color: var(--bg-page);
+    background-image: var(--bg-pattern);
+    background-size: 100% 100%, 100% 100%, 28px 28px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding-bottom: 90px;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Slide Shell (16:9 Presentation Canvas) */
   .slide {
-    width: 1120px; min-height: 630px; margin: 24px auto; padding: 56px 64px;
-    background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
-    border-radius: 16px; display: flex; flex-direction: column; justify-content: center;
-    page-break-after: always; position: relative; overflow: hidden;
+    width: 1160px;
+    min-height: 652px;
+    margin: 32px auto;
+    padding: 40px 54px 46px;
+    background: var(--slide-bg);
+    border: 1px solid var(--slide-border);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--slide-shadow);
+    scroll-margin-top: 24px;
+    transition: all 0.3s ease;
   }
+
+  /* Ambient Glow Accents */
   .slide::before {
-    content: ''; position: absolute; top: -120px; right: -120px;
-    width: 340px; height: 340px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(34,197,94,.15), transparent 70%);
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow-1), transparent 70%);
+    pointer-events: none;
+    z-index: 1;
   }
-  .kicker { color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
-  h1 { font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
-  h2 { font-size: 38px; font-weight: 700; line-height: 1.15; margin-bottom: 24px; }
-  .sub { font-size: 20px; color: var(--muted); line-height: 1.5; max-width: 800px; }
-  .grid { display: grid; gap: 18px; }
+
+  .slide::after {
+    content: '';
+    position: absolute;
+    bottom: -140px;
+    left: -140px;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow-2), transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .slide-content {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Top Navigation & Brand Header per slide */
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--header-border);
+    position: relative;
+    z-index: 3;
+  }
+
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-logo-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+  }
+
+  .brand-dot {
+    width: 9px;
+    height: 9px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--accent);
+    display: inline-block;
+  }
+
+  .brand-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    background: rgba(125, 125, 125, 0.08);
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+  }
+
+  .slide-meta-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .lang-toggle {
+    font-family: 'Anek Bangla', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent2);
+    text-decoration: none;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    padding: 3px 12px;
+    border-radius: 999px;
+    transition: all 0.2s;
+  }
+
+  .lang-toggle:hover {
+    background: rgba(56, 189, 248, 0.18);
+    border-color: rgba(56, 189, 248, 0.45);
+  }
+
+  .slide-counter {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+  }
+
+  /* Typography */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-light);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    background: var(--accent-glow);
+    border: 1px solid var(--accent-light);
+    padding: 4px 14px;
+    border-radius: 999px;
+    width: fit-content;
+  }
+
+  .kicker-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-light);
+    border-radius: 50%;
+  }
+
+  h1 {
+    font-size: 60px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    background: var(--heading-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1.5px;
+  }
+
+  h2 {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 18px;
+    color: var(--text-primary);
+    letter-spacing: -0.8px;
+  }
+
+  .sub {
+    font-size: 19px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 860px;
+    font-weight: 400;
+  }
+
+  /* Grid Layouts */
+  .grid { display: grid; gap: 16px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: repeat(3, 1fr); }
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
-  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+  /* Glass Cards */
   .card {
-    background: rgba(30,41,59,.85); border: 1px solid rgba(148,163,184,.15);
-    border-radius: 14px; padding: 22px 24px;
+    background: var(--card-bg);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--card-border);
+    border-top: 1px solid var(--card-border-top);
+    border-radius: 16px;
+    padding: 20px 22px;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.2);
+    position: relative;
   }
-  .card .num { font-size: 34px; font-weight: 800; color: var(--accent); }
+
+  .card:hover {
+    border-color: var(--card-border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.3), 0 0 20px var(--accent-glow);
+  }
+
+  .card.highlight {
+    background: var(--card-highlight-bg);
+    border: 1px solid var(--card-highlight-border);
+  }
+
+  .card .num {
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+
   .card .num.blue { color: var(--accent2); }
-  .card .lbl { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
-  .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-  .card p { font-size: 14px; color: var(--muted); line-height: 1.55; }
-  table { width: 100%; border-collapse: collapse; font-size: 15px; }
-  th { text-align: left; color: var(--accent); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 14px; border-bottom: 2px solid rgba(34,197,94,.4); }
-  td { padding: 11px 14px; border-bottom: 1px solid rgba(148,163,184,.12); color: #e2e8f0; }
-  td.dim { color: var(--muted); }
-  .pill { display: inline-block; background: rgba(34,197,94,.12); color: var(--accent); border: 1px solid rgba(34,197,94,.35); border-radius: 999px; padding: 6px 16px; font-size: 14px; font-weight: 600; margin: 4px 6px 4px 0; }
-  .quote { font-size: 22px; line-height: 1.55; color: #e2e8f0; border-left: 4px solid var(--accent); padding-left: 24px; max-width: 900px; }
-  .footnote { position: absolute; bottom: 26px; left: 64px; font-size: 11px; color: #64748b; }
-  .footnote a { color: #7dd3fc; text-decoration: none; }
-  .footnote a:hover { text-decoration: underline; }
-  .funnel { display: flex; align-items: stretch; gap: 0; margin-top: 8px; }
-  .stage { flex: 1; text-align: center; padding: 26px 14px; border-radius: 12px; }
-  .stage .v { font-size: 30px; font-weight: 800; }
-  .stage .l { font-size: 13px; color: var(--muted); margin-top: 6px; }
-  .stage.tam { background: rgba(56,189,248,.10); } .stage.tam .v { color: var(--accent2); }
-  .stage.sam { background: rgba(34,197,94,.10); } .stage.sam .v { color: var(--accent); }
-  .stage.som { background: rgba(34,197,94,.22); border: 1px solid rgba(34,197,94,.4); } .stage.som .v { color: var(--accent); }
-  .arrow { align-self: center; color: var(--muted); font-size: 26px; padding: 0 8px; }
-  ul.feat { list-style: none; }
-  ul.feat li { padding: 7px 0 7px 26px; position: relative; font-size: 15.5px; color: #e2e8f0; }
-  ul.feat li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
-  ul.feat li span { color: var(--muted); }
-  .pdfbtn {
-    position: fixed; bottom: 18px; right: 18px; z-index: 50;
-    background: var(--accent); color: #04120a; border: none; border-radius: 999px;
-    padding: 12px 22px; font-weight: 700; font-size: 14px; cursor: pointer;
-    font-family: inherit; box-shadow: 0 8px 24px rgba(0,0,0,.45);
+
+  .card .lbl {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    line-height: 1.45;
   }
-  .pdfbtn:hover { filter: brightness(1.1); }
+
+  .card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.3px;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Pills & Badges */
+  .pill {
+    display: inline-block;
+    background: var(--accent-glow);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 7px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 4px 6px 4px 0;
+    transition: all 0.2s;
+  }
+
+  .pill:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+  }
+
+  /* Quotes / Callouts */
+  .quote {
+    font-size: 21px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    border-left: 4px solid var(--accent);
+    background: var(--accent-glow);
+    padding: 18px 26px;
+    border-radius: 0 14px 14px 0;
+    max-width: 980px;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+  }
+
+  /* Feature Lists */
+  ul.feat { list-style: none; }
+  ul.feat li {
+    padding: 7px 0 7px 30px;
+    position: relative;
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  ul.feat li::before {
+    content: '✓';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 18px;
+    height: 18px;
+    background: var(--accent-glow);
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  ul.feat li span { color: var(--text-secondary); }
+
+  /* Stepped Conversion Funnel */
+  .funnel {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .stage {
+    flex: 1;
+    text-align: center;
+    padding: 20px 16px;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    transition: transform 0.2s ease;
+  }
+
+  .stage:hover { transform: translateY(-3px); }
+
+  .stage .badge {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  .stage .v {
+    font-size: 30px;
+    font-weight: 800;
+    margin-top: 2px;
+    letter-spacing: -1px;
+  }
+
+  .stage .l {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .stage.tam {
+    background: rgba(56, 189, 248, 0.08);
+    border-color: rgba(56, 189, 248, 0.25);
+  }
+  .stage.tam .badge { background: rgba(56, 189, 248, 0.2); color: var(--accent2); }
+  .stage.tam .v { color: var(--accent2); }
+
+  .stage.sam {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+  }
+  .stage.sam .badge { background: var(--accent-glow); color: var(--accent); }
+  .stage.sam .v { color: var(--accent); }
+
+  .stage.som {
+    background: var(--card-highlight-bg);
+    border: 1px solid var(--accent);
+    box-shadow: 0 8px 24px var(--accent-glow);
+  }
+  .stage.som .badge { background: var(--accent); color: #04120a; }
+  .stage.som .v { color: var(--text-primary); }
+
+  .arrow {
+    align-self: center;
+    color: var(--text-muted);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  /* Clean Tables */
+  .table-wrap {
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--table-bg);
+    backdrop-filter: blur(12px);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+  }
+
+  th {
+    text-align: left;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 11px 16px;
+    background: var(--table-header-bg);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--text-primary);
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--table-row-hover); }
+
+  td.dim { color: var(--text-secondary); }
+  td.highlight-cell { color: var(--text-primary); font-weight: 600; background: var(--table-highlight-cell); }
+
+  /* Footnote */
+  .footnote {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    padding-top: 12px;
+    margin-top: 12px;
+    border-top: 1px solid var(--header-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footnote a {
+    color: var(--accent2);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .footnote a:hover {
+    filter: brightness(1.2);
+    text-decoration: underline;
+  }
+
+  /* App Mockup Showcase Frame */
+  .device-mockup {
+    position: relative;
+    border-radius: 32px;
+    padding: 6px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.2), rgba(255,255,255,0.03));
+    box-shadow: 
+      0 25px 60px -10px rgba(0, 0, 0, 0.4),
+      0 0 35px var(--accent-glow);
+  }
+
+  .device-mockup img {
+    height: 410px;
+    border-radius: 26px;
+    display: block;
+  }
+
+  /* Fixed Navigation Dock */
+  .deck-nav-bar {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--dock-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--dock-border);
+    padding: 8px 14px;
+    border-radius: 999px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  }
+
+  .deck-nav-btn {
+    background: rgba(125, 125, 125, 0.1);
+    color: var(--text-primary);
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .deck-nav-btn:hover {
+    background: rgba(125, 125, 125, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .deck-nav-btn.primary {
+    background: var(--accent);
+    color: #04120a;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+
+  .deck-nav-btn.primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 15px var(--accent-glow);
+  }
+
+  .nav-counter {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    padding: 0 4px;
+  }
+
+  /* Segmented Theme Switcher */
+  .theme-switch-group {
+    display: flex;
+    background: rgba(125, 125, 125, 0.1);
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 3px;
+  }
+
+  .theme-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 9px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .theme-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .theme-btn.active {
+    background: var(--accent);
+    color: #04120a;
+    font-weight: 700;
+    box-shadow: 0 2px 8px var(--accent-glow);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .slide { width: 95%; margin: 20px auto; min-height: auto; padding: 34px 28px; }
+  }
+
   @media (max-width: 900px) {
-    .slide { width: 100%; min-height: auto; margin: 0; border-radius: 0; padding: 40px 22px 60px; }
-    .slide::before { display: none; }
-    h1 { font-size: 34px; }
+    .slide { width: 100%; border-radius: 0; padding: 26px 16px 36px; margin: 0 0 16px; }
+    .slide::before, .slide::after { display: none; }
+    h1 { font-size: 32px; }
     h2 { font-size: 23px; }
     .sub { font-size: 15.5px; }
-    .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; }
-    .funnel { flex-direction: column; gap: 10px; }
-    .arrow { transform: rotate(90deg); }
-    .stage { padding: 18px 14px; }
-    .card .num { font-size: 26px; }
-    table { display: block; overflow-x: auto; font-size: 13px; white-space: nowrap; }
-    td, th { white-space: normal; min-width: 130px; }
-    .footnote { position: static; margin-top: 22px; }
-    .quote { font-size: 17px; }
-    ul.feat li { font-size: 14px; }
+    .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .funnel { flex-direction: column; gap: 8px; }
+    .arrow { transform: rotate(90deg); margin: 4px auto; }
+    .device-mockup img { height: 300px; }
     .slide [style*="display:flex"] { flex-wrap: wrap !important; }
-    .slide img { height: auto !important; max-width: 240px !important; }
-    .pdfbtn { bottom: 12px; right: 12px; padding: 10px 16px; }
+    .deck-nav-bar { width: 96%; flex-wrap: wrap; justify-content: center; border-radius: 18px; bottom: 8px; }
   }
+
+  /* Print Optimization (16:9 Landscape PDF Export) */
   @media print {
-    body { background: #fff; }
-    .slide { margin: 0; border-radius: 0; page-break-after: always; }
-    .pdfbtn { display: none; }
+    body {
+      background: #ffffff !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      padding: 0 !important;
+    }
+    .slide {
+      width: 100vw !important;
+      height: 100vh !important;
+      min-height: 100vh !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      border: none !important;
+      page-break-after: always !important;
+      box-shadow: none !important;
+      padding: 38px 44px !important;
+    }
+    .deck-nav-bar, .lang-toggle { display: none !important; }
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
   }
 </style>
 </head>
 <body>
 
 <!-- Slide 1: Title -->
-<div class="slide">
-  <div class="kicker">Investor Presentation · 2026</div>
-  <h1>ByabshaGhor</h1>
-  <p class="sub">The offline-first, multi-platform POS &amp; business OS for Bangladesh's
-  high-value retail shops — starting with mobile/electronics &amp; pharmacy, the two largest
-  regulated-inventory niches.</p>
-  <div style="margin-top:40px">
-    <span class="pill">POS &amp; Inventory</span>
-    <span class="pill">EMI &amp; Warranty</span>
-    <span class="pill">IMEI / Serial Tracking</span>
-    <span class="pill">Repair Job Orders</span>
-    <span class="pill">Offline-First</span>
-    <span class="pill">Android · Windows · Web</span>
+<div class="slide" id="slide-1">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">Investor Presentation</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle" title="Switch to Bangla Deck">বাংলা ↗</a>
+      <span class="slide-counter">01 / 11</span>
+    </div>
   </div>
-  <div class="footnote">ByabshaGhor · Confidential</div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>Investor Presentation · 2026</div>
+    <h1>ByabshaGhor</h1>
+    <p class="sub">The offline-first, multi-platform POS &amp; business OS for Bangladesh's
+    high-value retail shops — starting with mobile/electronics &amp; pharmacy, the two largest
+    regulated-inventory niches.</p>
+    <div style="margin-top: 36px;">
+      <span class="pill">POS &amp; Inventory</span>
+      <span class="pill">EMI &amp; Warranty</span>
+      <span class="pill">IMEI / Serial Tracking</span>
+      <span class="pill">Repair Job Orders</span>
+      <span class="pill">Offline-First Sync</span>
+      <span class="pill">Android · Windows · Web</span>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>ByabshaGhor · Confidential Investor Deck</span>
+    <span>Dhaka, Bangladesh</span>
+  </div>
 </div>
 
 <!-- Slide 2: Problem -->
-<div class="slide">
-  <div class="kicker">The Problem</div>
-  <h2>Bangladesh's shops still run on paper ledgers<br>— and it's costing them.</h2>
-  <div class="grid grid-3" style="margin-top:20px">
-    <div class="card"><h3>Manual khata</h3><p>Sales, dues and EMI tracked in notebooks. Reconciliation takes days each month; errors and theft go unnoticed.</p></div>
-    <div class="card"><h3>Serialized inventory</h3><p>Mobile &amp; electronics shops must track every IMEI/serial, warranty and repair job — generic khata apps can't do this.</p></div>
-    <div class="card"><h3>Unreliable internet</h3><p>Cloud-only POS tools stop when connectivity drops. Shops need to sell offline and sync later.</p></div>
+<div class="slide" id="slide-2">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">The Problem</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle">বাংলা ↗</a>
+      <span class="slide-counter">02 / 11</span>
+    </div>
   </div>
-  <div class="footnote">Source: field interviews (in progress), BBS Wholesale &amp; Retail Trade Survey</div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>The Problem</div>
+    <h2>Bangladesh's shops still run on paper ledgers<br>— and it's costing them daily.</h2>
+    <div class="grid grid-3" style="margin-top: 14px;">
+      <div class="card">
+        <h3>📓 Manual Khata</h3>
+        <p>Sales, dues and EMI tracked in notebooks. Reconciliation takes days each month; errors and unrecorded leakage go completely unnoticed.</p>
+      </div>
+      <div class="card">
+        <h3>🔍 Serialized Inventory</h3>
+        <p>Mobile &amp; electronics shops must track every IMEI/serial, warranty and repair job — generic khata apps simply cannot handle serialized workflows.</p>
+      </div>
+      <div class="card">
+        <h3>⚡ Unreliable Connectivity</h3>
+        <p>Cloud-only POS tools halt whenever connectivity drops. Shops need instant, offline-first cashier billing that syncs seamlessly when reconnected.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>Source: Field interviews (in progress)</span>
+    <span>BBS Wholesale &amp; Retail Trade Survey</span>
+  </div>
 </div>
 
 <!-- Slide 3: Solution -->
-<div class="slide">
-  <div class="kicker">The Solution</div>
-  <h2>A complete business OS for retail shops.</h2>
-  <div class="grid grid-2">
-    <div>
-      <ul class="feat">
-        <li>POS, purchase, returns, stock transfer <span>— full inventory lifecycle</span></li>
-        <li>IMEI/serial tracking, warranty, exchange <span>— built for phone &amp; electronics retail</span></li>
-        <li>Batch &amp; expiry tracking with FEFO <span>— the pharmacy counter's core need</span></li>
-        <li>EMI / installment sales &amp; credit limits <span>— how BD customers actually buy</span></li>
-        <li>Repair job orders &amp; servicing <span>— the mobile shop's second business</span></li>
-        <li>HRM, CRM, expenses, khata reports <span>— one system, not five apps</span></li>
-        <li>AI purchase entry &amp; WhatsApp/SMS gateway <span>— modern differentiators</span></li>
-      </ul>
+<div class="slide" id="slide-3">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">The Solution</span>
     </div>
-    <div>
-      <div class="card" style="margin-bottom:16px"><h3>Offline-first sync</h3><p>Sell with zero connectivity; local DB syncs to the cloud when back online. Built for real infrastructure conditions.</p></div>
-      <div class="card" style="margin-bottom:16px"><h3>True multi-tenant SaaS</h3><p>Schema-per-tenant isolation, AES-256-GCM encrypted PII, subscription plans — built to scale to thousands of shops.</p></div>
-      <div class="card"><h3>Every device they own</h3><p>Android app, Windows desktop installer, web app — plus a ready-made storefront website per shop.</p></div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle">বাংলা ↗</a>
+      <span class="slide-counter">03 / 11</span>
     </div>
   </div>
-  <div class="footnote">All features above are implemented and in production builds</div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>The Solution</div>
+    <h2>A complete business OS for high-value retail.</h2>
+    <div class="grid grid-2" style="align-items: center; margin-top: 10px;">
+      <div>
+        <ul class="feat">
+          <li>POS, purchase, returns, stock transfer <span>— full inventory lifecycle</span></li>
+          <li>IMEI/serial tracking, warranty, exchange <span>— built for phone &amp; electronics retail</span></li>
+          <li>Batch &amp; expiry tracking with FEFO <span>— the pharmacy counter's core need</span></li>
+          <li>EMI / installment sales &amp; credit limits <span>— how BD customers actually buy</span></li>
+          <li>Repair job orders &amp; servicing <span>— the mobile shop's second business</span></li>
+          <li>HRM, CRM, expenses, khata reports <span>— one system, not five disconnected apps</span></li>
+          <li>AI purchase entry &amp; WhatsApp/SMS gateway <span>— modern differentiators</span></li>
+        </ul>
+      </div>
+      <div class="grid" style="gap: 12px;">
+        <div class="card highlight">
+          <h3>⚡ Offline-First Sync</h3>
+          <p>Sell with zero connectivity; local DB syncs to the cloud automatically when online. Built specifically for frontier market infrastructure.</p>
+        </div>
+        <div class="card">
+          <h3>🛡️ True Multi-Tenant SaaS</h3>
+          <p>Schema-per-tenant isolation, AES-256-GCM encrypted PII, subscription tiers — architected to scale safely to tens of thousands of stores.</p>
+        </div>
+        <div class="card">
+          <h3>📱 Every Device They Own</h3>
+          <p>Android app, Windows desktop installer, responsive web app — plus an instant storefront website generated for every shop.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>All features above are implemented and live in production builds</span>
+    <span>ByabshaGhor Architecture</span>
+  </div>
 </div>
 
 <!-- Slide 3.5: Product -->
-<div class="slide">
-  <div class="kicker">The Product</div>
-  <h2>Live and in the shopkeeper's pocket.</h2>
-  <div style="display:flex; gap:48px; align-items:center">
-    <div style="flex-shrink:0">
-      <img src="assets/app-dashboard.png" alt="ByabshaGhor app dashboard" style="height:430px; border-radius:28px; border:3px solid rgba(148,163,184,.25); box-shadow:0 20px 60px rgba(0,0,0,.5)">
+<div class="slide" id="slide-4">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">Live Product</span>
     </div>
-    <div>
-      <ul class="feat">
-        <li>Bangla-first dashboard <span>— today's sales, dues, bills at a glance</span></li>
-        <li>One-tap new sale <span>— counter speed matters</span></li>
-        <li>Customer dues &amp; receivables <span>— the khata they actually need</span></li>
-        <li>7-day sales trend <span>— the owner's daily pulse</span></li>
-        <li>Same data on phone, PC &amp; web <span>— offline-first sync</span></li>
-      </ul>
-      <p class="sub" style="margin-top:18px; font-size:14px">Real screenshot from the production Android app.</p>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle">বাংলা ↗</a>
+      <span class="slide-counter">04 / 11</span>
     </div>
   </div>
-  <div class="footnote">ByabshaGhor · Confidential</div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>The Product</div>
+    <h2>Live and in the shopkeeper's pocket today.</h2>
+    <div style="display: flex; gap: 40px; align-items: center; margin-top: 8px;">
+      <div class="device-mockup" style="flex-shrink: 0;">
+        <img src="assets/app-dashboard.png" alt="ByabshaGhor app dashboard">
+      </div>
+      <div style="flex: 1;">
+        <ul class="feat" style="font-size: 16px;">
+          <li>Bangla-first native interface <span>— today's sales, dues, cash at a glance</span></li>
+          <li>One-tap new sale checkout <span>— lightning counter speed during peak rush</span></li>
+          <li>Customer dues &amp; receivables khata <span>— automated SMS ledger reminders</span></li>
+          <li>7-day sales trend &amp; analytics <span>— the owner's pulse in real-time</span></li>
+          <li>Instant sync across phone, PC &amp; web <span>— uninterrupted offline capability</span></li>
+        </ul>
+
+        <!-- Live Dashboard Mini Pulse Chart -->
+        <div class="card" style="margin-top: 18px; padding: 14px 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 13px; font-weight: 700; color: var(--text-primary);">📈 7-Day Live Sales Trend (Merchant Dashboard Pulse)</span>
+            <span style="font-size: 12px; font-weight: 700; color: var(--accent);">+23% Week-over-Week</span>
+          </div>
+          <svg viewBox="0 0 460 65" style="width: 100%; height: 55px; overflow: visible;">
+            <defs>
+              <linearGradient id="pulseGradEn" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <path d="M 10 48 Q 75 42, 140 32 T 270 24 T 370 14 T 450 8 L 450 60 L 10 60 Z" fill="url(#pulseGradEn)"/>
+            <path d="M 10 48 Q 75 42, 140 32 T 270 24 T 370 14 T 450 8" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="140" cy="32" r="3.5" fill="var(--accent)"/>
+            <circle cx="270" cy="24" r="3.5" fill="var(--accent)"/>
+            <circle cx="370" cy="14" r="3.5" fill="var(--accent)"/>
+            <circle cx="450" cy="8" r="4.5" fill="var(--accent)" stroke="#fff" stroke-width="1.5"/>
+            <text x="450" y="0" text-anchor="end" fill="var(--accent)" font-weight="700" font-size="11" font-family="'Plus Jakarta Sans', sans-serif">Today: Tk 82,500</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>ByabshaGhor · Production Architecture</span>
+    <span>Google Play Store &amp; Windows Installer Ready</span>
+  </div>
 </div>
 
-<!-- Slide 4: Market -->
-<div class="slide">
-  <div class="kicker">Market Size</div>
-  <h2>A massive, proven, underserved market.</h2>
-  <div class="funnel">
-    <div class="stage tam"><div class="v">3.95M</div><div class="l">Retail &amp; wholesale shops<br>(TAM — BBS)</div></div>
-    <div class="arrow">→</div>
-    <div class="stage sam"><div class="v">100–200K</div><div class="l">Digital-ready, high-value inventory shops<br>(SAM)</div></div>
-    <div class="arrow">→</div>
-    <div class="stage som"><div class="v">1–2K</div><div class="l">Paying shops in 3 years<br>(SOM — 1–2%)</div></div>
+<!-- Slide 4: Market & Growth Projection -->
+<div class="slide" id="slide-5">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">Market Size &amp; Scale</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle">বাংলা ↗</a>
+      <span class="slide-counter">05 / 11</span>
+    </div>
   </div>
-  <div class="grid grid-3" style="margin-top:26px">
-    <div class="card"><div class="num">1M+</div><div class="lbl">Monthly active shops on TallyKhata — proof that Bangladeshi shopkeepers adopt digital tools at scale</div></div>
-    <div class="card"><div class="num blue">2.26L+</div><div class="lbl">Registered pharmacies (DGDA) + ~20K mobile retailers — two regulated-inventory beachheads</div></div>
-    <div class="card"><div class="num blue">Tk 400Cr+</div><div class="lbl">/month theoretical subscription market across all retail (TAM at Tk 1,000 ARPU)</div></div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>Market Opportunity &amp; ARR Targets</div>
+    <h2>A massive market with a proven 3-year ARR roadmap.</h2>
+    
+    <div class="funnel">
+      <div class="stage tam">
+        <span class="badge">TAM · Total Market</span>
+        <div class="v">3.95M</div>
+        <div class="l">Retail &amp; wholesale shops<br>(BBS Trade Survey)</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="stage sam">
+        <span class="badge">SAM · Target Segment</span>
+        <div class="v">100–200K</div>
+        <div class="l">Digital-ready, high-value inventory shops</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="stage som">
+        <span class="badge">SOM · 3-Year Goal</span>
+        <div class="v">1–2K</div>
+        <div class="l">Paying subscriber shops<br>(1–2% of SAM)</div>
+      </div>
+    </div>
+
+    <!-- 3-Year ARR Projection Chart & Proof -->
+    <div class="grid grid-2" style="margin-top: 18px; align-items: stretch;">
+      <!-- Chart Card: ARR Ramp -->
+      <div class="card" style="padding: 16px 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-size: 13.5px; font-weight: 700; color: var(--text-primary);">📊 3-Year Annual Recurring Revenue (ARR) Ramp</span>
+          <span style="font-size: 12px; font-weight: 800; color: var(--accent);">Year 3: ~Tk 2.9Cr ARR</span>
+        </div>
+        <svg viewBox="0 0 460 110" style="width: 100%; height: 95px; overflow: visible;">
+          <!-- Bar 1: Year 1 -->
+          <rect x="50" y="70" width="60" height="30" rx="6" fill="var(--accent2)" opacity="0.8"/>
+          <text x="80" y="62" text-anchor="middle" fill="var(--text-primary)" font-weight="700" font-size="11" font-family="'Plus Jakarta Sans', sans-serif">Tk 18 Lakh</text>
+          <text x="80" y="116" text-anchor="middle" fill="var(--text-secondary)" font-size="11">Year 1 (100 shops)</text>
+
+          <!-- Bar 2: Year 2 -->
+          <rect x="190" y="42" width="60" height="58" rx="6" fill="var(--accent-secondary)" opacity="0.85"/>
+          <text x="220" y="34" text-anchor="middle" fill="var(--text-primary)" font-weight="700" font-size="11" font-family="'Plus Jakarta Sans', sans-serif">Tk 85 Lakh</text>
+          <text x="220" y="116" text-anchor="middle" fill="var(--text-secondary)" font-size="11">Year 2 (500 shops)</text>
+
+          <!-- Bar 3: Year 3 -->
+          <rect x="330" y="12" width="60" height="88" rx="6" fill="var(--accent)"/>
+          <text x="360" y="4" text-anchor="middle" fill="var(--accent)" font-weight="800" font-size="12" font-family="'Plus Jakarta Sans', sans-serif">Tk 2.9 Crore 🚀</text>
+          <text x="360" y="116" text-anchor="middle" fill="var(--text-primary)" font-weight="700" font-size="11">Year 3 (2,000 shops)</text>
+
+          <!-- Growth Arc -->
+          <path d="M 80 50 Q 220 18, 330 10" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+
+      <!-- Proof Points -->
+      <div class="grid" style="gap: 10px;">
+        <div class="card" style="padding: 12px 18px;">
+          <div class="num" style="font-size: 26px;">1M+ Active Shops</div>
+          <div class="lbl" style="margin-top: 2px;">Monthly active on TallyKhata — confirms mass retail smartphone adoption.</div>
+        </div>
+        <div class="card" style="padding: 12px 18px;">
+          <div class="num blue" style="font-size: 26px;">2.46L+ Stores</div>
+          <div class="lbl" style="margin-top: 2px;">Registered pharmacies + mobile retailers — dual regulated beachhead.</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="footnote">Sources: <a href="https://www.adb.org/sites/default/files/linked-documents/36200-024-ssa.pdf">BBS Economic Census 2024 (via ADB)</a>, <a href="https://www.thedailystar.net/business/economy/industries/news/395-lakh-trading-firms-contribute-14pc-gdp-2206521">BBS Wholesale &amp; Retail Trade Survey</a>, <a href="https://en.techworldbd.com/mobile-phone/138">MIOB</a>, <a href="https://www.tallykhata.com">TallyKhata</a></div>
+
+  <div class="footnote">
+    <span>Sources: <a href="https://www.adb.org/sites/default/files/linked-documents/36200-024-ssa.pdf">BBS Census 2024 (via ADB)</a>, <a href="https://www.thedailystar.net/business/economy/industries/news/395-lakh-trading-firms-contribute-14pc-gdp-2206521">BBS Trade Survey</a>, <a href="https://en.techworldbd.com/mobile-phone/138">MIOB</a></span>
+    <span>TallyKhata &amp; DGDA Public Data</span>
+  </div>
 </div>
 
 <!-- Slide 5: Tailwind -->
-<div class="slide">
-  <div class="kicker">Why Now</div>
-  <h2>Regulation is turning our niche's pain<br>into a mandate.</h2>
-  <div class="quote" style="margin-top:10px">BTRC's NEIR handset registration makes IMEI-level inventory tracking
-  essential for every mobile retailer — trade bodies call it an "existential crisis" for shops
-  running on paper.</div>
-  <div class="grid grid-3" style="margin-top:30px">
-    <div class="card"><h3>3.2–3.5M</h3><p>smartphones sold every month — every one carries an IMEI shops must track</p></div>
-    <div class="card"><h3>60%+</h3><p>of handsets historically grey-market — inventory compliance pressure is only rising</p></div>
-    <div class="card"><h3>We're ready</h3><p>IMEI tracking, warranty, job orders already shipped in production</p></div>
+<div class="slide" id="slide-6">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">Market Timing</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle">বাংলা ↗</a>
+      <span class="slide-counter">06 / 11</span>
+    </div>
   </div>
-  <div class="footnote">Sources: <a href="https://www.dhakatribune.com/feature/tech/400169/mobile-retailers-neir-rollout-and-future-of">Dhaka Tribune</a>, <a href="https://www.tbsnews.net/economy/smartphones-must-now-too-high-tax-makes-them-unaffordable-many-1306936">The Business Standard</a>, <a href="https://en.techworldbd.com/mobile-phone/138">TechWorldBD</a></div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>Why Now</div>
+    <h2>Regulation is turning our niche's acute pain<br>into an unavoidable legal mandate.</h2>
+    
+    <div class="quote">
+      "BTRC's NEIR handset registration makes IMEI-level inventory tracking essential for every mobile retailer — trade bodies call it an 'existential crisis' for shops attempting to run on paper."
+    </div>
+
+    <div class="grid grid-3" style="margin-top: 24px;">
+      <div class="card">
+        <div class="num">3.2–3.5M</div>
+        <div class="lbl"><b>Smartphones sold every month</b> — every single one carries an IMEI that retail shops must track and report.</div>
+      </div>
+      <div class="card">
+        <div class="num blue">60%+</div>
+        <div class="lbl"><b>Historically grey-market handsets</b> — inventory compliance pressure and tax oversight are tightening rapidly.</div>
+      </div>
+      <div class="card highlight">
+        <div class="num">100% Ready</div>
+        <div class="lbl"><b>Production shipped</b> — IMEI tracking, warranty records, customer serial logs and repair orders are live today.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>Sources: <a href="https://www.dhakatribune.com/feature/tech/400169/mobile-retailers-neir-rollout-and-future-of">Dhaka Tribune</a>, <a href="https://www.tbsnews.net/economy/smartphones-must-now-too-high-tax-makes-them-unaffordable-many-1306936">The Business Standard</a></span>
+    <span>TechWorldBD Industry Report</span>
+  </div>
 </div>
 
 <!-- Slide 5.5: Pharmacy niche -->
-<div class="slide">
-  <div class="kicker">Beachhead #2 · Pharmacy</div>
-  <h2>226K+ pharmacies lose stock to expiry every year.</h2>
-  <div class="grid grid-2">
-    <div>
-      <div class="card" style="margin-bottom:16px"><h3>The pain</h3><p>Medicines expire silently on shelves. Owners find out when the box is already dead stock — written off, or worse, sold by mistake. Batch recall? Nearly impossible on paper.</p></div>
-      <div class="card"><h3>The units mess</h3><p>Stock arrives in boxes, sells by strip, sometimes by piece. Keeping the math straight across a thousand SKUs is where errors and theft hide.</p></div>
+<div class="slide" id="slide-7">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">Beachhead #2 · Pharmacy</span>
     </div>
-    <div>
-      <ul class="feat">
-        <li>Batch + expiry tracked at purchase <span>— every unit knows its shelf life</span></li>
-        <li>FEFO allocation at billing <span>— oldest expiry sells first, automatically</span></li>
-        <li>Expiry alert report <span>— see what's dying 30/60/90 days out, return or discount it</span></li>
-        <li>Strip ↔ piece unit conversion <span>— sell either way, stock stays correct</span></li>
-        <li>Offline-first + multi-device <span>— counter keeps selling, syncs later</span></li>
-      </ul>
-      <div class="card" style="margin-top:16px"><h3>2,26,118</h3><p>registered pharmacies in Bangladesh (DGDA) + ~1 lakh unlicensed — the densest retail network in the country</p></div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle">বাংলা ↗</a>
+      <span class="slide-counter">07 / 11</span>
     </div>
   </div>
-  <div class="footnote">Shipped in production: batch/expiry, FEFO, expiry-alert, UOM conversion · Source: DGDA</div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>Beachhead #2 · Pharmacy Niche</div>
+    <h2>226K+ pharmacies lose stock to expiry every single year.</h2>
+    
+    <div class="grid grid-2" style="margin-top: 10px;">
+      <div class="grid" style="gap: 12px;">
+        <div class="card">
+          <h3>⚠️ Silent Expiry Loss</h3>
+          <p>Medicines expire silently on shelves. Owners discover dead stock when it's too late — forced to write it off, or worse, sell it by error. Paper batch recall is virtually impossible.</p>
+        </div>
+        <div class="card">
+          <h3>📦 The Multi-Unit Dilemma</h3>
+          <p>Stock arrives in whole boxes, sells by strip, sometimes by piece. Keeping math straight across thousands of SKUs is where inventory errors and employee theft hide.</p>
+        </div>
+      </div>
+
+      <div>
+        <ul class="feat">
+          <li>Batch &amp; expiry tracked at purchase <span>— every unit knows its exact shelf life</span></li>
+          <li>Automatic FEFO billing <span>— first-expiry-first-out sells older stock automatically</span></li>
+          <li>Expiry alert reports <span>— see what expires in 30/60/90 days; return or discount</span></li>
+          <li>Box ↔ Strip ↔ Piece unit conversion <span>— sell any unit, inventory stays synced</span></li>
+          <li>Full offline counter <span>— load-shedding or net drop will never halt a billing line</span></li>
+        </ul>
+        <div class="card highlight" style="margin-top: 14px;">
+          <div class="num" style="font-size: 28px;">2,26,118+</div>
+          <div class="lbl">Registered pharmacies (DGDA) + ~1 lakh community drugstores — Bangladesh's densest retail network.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>Shipped in production: batch/expiry, FEFO, expiry-alert engine, UOM conversion</span>
+    <span>Source: DGDA Annual Data</span>
+  </div>
 </div>
 
 <!-- Slide 6: Competition -->
-<div class="slide">
-  <div class="kicker">Competition</div>
-  <h2>Crowded market — but nobody owns our niche.</h2>
-  <table style="margin-top:8px">
-    <tr><th>Category</th><th>Players</th><th>Gap we exploit</th></tr>
-    <tr><td>Khata apps</td><td class="dim">TallyKhata (1M+ MAU), Hishabee, Bisnesy, HishabPati</td><td class="dim">Ledger-first — no IMEI, EMI, warranty or service workflows</td></tr>
-    <tr><td>Local POS vendors</td><td class="dim">Mediasoft, SK POS, Smart Dokani, AmarSolution, Sunshine IT</td><td class="dim">Generic retail or single-PC — weak offline, no mobile+desktop+web, no serialized inventory</td></tr>
-    <tr><td>Retail ERPs</td><td class="dim">Managerium (iBOS), Odoo, TallyPrime</td><td class="dim">Built for chains — heavy setup fees, overkill for a shop</td></tr>
-    <tr><td>Paper / Excel</td><td class="dim">The real incumbent</td><td class="dim">Errors, no reports, no EMI/IMEI tracking, no backup</td></tr>
-  </table>
-  <p class="sub" style="margin-top:22px; font-size:16px">Khata apps digitized the <b style="color:#e2e8f0">ledger</b>; ERPs serve <b style="color:#e2e8f0">chains</b>. Nobody gives the mobile/electronics shop a complete business OS — <b style="color:#22c55e">that's us</b>.</p>
-  <div class="footnote">Analysis: <a href="https://itlab.solutions/blog/the-ultimate-guide-to-pos-and-shop-management-system-in-bangladesh">IT Lab</a>, <a href="https://bisnesy.com/compare">Bisnesy</a>, <a href="https://financfy.com/blog/pos-software-in-bangladesh/">Financfy</a>, <a href="https://www.softeko.co/software/pos/bangladesh/">Softeko</a>, <a href="https://ibos.io/top-10-pos-software-in-bangladesh-2026-managerium-retail-erp-1-ranked/">iBOS</a> + field research</div>
+<div class="slide" id="slide-8">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">Competitive Landscape</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle">বাংলা ↗</a>
+      <span class="slide-counter">08 / 11</span>
+    </div>
+  </div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>Competition</div>
+    <h2>Crowded market — but nobody owns our high-value niche.</h2>
+    
+    <div class="table-wrap" style="margin-top: 12px;">
+      <table>
+        <tr>
+          <th>Category</th>
+          <th>Incumbent Players</th>
+          <th>Their Limitations</th>
+          <th>The ByabshaGhor Advantage</th>
+        </tr>
+        <tr>
+          <td><b>Khata Apps</b></td>
+          <td class="dim">TallyKhata (1M+ MAU), Hishabee, Bisnesy</td>
+          <td class="dim">Ledger-first — no serials, IMEI, EMI, or warranty tracking</td>
+          <td class="highlight-cell">Complete serialized retail OS</td>
+        </tr>
+        <tr>
+          <td><b>Local POS</b></td>
+          <td class="dim">Mediasoft, SK POS, Smart Dokani</td>
+          <td class="dim">Single-PC legacy tech, weak mobile, no true offline sync</td>
+          <td class="highlight-cell">Offline-first on Phone, PC &amp; Web</td>
+        </tr>
+        <tr>
+          <td><b>Retail ERPs</b></td>
+          <td class="dim">Managerium (iBOS), Odoo, TallyPrime</td>
+          <td class="dim">Heavy upfront setup fees, built for corporate chains</td>
+          <td class="highlight-cell">Zero-friction assisted onboarding</td>
+        </tr>
+        <tr>
+          <td><b>Paper / Excel</b></td>
+          <td class="dim">The real primary incumbent</td>
+          <td class="dim">High human error, no insights, lost dues, zero backup</td>
+          <td class="highlight-cell">100% automated &amp; backed up</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card" style="margin-top: 16px; background: rgba(125, 125, 125, 0.06); border-color: var(--accent);">
+      <p style="font-size: 15.5px;">💡 <b>Core Takeaway:</b> Khata apps digitized the <b>ledger</b>; ERPs serve <b>large chains</b>. Nobody equips mobile, electronics, and pharmacy shops with an end-to-end business OS — <b>that is precisely what ByabshaGhor delivers.</b></p>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>Analysis: IT Lab, Bisnesy, Financfy, Softeko, iBOS and proprietary field interviews</span>
+    <span>Confidential</span>
+  </div>
 </div>
 
-<!-- Slide 7: Business model -->
-<div class="slide">
-  <div class="kicker">Business Model</div>
-  <h2>Subscription now. Platform revenue next.</h2>
-  <div class="grid grid-3" style="margin-top:10px">
-    <div class="card"><div class="num">Free → Tk 1.5K</div><div class="lbl"><b>Khata (free)</b> entry tier for simple ledger shops → upgrade to Pro when they need IMEI/EMI/repairs — TallyKhata's playbook, with a real product behind it</div></div>
-    <div class="card"><div class="num blue">~Tk 2.9Cr</div><div class="lbl">ARR at 2,000 paying shops (base case, year 3)</div></div>
-    <div class="card"><div class="num blue">Multi-line</div><div class="lbl">Expansion: payments margin, SMS/WhatsApp credits, storefront websites, partner API, data-based credit referrals</div></div>
+<!-- Slide 7: Business Model -->
+<div class="slide" id="slide-9">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">Business Model</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle">বাংলা ↗</a>
+      <span class="slide-counter">09 / 11</span>
+    </div>
   </div>
-  <div class="grid grid-2" style="margin-top:22px">
-    <div class="card"><h3>Go-to-market</h3><p>Field sales in mobile/electronics market clusters → 14-day assisted trial (we migrate their stock) → referral incentives → commission-based district agents via our Partner API.</p></div>
-    <div class="card"><h3>Moat</h3><p>Migration cost (inventory + IMEI history), daily operational dependence, offline data sync, and accumulated sales/credit data powering future fintech products.</p></div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>Monetization</div>
+    <h2>Subscription SaaS today. Platform &amp; fintech revenue next.</h2>
+    
+    <div class="grid grid-3" style="margin-top: 10px;">
+      <div class="card highlight">
+        <div class="num">Free → Tk 1.5K</div>
+        <div class="lbl"><b>Khata Entry Tier:</b> Simple ledgers are free. Upgrades to Pro when shops need IMEI, EMI, repairs or cloud sync — TallyKhata's scale playbook, powered by a real product.</div>
+      </div>
+      <div class="card">
+        <div class="num blue">~Tk 2.9Cr</div>
+        <div class="lbl"><b>Annual Recurring Revenue (ARR):</b> Across 2,000 paying shops (conservative Year 3 baseline scenario).</div>
+      </div>
+      <div class="card">
+        <div class="num blue">Multi-Stream</div>
+        <div class="lbl"><b>Expansion Revenue:</b> Digital payment transaction fees, SMS/WhatsApp credit packages, online storefronts, and verified credit referral commissions.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top: 16px;">
+      <div class="card">
+        <h3>🚀 Go-To-Market (GTM)</h3>
+        <p>Direct field sales in high-density electronics hubs → 14-day assisted trial (our team digitizes their legacy inventory) → customer referral incentives → commission-based district agents.</p>
+      </div>
+      <div class="card">
+        <h3>🏰 Defensible Moat</h3>
+        <p>High migration cost (historical IMEI and customer ledger lock-in), daily mission-critical operational reliance, offline data sync, and transactional data powering future embedded fintech.</p>
+      </div>
+    </div>
   </div>
-  <div class="footnote">Subscription architecture and plans already implemented in the backend</div>
+
+  <div class="footnote">
+    <span>Subscription tier architecture and billing management already operational in backend</span>
+    <span>SaaS Expansion Model</span>
+  </div>
 </div>
 
-<!-- Slide 7.5: Shop ROI -->
-<div class="slide">
-  <div class="kicker">Shop-level ROI</div>
-  <h2>Tk 40,000+ saved per year. Costs Tk 14,400.</h2>
-  <p class="sub">Manual vs. ByabshaGhor for a mid-size shop (~Tk 3L monthly sales)</p>
-  <table style="margin-top:14px">
-    <tr><th>Where shops bleed</th><th>Manual</th><th>With us</th><th>Yearly saving</th></tr>
-    <tr><td>Reconciliation time</td><td class="dim">1–2 hrs/day</td><td class="dim">~15 min</td><td class="dim">Tk 10–15K</td></tr>
-    <tr><td>Stock errors &amp; leakage</td><td class="dim">0.5–1% of sales</td><td class="dim">every unit tracked</td><td class="dim">Tk 15–25K</td></tr>
-    <tr><td>Forgotten dues (baki)</td><td class="dim">~5% written off</td><td class="dim">auto list + reminders</td><td class="dim">Tk 10–18K</td></tr>
-    <tr><td>Lost EMI installments</td><td class="dim">memory-based</td><td class="dim">auto schedule</td><td class="dim">Tk 5–8K</td></tr>
-    <tr><td>IMEI/warranty disputes</td><td class="dim">paper receipts</td><td class="dim">search by IMEI</td><td class="dim">Tk 3–5K</td></tr>
-    <tr><td>Expiry write-offs (pharmacy)</td><td class="dim">1–3% of stock</td><td class="dim">FEFO + expiry alerts</td><td class="dim">Tk 5–15K</td></tr>
-  </table>
-  <p class="sub" style="margin-top:16px; font-size:15px"><b style="color:#22c55e">3–5× ROI</b> — one wrong IMEI or one expired batch costs more than months of subscription.</p>
-  <div class="footnote">Conservative field estimates — replace with pilot data</div>
+<!-- Slide 7.5: Shop ROI & Savings Chart -->
+<div class="slide" id="slide-10">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">Shop Economics</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle">বাংলা ↗</a>
+      <span class="slide-counter">10 / 11</span>
+    </div>
+  </div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>Unit Economics &amp; Savings</div>
+    <h2>Tk 40,000+ saved per year. Annual software cost: Tk 14,400.</h2>
+    
+    <div class="table-wrap" style="margin-top: 6px;">
+      <table>
+        <tr>
+          <th>Where Shops Bleed Cash</th>
+          <th>Manual Operation</th>
+          <th>With ByabshaGhor</th>
+          <th>Estimated Yearly Saving</th>
+        </tr>
+        <tr>
+          <td>Reconciliation Time</td>
+          <td class="dim">1–2 wasted hours daily</td>
+          <td>Automated 15-min balance</td>
+          <td class="highlight-cell">Tk 10,000 – 15,000</td>
+        </tr>
+        <tr>
+          <td>Stock Errors &amp; Leakage</td>
+          <td class="dim">0.5–1% of total sales</td>
+          <td>Every single serial tracked</td>
+          <td class="highlight-cell">Tk 15,000 – 25,000</td>
+        </tr>
+        <tr>
+          <td>Forgotten Dues (Baki)</td>
+          <td class="dim">~5% written off completely</td>
+          <td>Auto debtor list + reminders</td>
+          <td class="highlight-cell">Tk 10,000 – 18,000</td>
+        </tr>
+        <tr>
+          <td>Lost EMI Installments</td>
+          <td class="dim">Relies on memory</td>
+          <td>Automated payment schedule</td>
+          <td class="highlight-cell">Tk 5,000 – 8,000</td>
+        </tr>
+        <tr>
+          <td>Expiry Losses (Pharmacy)</td>
+          <td class="dim">1–3% of stock written off</td>
+          <td>FEFO rules + expiry alerts</td>
+          <td class="highlight-cell">Tk 5,000 – 15,000</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Visual ROI Comparison Bar -->
+    <div class="card highlight" style="margin-top: 14px; padding: 14px 22px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span style="font-size: 14px; font-weight: 700; color: var(--text-primary);">📊 Annual Loss vs. Net Profit Saved Comparison</span>
+        <div class="num" style="font-size: 24px;">3x - 5x Net ROI</div>
+      </div>
+      
+      <!-- Comparison Bar -->
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 3px;">
+            <span style="color: #ef4444; font-weight: 600;">Paper Khata (Annual Hidden Leakage &amp; Waste):</span>
+            <span style="color: #ef4444; font-weight: 800;">-Tk 58,000+ Loss/yr</span>
+          </div>
+          <div style="height: 12px; background: rgba(239, 68, 68, 0.15); border-radius: 999px; overflow: hidden; border: 1px solid rgba(239, 68, 68, 0.3);">
+            <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #ef4444, #f87171); border-radius: 999px;"></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 3px;">
+            <span style="color: var(--accent); font-weight: 600;">With ByabshaGhor (Cost Tk 14,400 → Cash Saved Tk 43,600+):</span>
+            <span style="color: var(--accent); font-weight: 800;">+Tk 43,600 Net Saved</span>
+          </div>
+          <div style="height: 12px; background: var(--accent-glow); border-radius: 999px; overflow: hidden; border: 1px solid var(--accent); display: flex;">
+            <div style="width: 25%; height: 100%; background: var(--accent2);" title="Software Fee"></div>
+            <div style="width: 75%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light));" title="Net Savings"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-top: 3px;">
+            <span>🔵 Software Subscription: Tk 14,400</span>
+            <span>🟢 Net Direct Cash Saved: Tk 43,600+ (Straight to owner's pocket)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>Conservative field estimates based on mid-size merchant operating models</span>
+    <span>ByabshaGhor Value Proposition</span>
+  </div>
 </div>
 
-<!-- Slide 8: Roadmap + Ask -->
-<div class="slide">
-  <div class="kicker">Roadmap &amp; The Ask</div>
-  <h2>Traction first, then capital.</h2>
-  <div class="grid grid-4" style="margin-top:10px">
-    <div class="card"><h3>Months 1–2</h3><p>20 shop interviews → 5 pilot shops live (free)</p></div>
-    <div class="card"><h3>Months 3–4</h3><p>Pilots convert to paid · pricing finalized</p></div>
-    <div class="card"><h3>Months 5–8</h3><p>30–50 paying shops · 1 district agent · referral program</p></div>
-    <div class="card"><h3>Months 9–12</h3><p>100 paying shops · Tk 1.5L+ MRR · churn &lt;5%</p></div>
+<!-- Slide 8: Roadmap + Ask (In Taka & with Traction Graph) -->
+<div class="slide" id="slide-11">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ByabshaGhor</div>
+      <span class="brand-badge">Execution &amp; Funding</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck-bn.html" class="lang-toggle">বাংলা ↗</a>
+      <span class="slide-counter">11 / 11</span>
+    </div>
   </div>
-  <div class="card" style="margin-top:26px; border-color: rgba(34,197,94,.4)">
-    <h3 style="color:var(--accent); font-size:19px">What we're raising</h3>
-    <p style="font-size:15.5px">Pre-seed / angel round after pilot traction — targeting <b style="color:#e2e8f0">US$50–150K</b> to fund
-    field sales expansion, onboarding ops, and product hardening. Open to conversations now with
-    angels who know the Bangladeshi retail market.</p>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>Roadmap &amp; Milestones</div>
+    <h2>Proven traction first, then scaling capital.</h2>
+    
+    <div class="grid grid-4" style="margin-top: 6px;">
+      <div class="card">
+        <h3 style="color: var(--accent2); font-size: 16px;">Months 1–2</h3>
+        <p style="font-size: 13.5px;">20 deep merchant interviews → 5 pilot shops onboarded with free hands-on assisted setup.</p>
+      </div>
+      <div class="card">
+        <h3 style="color: var(--accent2); font-size: 16px;">Months 3–4</h3>
+        <p style="font-size: 13.5px;">Pilot to paid conversion validation · packaging &amp; tiered pricing finalized.</p>
+      </div>
+      <div class="card">
+        <h3 style="color: var(--accent-light); font-size: 16px;">Months 5–8</h3>
+        <p style="font-size: 13.5px;">30–50 paying shops live · 1st district agent onboarded · referral incentive program.</p>
+      </div>
+      <div class="card highlight">
+        <h3 style="color: var(--text-primary); font-size: 16px;">Months 9–12</h3>
+        <p style="font-size: 13.5px;"><b>100 paying shops</b> · Tk 1.5L+ MRR · Churn sustained at &lt;5%.</p>
+      </div>
+    </div>
+
+    <!-- 12-Month MRR Growth Curve SVG Chart -->
+    <div class="card" style="margin-top: 14px; padding: 14px 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+        <span style="font-size: 13.5px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent); display: inline-block;"></span>
+          12-Month Merchant Count &amp; Monthly Recurring Revenue (MRR) Growth Curve
+        </span>
+        <span style="font-size: 12.5px; font-weight: 800; color: var(--accent);">Target: Tk 1.5L+ MRR (100 Shops)</span>
+      </div>
+      <svg viewBox="0 0 760 100" style="width: 100%; height: 85px; overflow: visible;">
+        <defs>
+          <linearGradient id="mrrGradEn" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.32"/>
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.0"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid horizontal lines -->
+        <line x1="40" y1="20" x2="740" y2="20" stroke="var(--card-border)" stroke-dasharray="3"/>
+        <line x1="40" y1="55" x2="740" y2="55" stroke="var(--card-border)" stroke-dasharray="3"/>
+        <line x1="40" y1="85" x2="740" y2="85" stroke="var(--card-border)"/>
+
+        <!-- Area Fill -->
+        <path d="M 60 85 Q 240 82, 420 58 T 720 18 L 720 85 L 60 85 Z" fill="url(#mrrGradEn)"/>
+        <!-- Curve Line -->
+        <path d="M 60 85 Q 240 82, 420 58 T 720 18" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- Points & text -->
+        <circle cx="60" cy="85" r="4.5" fill="var(--bg-page)" stroke="var(--accent2)" stroke-width="2"/>
+        <text x="60" y="74" text-anchor="middle" fill="var(--text-secondary)" font-size="10.5">M2: 5 Pilots (Tk 0)</text>
+        <text x="60" y="98" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">M2</text>
+
+        <circle cx="280" cy="74" r="4.5" fill="var(--bg-page)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="280" y="62" text-anchor="middle" fill="var(--text-secondary)" font-size="10.5">M4: 15 Paid (Tk 22K)</text>
+        <text x="280" y="98" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">M4</text>
+
+        <circle cx="500" cy="52" r="5" fill="var(--bg-page)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="500" y="38" text-anchor="middle" fill="var(--text-secondary)" font-size="10.5">M8: 45 Paid (Tk 65K)</text>
+        <text x="500" y="98" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">M8</text>
+
+        <circle cx="720" cy="18" r="6" fill="var(--accent)" stroke="#fff" stroke-width="2"/>
+        <text x="700" y="8" text-anchor="end" fill="var(--accent)" font-weight="800" font-size="12">M12: 100 Shops · Tk 1.5L+ MRR 🚀</text>
+        <text x="720" y="98" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">M12</text>
+      </svg>
+    </div>
+
+    <!-- Funding Ask in BDT / Taka -->
+    <div class="card highlight" style="margin-top: 14px; padding: 18px 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+        <div>
+          <h3 style="color: var(--accent-light); font-size: 19px; margin-bottom: 4px;">💼 What We're Raising (Target Round)</h3>
+          <p style="font-size: 15px; color: var(--text-primary); line-height: 1.55;">
+            Following pilot traction proof, we are targeting a Pre-Seed / Angel round of <b style="font-size: 17px; color: var(--accent);">Tk 50 Lakh – 1.5 Crore</b>. 
+            Capital will directly finance field sales cluster expansion across key retail hubs, onboarding ops acceleration, and core software scalability.
+          </p>
+        </div>
+        <div style="text-align: right; flex-shrink: 0;">
+          <div class="num" style="font-size: 28px;">Tk 50L – 1.5Cr</div>
+          <span style="font-size: 12.5px; color: var(--text-secondary); font-weight: 600;">Pre-Seed / Angel Round</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="footnote">ByabshaGhor · Confidential · figures are targets, not commitments</div>
+
+  <div class="footnote">
+    <span>ByabshaGhor · Founder Contact: founders@byabshaghor.com</span>
+    <span>Projections are strategic targets, not guarantees</span>
+  </div>
 </div>
 
-<button class="pdfbtn" onclick="window.print()" title="Save as PDF">⬇ Download PDF</button>
+<!-- Floating Presentation Dock -->
+<div class="deck-nav-bar">
+  <button class="deck-nav-btn" onclick="navigateSlide(-1)" title="Previous Slide (Left Arrow)">◀ Previous</button>
+  <span class="nav-counter" id="navCounter">01 / 11</span>
+  <button class="deck-nav-btn" onclick="navigateSlide(1)" title="Next Slide (Right Arrow or Space)">Next ▶</button>
+  
+  <!-- Segmented Theme Switcher -->
+  <div class="theme-switch-group" title="Change Theme Palette">
+    <button class="theme-btn active" data-set-theme="fintech" onclick="setDeckTheme('fintech')">🌙 FinTech</button>
+    <button class="theme-btn" data-set-theme="executive" onclick="setDeckTheme('executive')">☀️ Light</button>
+    <button class="theme-btn" data-set-theme="cyber" onclick="setDeckTheme('cyber')">⚡ Cyber</button>
+  </div>
+
+  <button class="deck-nav-btn" onclick="toggleDeckFullscreen()" title="Toggle Fullscreen (F)">⛶ Fullscreen</button>
+  <a href="pitch-deck-bn.html" class="deck-nav-btn" title="Bangla Version">🌐 বাংলা</a>
+  <button class="deck-nav-btn primary" onclick="window.print()" title="Save as PDF">⬇ Download PDF</button>
+</div>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const counterEl = document.getElementById('navCounter');
+
+  /* Theme Switcher Engine */
+  function setDeckTheme(themeName) {
+    document.documentElement.setAttribute('data-theme', themeName);
+    localStorage.setItem('byabshaghor_pitch_theme', themeName);
+    
+    // update button states
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      if (btn.getAttribute('data-set-theme') === themeName) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Restore saved theme on load
+  const savedTheme = localStorage.getItem('byabshaghor_pitch_theme') || 'fintech';
+  setDeckTheme(savedTheme);
+
+  function updateCounter() {
+    if (counterEl) {
+      const toEn = n => String(n).padStart(2, '0');
+      counterEl.textContent = `${toEn(currentSlide + 1)} / ${toEn(slides.length)}`;
+    }
+  }
+
+  function navigateSlide(dir) {
+    currentSlide += dir;
+    if (currentSlide < 0) currentSlide = 0;
+    if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+    slides[currentSlide].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    updateCounter();
+  }
+
+  function toggleDeckFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => console.log(err));
+    } else {
+      document.exitFullscreen().catch(err => console.log(err));
+    }
+  }
+
+  // Keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      navigateSlide(1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      navigateSlide(-1);
+    } else if (e.key.toLowerCase() === 'f') {
+      toggleDeckFullscreen();
+    }
+  });
+
+  // Track scroll position to update counter
+  window.addEventListener('scroll', () => {
+    let closestIndex = 0;
+    let minDiff = Infinity;
+    slides.forEach((slide, idx) => {
+      const rect = slide.getBoundingClientRect();
+      const diff = Math.abs(rect.top);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = idx;
+      }
+    });
+    if (closestIndex !== currentSlide) {
+      currentSlide = closestIndex;
+      updateCounter();
+    }
+  }, { passive: true });
+</script>
 </body>
 </html>

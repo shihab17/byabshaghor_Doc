@@ -3,70 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ByabshaGhor — Market Research & Sizing — ByabshaGhor Docs</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<title>ByabshaGhor — Market Research &amp; Sizing — ব্যবসাঘর Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="glossary.css">
 <script src="glossary.js" defer></script>
 <style>
   :root {
-    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
-    --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
+    --bg-page: #050814;
+    --card-bg: rgba(16, 23, 44, 0.65);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-top: rgba(255, 255, 255, 0.14);
+    --accent: #00f2a9;
+    --accent-light: #34d399;
+    --accent-glow: rgba(0, 242, 169, 0.15);
+    --accent2: #38bdf8;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --line: rgba(255, 255, 255, 0.08);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Hind Siliguri','Inter',sans-serif; background:#0b1120; color:var(--text); }
+  body {
+    font-family: 'Anek Bangla', 'Hind Siliguri', sans-serif;
+    background-color: var(--bg-page);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(0, 242, 169, 0.08), transparent 50%),
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 28px 28px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
   .bar {
-    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line); padding:12px 24px;
-    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(9, 14, 31, 0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line); padding: 13px 28px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   }
-  .brand { font-weight:700; color:var(--accent); font-size:16px; }
-  .bar a { color:var(--accent2); font-size:13.5px; text-decoration:none; }
-  .bar a:hover { text-decoration:underline; }
+  .brand {
+    font-weight: 700; color: #fff; font-size: 16.5px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .brand-dot {
+    width: 8px; height: 8px; background: var(--accent);
+    border-radius: 50%; box-shadow: 0 0 10px var(--accent);
+  }
+  .bar a {
+    color: var(--accent2); font-size: 13px; text-decoration: none;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;
+    transition: color 0.15s;
+  }
+  .bar a:hover { color: #bae6fd; text-decoration: underline; }
   .bar button {
-    margin-left:auto; background:rgba(34,197,94,.12); color:var(--accent);
-    border:1px solid rgba(34,197,94,.4); border-radius:10px;
-    padding:7px 14px; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+    margin-left: auto; background: var(--accent); color: #04120a;
+    border: none; border-radius: 999px;
+    padding: 7px 16px; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 2px 10px var(--accent-glow); transition: all 0.2s;
   }
-  .content { max-width:960px; margin:0 auto; padding:40px 28px 80px; }
-  h1 { font-size:32px; color:var(--accent); margin:0 0 18px; border-bottom:2px solid rgba(34,197,94,.3); padding-bottom:12px; }
-  h2 { font-size:23px; color:var(--accent2); margin:34px 0 14px; }
-  h3 { font-size:18px; color:#e2e8f0; margin:24px 0 10px; }
-  p, li { font-size:15.5px; line-height:1.75; color:#dbe4f0; }
-  p { margin:10px 0; }
-  ul, ol { padding-left:26px; margin:10px 0; }
-  li { margin:5px 0; }
+  .bar button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .content {
+    max-width: 940px; margin: 0 auto; padding: 44px 24px 90px;
+  }
+  h1 {
+    font-size: 36px; font-weight: 800; line-height: 1.25; margin: 0 0 20px;
+    background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    border-bottom: 1px solid var(--line); padding-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  h2 {
+    font-size: 24px; font-weight: 700; color: var(--accent2); margin: 36px 0 14px;
+    letter-spacing: -0.2px; display: flex; align-items: center; gap: 8px;
+  }
+  h3 { font-size: 18px; font-weight: 700; color: #f1f5f9; margin: 24px 0 10px; }
+  p, li { font-size: 16px; line-height: 1.75; color: #dbe4f0; }
+  p { margin: 12px 0; }
+  ul, ol { padding-left: 24px; margin: 12px 0; }
+  li { margin: 6px 0; }
   blockquote {
-    border-left:4px solid var(--accent); background:rgba(34,197,94,.07);
-    padding:14px 18px; border-radius:0 10px 10px 0; margin:14px 0;
+    border-left: 4px solid var(--accent);
+    background: rgba(0, 242, 169, 0.06);
+    padding: 16px 22px; border-radius: 0 12px 12px 0; margin: 18px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
   }
-  blockquote p { color:#d1fae5; }
-  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
-  th { text-align:left; color:var(--accent); background:rgba(34,197,94,.08); padding:10px 12px; font-size:13px; border:1px solid var(--line); }
-  td { padding:9px 12px; border:1px solid var(--line); color:#dbe4f0; vertical-align:top; }
-  tr:nth-child(even) td { background:rgba(30,41,59,.5); }
-  code { background:#0b1120; padding:2px 7px; border-radius:5px; font-size:13.5px; color:#fbbf24; }
-  pre { background:#0b1120; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; margin:14px 0; }
-  pre code { background:none; padding:0; color:#e2e8f0; font-size:13.5px; line-height:1.6; }
-  a { color:var(--accent2); text-decoration:none; }
-  a:hover { text-decoration:underline; }
-  hr { border:none; border-top:1px solid var(--line); margin:26px 0; }
-  strong { color:#fff; }
+  blockquote p { color: #d1fae5; margin: 4px 0; font-size: 16px; }
+  table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    margin: 20px 0; font-size: 14.5px;
+    border: 1px solid var(--card-border); border-radius: 12px;
+    overflow: hidden; background: var(--card-bg); backdrop-filter: blur(12px);
+  }
+  th {
+    text-align: left; color: var(--accent); background: rgba(24, 34, 64, 0.85);
+    padding: 12px 16px; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  td {
+    padding: 11px 16px; border-bottom: 1px solid var(--line);
+    color: #e2e8f0; vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  code {
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2px 8px; border-radius: 6px; font-size: 13.5px; color: #fbbf24;
+    font-family: 'Plus Jakarta Sans', monospace;
+  }
+  pre {
+    background: #090e1f; border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px; overflow-x: auto; margin: 16px 0;
+  }
+  pre code { background: none; border: none; padding: 0; color: #e2e8f0; font-size: 13.5px; line-height: 1.6; }
+  a { color: var(--accent2); text-decoration: none; transition: color 0.15s; }
+  a:hover { color: #bae6fd; text-decoration: underline; }
+  hr { border: none; border-top: 1px solid var(--line); margin: 30px 0; }
+  strong { color: #fff; font-weight: 700; }
   @media print {
-    .bar { display:none; }
-    body { background:#fff; }
-    .content { padding:0; }
-    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color:#111; }
-    td, th { border-color:#ccc; }
-    th { background:#eee; }
-    blockquote { background:#f5f5f5; }
-    a { color:#0369a1; }
+    .bar { display: none; }
+    body { background: #fff !important; color: #111 !important; }
+    .content { padding: 0; max-width: 100%; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color: #111 !important; }
+    td, th {{ border-color: #ccc !important; }}
+    th {{ background: #eee !important; }}
+    blockquote {{ background: #f5f5f5 !important; border-left-color: #047857 !important; }}
+    a {{ color: #0369a1 !important; }}
   }
 </style>
 </head>
 <body>
 <div class="bar">
-  <span class="brand">ব্যবসাঘর Docs</span>
-  <a href="viewer.html">সব ডকের লিস্ট</a>
+  <span class="brand"><span class="brand-dot"></span>ব্যবসাঘর Docs</span>
+  <a href="viewer.html">← সব ডকের লিস্ট</a>
   <a href="market-research.md">market-research.md (markdown)</a>
   <button onclick="window.print()">🖨 Print / PDF</button>
 </div>
@@ -141,22 +214,21 @@
 <h3>সোর্স লিংক</h3>
 <ul>
 <li>BBS Economic Census / ADB SME assessment:
-  https://www.adb.org/sites/default/files/linked-documents/36200-024-ssa.pdf</li>
+  <a href="https://www.adb.org/sites/default/files/linked-documents/36200-024-ssa.pdf" target="_blank">https://www.adb.org/sites/default/files/linked-documents/36200-024-ssa.pdf</a></li>
 <li>BBS Wholesale &amp; Retail Trade Survey 2020:
-  https://objectstorage.ap-dcc-gazipur-1.oraclecloud15.com/n/axvjbnqprylg/b/V2Ministry/o/office-bbs/2024/12/d2d7fc053aed4c96a6eed18d8fda8211.pdf</li>
+  <a href="https://objectstorage.ap-dcc-gazipur-1.oraclecloud15.com/n/axvjbnqprylg/b/V2Ministry/o/office-bbs/2024/12/d2d7fc053aed4c96a6eed18d8fda8211.pdf" target="_blank">BBS Survey PDF Report</a></li>
 <li>Daily Star — 39.5 lakh trading firms, 14% GDP:
-  https://www.thedailystar.net/business/economy/industries/news/395-lakh-trading-firms-contribute-14pc-gdp-2206521</li>
+  <a href="https://www.thedailystar.net/business/economy/industries/news/395-lakh-trading-firms-contribute-14pc-gdp-2206521" target="_blank">Daily Star News</a></li>
 <li>Smartphone sales / market size:
-  https://www.tbsnews.net/economy/smartphones-must-now-too-high-tax-makes-them-unaffordable-many-1306936
-  https://english.thedailycampus.com/economy/1247</li>
-<li>মোবাইল রিটেইলার সংখ্যা (MIOB): https://en.techworldbd.com/mobile-phone/138</li>
+  <a href="https://www.tbsnews.net/economy/smartphones-must-now-too-high-tax-makes-them-unaffordable-many-1306936" target="_blank">TBS News</a> |
+  <a href="https://english.thedailycampus.com/economy/1247" target="_blank">The Daily Campus</a></li>
+<li>মোবাইল রিটেইলার সংখ্যা (MIOB): <a href="https://en.techworldbd.com/mobile-phone/138" target="_blank">TechWorldBD</a></li>
 <li>NEIR crisis (Dhaka Tribune):
-  https://www.dhakatribune.com/feature/tech/400169/mobile-retailers-neir-rollout-and-future-of</li>
+  <a href="https://www.dhakatribune.com/feature/tech/400169/mobile-retailers-neir-rollout-and-future-of" target="_blank">Dhaka Tribune Report</a></li>
 <li>ফার্মেসি সংখ্যা (DGDA data):
-  https://www.asia-post.com/english/business/ap3pb9uvf5yx-100000-Pharmacies-operating-without-registration-237-more-added-every-month
-  https://tob.news/nearly-half-of-pharmacies-lack-required-authorisation-dgda/</li>
+  <a href="https://www.asia-post.com/english/business/ap3pb9uvf5yx-100000-Pharmacies-operating-without-registration-237-more-added-every-month" target="_blank">Asia Post Report</a></li>
 <li>টালিখাতা 1M+ MAU:
-  https://www.thedailystar.net/supplements/app-savvy-bangladesh/news/millions-shopkeepers-using-tallykhata-app-records-and-payments-3622596</li>
+  <a href="https://www.thedailystar.net/supplements/app-savvy-bangladesh/news/millions-shopkeepers-using-tallykhata-app-records-and-payments-3622596" target="_blank">The Daily Star Supplement</a></li>
 </ul>
 <h2>২. TAM → SAM → SOM</h2>
 <h3>TAM — Total Addressable Market</h3>

@@ -1,310 +1,1539 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" data-theme="fintech">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ব্যবসাঘর — ইনভেস্টর পিচ</title>
+<title>ব্যবসাঘর — ইনভেস্টর পিচ ডেক (Investor Pitch Deck)</title>
 <link rel="stylesheet" href="glossary.css">
 <script src="glossary.js" defer></script>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --accent: #22c55e;
+  /* ==========================================================================
+     THEME DEFINITIONS (CSS CUSTOM PROPERTIES)
+     ========================================================================== */
+
+  /* 1. FinTech Obsidian (Default: Stripe / Mercury Inspired) */
+  :root, [data-theme="fintech"] {
+    --bg-page: #050814;
+    --bg-pattern: 
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(0, 242, 169, 0.08), transparent 50%),
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    --slide-bg: linear-gradient(145deg, #090e1f 0%, #050814 100%);
+    --slide-border: rgba(255, 255, 255, 0.09);
+    --slide-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    --glow-1: rgba(0, 242, 169, 0.15);
+    --glow-2: rgba(99, 102, 241, 0.18);
+    --card-bg: rgba(16, 23, 44, 0.65);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-top: rgba(255, 255, 255, 0.14);
+    --card-border-hover: rgba(0, 242, 169, 0.4);
+    --card-highlight-bg: linear-gradient(145deg, rgba(0, 242, 169, 0.12) 0%, rgba(16, 23, 44, 0.7) 100%);
+    --card-highlight-border: rgba(0, 242, 169, 0.4);
+    --accent: #00f2a9;
+    --accent-light: #34d399;
+    --accent-glow: rgba(0, 242, 169, 0.2);
+    --accent-secondary: #818cf8;
     --accent2: #38bdf8;
-    --text: #f1f5f9;
-    --muted: #94a3b8;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --heading-gradient: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
+    --header-border: rgba(255, 255, 255, 0.07);
+    --table-bg: rgba(16, 23, 44, 0.6);
+    --table-header-bg: rgba(24, 34, 64, 0.85);
+    --table-row-hover: rgba(255, 255, 255, 0.03);
+    --table-highlight-cell: rgba(0, 242, 169, 0.1);
+    --dock-bg: rgba(9, 13, 31, 0.88);
+    --dock-border: rgba(255, 255, 255, 0.12);
   }
+
+  /* 2. Executive Institutional Light (Apple / Sequoia Clean Style) */
+  [data-theme="executive"] {
+    --bg-page: #f1f5f9;
+    --bg-pattern: 
+      radial-gradient(circle at 50% 0%, rgba(4, 120, 87, 0.07), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05), transparent 50%),
+      radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+    --slide-bg: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    --slide-border: rgba(15, 23, 42, 0.1);
+    --slide-shadow: 0 20px 50px -15px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.04);
+    --glow-1: rgba(4, 120, 87, 0.08);
+    --glow-2: rgba(37, 99, 235, 0.07);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --card-border: rgba(226, 232, 240, 0.9);
+    --card-border-top: #ffffff;
+    --card-border-hover: rgba(4, 120, 87, 0.4);
+    --card-highlight-bg: linear-gradient(145deg, rgba(4, 120, 87, 0.06) 0%, #ffffff 100%);
+    --card-highlight-border: rgba(4, 120, 87, 0.35);
+    --accent: #047857;
+    --accent-light: #059669;
+    --accent-glow: rgba(4, 120, 87, 0.12);
+    --accent-secondary: #2563eb;
+    --accent2: #0284c7;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --heading-gradient: linear-gradient(135deg, #0f172a 30%, #334155 100%);
+    --header-border: rgba(15, 23, 42, 0.08);
+    --table-bg: #ffffff;
+    --table-header-bg: #f8fafc;
+    --table-row-hover: rgba(15, 23, 42, 0.02);
+    --table-highlight-cell: rgba(4, 120, 87, 0.08);
+    --dock-bg: rgba(255, 255, 255, 0.92);
+    --dock-border: rgba(15, 23, 42, 0.12);
+  }
+
+  /* 3. Cyber Luxury (Linear & Raycast Inspired Pitch Dark & Amber Gold) */
+  [data-theme="cyber"] {
+    --bg-page: #030712;
+    --bg-pattern: 
+      radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.12), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(6, 182, 212, 0.09), transparent 50%),
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    --slide-bg: linear-gradient(145deg, #0c101d 0%, #030712 100%);
+    --slide-border: rgba(245, 158, 11, 0.16);
+    --slide-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(245, 158, 11, 0.12);
+    --glow-1: rgba(245, 158, 11, 0.16);
+    --glow-2: rgba(6, 182, 212, 0.15);
+    --card-bg: rgba(17, 24, 39, 0.7);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-top: rgba(255, 255, 255, 0.15);
+    --card-border-hover: rgba(245, 158, 11, 0.45);
+    --card-highlight-bg: linear-gradient(145deg, rgba(245, 158, 11, 0.12) 0%, rgba(17, 24, 39, 0.75) 100%);
+    --card-highlight-border: rgba(245, 158, 11, 0.4);
+    --accent: #f59e0b;
+    --accent-light: #fbbf24;
+    --accent-glow: rgba(245, 158, 11, 0.2);
+    --accent-secondary: #06b6d4;
+    --accent2: #38bdf8;
+    --text-primary: #f9fafb;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --heading-gradient: linear-gradient(135deg, #ffffff 40%, #fbbf24 100%);
+    --header-border: rgba(255, 255, 255, 0.08);
+    --table-bg: rgba(17, 24, 39, 0.6);
+    --table-header-bg: rgba(31, 41, 55, 0.85);
+    --table-row-hover: rgba(255, 255, 255, 0.03);
+    --table-highlight-cell: rgba(245, 158, 11, 0.12);
+    --dock-bg: rgba(17, 24, 39, 0.9);
+    --dock-border: rgba(255, 255, 255, 0.14);
+  }
+
+  /* ==========================================================================
+     BASE STYLES & LAYOUT
+     ========================================================================== */
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Hind Siliguri', sans-serif; background: #e2e8f0; color: var(--text); }
+  
+  body {
+    font-family: 'Anek Bangla', 'Hind Siliguri', sans-serif;
+    background-color: var(--bg-page);
+    background-image: var(--bg-pattern);
+    background-size: 100% 100%, 100% 100%, 28px 28px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding-bottom: 90px;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Slide Shell (16:9 Presentation View) */
   .slide {
-    width: 1120px; min-height: 630px; margin: 24px auto; padding: 56px 64px;
-    background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
-    border-radius: 16px; display: flex; flex-direction: column; justify-content: center;
-    page-break-after: always; position: relative; overflow: hidden;
+    width: 1160px;
+    min-height: 652px;
+    margin: 32px auto;
+    padding: 40px 54px 46px;
+    background: var(--slide-bg);
+    border: 1px solid var(--slide-border);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--slide-shadow);
+    scroll-margin-top: 24px;
+    transition: all 0.3s ease;
   }
+
+  /* Decorative Ambient Glow */
   .slide::before {
-    content: ''; position: absolute; top: -120px; right: -120px;
-    width: 340px; height: 340px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(34,197,94,.15), transparent 70%);
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow-1), transparent 70%);
+    pointer-events: none;
+    z-index: 1;
   }
-  .kicker { color: var(--accent); font-size: 14px; font-weight: 700; letter-spacing: 2px; margin-bottom: 14px; }
-  h1 { font-size: 58px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
-  h2 { font-size: 36px; font-weight: 700; line-height: 1.3; margin-bottom: 24px; }
-  .sub { font-size: 21px; color: var(--muted); line-height: 1.6; max-width: 820px; }
-  .grid { display: grid; gap: 18px; }
+
+  .slide::after {
+    content: '';
+    position: absolute;
+    bottom: -140px;
+    left: -140px;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow-2), transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .slide-content {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Top Navigation & Brand Header per slide */
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--header-border);
+    position: relative;
+    z-index: 3;
+  }
+
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-logo-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+  }
+
+  .brand-dot {
+    width: 9px;
+    height: 9px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--accent);
+    display: inline-block;
+  }
+
+  .brand-badge {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    background: rgba(125, 125, 125, 0.08);
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+  }
+
+  .slide-meta-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .lang-toggle {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent2);
+    text-decoration: none;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    padding: 3px 10px;
+    border-radius: 999px;
+    transition: all 0.2s;
+  }
+
+  .lang-toggle:hover {
+    background: rgba(56, 189, 248, 0.18);
+    border-color: rgba(56, 189, 248, 0.45);
+  }
+
+  .slide-counter {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* Typography */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-light);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    background: var(--accent-glow);
+    border: 1px solid var(--accent-light);
+    padding: 4px 14px;
+    border-radius: 999px;
+    width: fit-content;
+  }
+
+  .kicker-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-light);
+    border-radius: 50%;
+  }
+
+  h1 {
+    font-size: 58px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    background: var(--heading-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+
+  h2 {
+    font-size: 35px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 18px;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+  }
+
+  .sub {
+    font-size: 19px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 860px;
+    font-weight: 400;
+  }
+
+  /* Grid Layouts */
+  .grid { display: grid; gap: 16px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: repeat(3, 1fr); }
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
-  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+  /* Premium Cards */
   .card {
-    background: rgba(30,41,59,.85); border: 1px solid rgba(148,163,184,.15);
-    border-radius: 14px; padding: 22px 24px;
+    background: var(--card-bg);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--card-border);
+    border-top: 1px solid var(--card-border-top);
+    border-radius: 16px;
+    padding: 20px 22px;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.2);
+    position: relative;
   }
-  .card .num { font-size: 34px; font-weight: 800; color: var(--accent); }
+
+  .card:hover {
+    border-color: var(--card-border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.3), 0 0 20px var(--accent-glow);
+  }
+
+  .card.highlight {
+    background: var(--card-highlight-bg);
+    border: 1px solid var(--card-highlight-border);
+  }
+
+  .card .num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+
   .card .num.blue { color: var(--accent2); }
-  .card .lbl { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
-  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-  .card p { font-size: 15px; color: var(--muted); line-height: 1.6; }
-  table { width: 100%; border-collapse: collapse; font-size: 15.5px; }
-  th { text-align: left; color: var(--accent); font-size: 13px; padding: 10px 14px; border-bottom: 2px solid rgba(34,197,94,.4); }
-  td { padding: 11px 14px; border-bottom: 1px solid rgba(148,163,184,.12); color: #e2e8f0; }
-  td.dim { color: var(--muted); }
-  .pill { display: inline-block; background: rgba(34,197,94,.12); color: var(--accent); border: 1px solid rgba(34,197,94,.35); border-radius: 999px; padding: 6px 16px; font-size: 15px; font-weight: 600; margin: 4px 6px 4px 0; }
-  .quote { font-size: 22px; line-height: 1.6; color: #e2e8f0; border-left: 4px solid var(--accent); padding-left: 24px; max-width: 920px; }
-  .footnote { position: absolute; bottom: 26px; left: 64px; font-size: 12px; color: #64748b; }
-  .footnote a { color: #7dd3fc; text-decoration: none; }
-  .footnote a:hover { text-decoration: underline; }
-  .funnel { display: flex; align-items: stretch; gap: 0; margin-top: 8px; }
-  .stage { flex: 1; text-align: center; padding: 26px 14px; border-radius: 12px; }
-  .stage .v { font-size: 30px; font-weight: 800; }
-  .stage .l { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
-  .stage.tam { background: rgba(56,189,248,.10); } .stage.tam .v { color: var(--accent2); }
-  .stage.sam { background: rgba(34,197,94,.10); } .stage.sam .v { color: var(--accent); }
-  .stage.som { background: rgba(34,197,94,.22); border: 1px solid rgba(34,197,94,.4); } .stage.som .v { color: var(--accent); }
-  .arrow { align-self: center; color: var(--muted); font-size: 26px; padding: 0 8px; }
-  ul.feat { list-style: none; }
-  ul.feat li { padding: 7px 0 7px 28px; position: relative; font-size: 16px; color: #e2e8f0; line-height: 1.5; }
-  ul.feat li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
-  ul.feat li span { color: var(--muted); }
-  .pdfbtn {
-    position: fixed; bottom: 18px; right: 18px; z-index: 50;
-    background: var(--accent); color: #04120a; border: none; border-radius: 999px;
-    padding: 12px 22px; font-weight: 700; font-size: 14px; cursor: pointer;
-    font-family: inherit; box-shadow: 0 8px 24px rgba(0,0,0,.45);
+
+  .card .lbl {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    line-height: 1.5;
   }
-  .pdfbtn:hover { filter: brightness(1.1); }
+
+  .card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card p {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* Pills & Tags */
+  .pill {
+    display: inline-block;
+    background: var(--accent-glow);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 7px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 4px 6px 4px 0;
+    transition: all 0.2s;
+  }
+
+  .pill:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+  }
+
+  /* Quotes / Callouts */
+  .quote {
+    font-size: 21px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    border-left: 4px solid var(--accent);
+    background: var(--accent-glow);
+    padding: 18px 26px;
+    border-radius: 0 14px 14px 0;
+    max-width: 980px;
+    font-weight: 500;
+  }
+
+  /* Feature Lists */
+  ul.feat { list-style: none; }
+  ul.feat li {
+    padding: 7px 0 7px 30px;
+    position: relative;
+    font-size: 15.5px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  ul.feat li::before {
+    content: '✓';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 18px;
+    height: 18px;
+    background: var(--accent-glow);
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  ul.feat li span { color: var(--text-secondary); }
+
+  /* Funnel Flow */
+  .funnel {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .stage {
+    flex: 1;
+    text-align: center;
+    padding: 20px 16px;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    transition: transform 0.2s ease;
+  }
+
+  .stage:hover { transform: translateY(-3px); }
+
+  .stage .badge {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  .stage .v {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    margin-top: 2px;
+  }
+
+  .stage .l {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .stage.tam {
+    background: rgba(56, 189, 248, 0.08);
+    border-color: rgba(56, 189, 248, 0.25);
+  }
+  .stage.tam .badge { background: rgba(56, 189, 248, 0.2); color: var(--accent2); }
+  .stage.tam .v { color: var(--accent2); }
+
+  .stage.sam {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+  }
+  .stage.sam .badge { background: var(--accent-glow); color: var(--accent); }
+  .stage.sam .v { color: var(--accent); }
+
+  .stage.som {
+    background: var(--card-highlight-bg);
+    border: 1px solid var(--accent);
+    box-shadow: 0 8px 24px var(--accent-glow);
+  }
+  .stage.som .badge { background: var(--accent); color: #04120a; }
+  .stage.som .v { color: var(--text-primary); }
+
+  .arrow {
+    align-self: center;
+    color: var(--text-muted);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  /* Clean Tables */
+  .table-wrap {
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--table-bg);
+    backdrop-filter: blur(12px);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+  }
+
+  th {
+    text-align: left;
+    color: var(--accent);
+    font-size: 12.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 11px 16px;
+    background: var(--table-header-bg);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--text-primary);
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--table-row-hover); }
+
+  td.dim { color: var(--text-secondary); }
+  td.highlight-cell { color: var(--text-primary); font-weight: 600; background: var(--table-highlight-cell); }
+
+  /* Footnote */
+  .footnote {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding-top: 12px;
+    margin-top: 12px;
+    border-top: 1px solid var(--header-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footnote a {
+    color: var(--accent2);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .footnote a:hover {
+    filter: brightness(1.2);
+    text-decoration: underline;
+  }
+
+  /* App Mockup Showcase Frame */
+  .device-mockup {
+    position: relative;
+    border-radius: 32px;
+    padding: 6px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.2), rgba(255,255,255,0.03));
+    box-shadow: 
+      0 25px 60px -10px rgba(0, 0, 0, 0.4),
+      0 0 35px var(--accent-glow);
+  }
+
+  .device-mockup img {
+    height: 410px;
+    border-radius: 26px;
+    display: block;
+  }
+
+  /* Fixed Navigation Dock */
+  .deck-nav-bar {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--dock-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--dock-border);
+    padding: 8px 14px;
+    border-radius: 999px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  }
+
+  .deck-nav-btn {
+    background: rgba(125, 125, 125, 0.1);
+    color: var(--text-primary);
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .deck-nav-btn:hover {
+    background: rgba(125, 125, 125, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .deck-nav-btn.primary {
+    background: var(--accent);
+    color: #04120a;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+
+  .deck-nav-btn.primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 15px var(--accent-glow);
+  }
+
+  .nav-counter {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    padding: 0 4px;
+  }
+
+  /* Segmented Theme Switcher */
+  .theme-switch-group {
+    display: flex;
+    background: rgba(125, 125, 125, 0.1);
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 3px;
+  }
+
+  .theme-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 9px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .theme-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .theme-btn.active {
+    background: var(--accent);
+    color: #04120a;
+    font-weight: 700;
+    box-shadow: 0 2px 8px var(--accent-glow);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .slide { width: 95%; margin: 20px auto; min-height: auto; padding: 34px 28px; }
+  }
+
   @media (max-width: 900px) {
-    .slide { width: 100%; min-height: auto; margin: 0; border-radius: 0; padding: 40px 22px 60px; }
-    .slide::before { display: none; }
+    .slide { width: 100%; border-radius: 0; padding: 26px 16px 36px; margin: 0 0 16px; }
+    .slide::before, .slide::after { display: none; }
     h1 { font-size: 32px; }
     h2 { font-size: 23px; }
-    .sub { font-size: 16px; }
-    .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; }
-    .funnel { flex-direction: column; gap: 10px; }
-    .arrow { transform: rotate(90deg); }
-    .stage { padding: 18px 14px; }
-    .card .num { font-size: 26px; }
-    table { display: block; overflow-x: auto; font-size: 13px; white-space: nowrap; }
-    td, th { white-space: normal; min-width: 130px; }
-    .footnote { position: static; margin-top: 22px; }
-    .quote { font-size: 17px; }
-    ul.feat li { font-size: 14px; }
+    .sub { font-size: 15.5px; }
+    .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .funnel { flex-direction: column; gap: 8px; }
+    .arrow { transform: rotate(90deg); margin: 4px auto; }
+    .device-mockup img { height: 300px; }
     .slide [style*="display:flex"] { flex-wrap: wrap !important; }
-    .slide img { height: auto !important; max-width: 240px !important; }
-    .pdfbtn { bottom: 12px; right: 12px; padding: 10px 16px; }
+    .deck-nav-bar { width: 96%; flex-wrap: wrap; justify-content: center; border-radius: 18px; bottom: 8px; }
   }
+
+  /* Print Optimization (16:9 Landscape PDF Export) */
   @media print {
-    body { background: #fff; }
-    .slide { margin: 0; border-radius: 0; page-break-after: always; }
-    .pdfbtn { display: none; }
+    body {
+      background: #ffffff !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      padding: 0 !important;
+    }
+    .slide {
+      width: 100vw !important;
+      height: 100vh !important;
+      min-height: 100vh !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      border: none !important;
+      page-break-after: always !important;
+      box-shadow: none !important;
+      padding: 38px 44px !important;
+    }
+    .deck-nav-bar, .lang-toggle { display: none !important; }
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
   }
 </style>
 </head>
 <body>
 
 <!-- স্লাইড ১: টাইটেল -->
-<div class="slide">
-  <div class="kicker">ইনভেস্টর প্রেজেন্টেশন · ২০২৬</div>
-  <h1>ব্যবসাঘর</h1>
-  <p class="sub">বাংলাদেশের হাই-ভ্যালু রিটেইল দোকানের জন্য অফলাইন-ফার্স্ট, মাল্টি-প্ল্যাটফর্ম
-  POS ও বিজনেস অপারেটিং সিস্টেম — শুরু মোবাইল/ইলেকট্রনিক্স ও ফার্মেসি থেকে,
-  দুটো বৃহত্তম রেগুলেটেড-ইনভেন্টরি নিচ।</p>
-  <div style="margin-top:40px">
-    <span class="pill">POS ও ইনভেন্টরি</span>
-    <span class="pill">EMI ও ওয়ারেন্টি</span>
-    <span class="pill">IMEI / সিরিয়াল ট্র্যাকিং</span>
-    <span class="pill">রিপেয়ার জব অর্ডার</span>
-    <span class="pill">অফলাইন-ফার্স্ট</span>
-    <span class="pill">অ্যান্ড্রয়েড · উইন্ডোজ · ওয়েব</span>
+<div class="slide" id="slide-1">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">ইনভেস্টর প্রেজেন্টেশন</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle" title="Switch to English Deck">English ↗</a>
+      <span class="slide-counter">০১ / ১১</span>
+    </div>
   </div>
-  <div class="footnote">ব্যবসাঘর · গোপনীয়</div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>ইনভেস্টর প্রেজেন্টেশন · ২০২৬</div>
+    <h1>ব্যবসাঘর</h1>
+    <p class="sub">বাংলাদেশের হাই-ভ্যালু রিটেইল দোকানের জন্য অফলাইন-ফার্স্ট, মাল্টি-প্ল্যাটফর্ম
+    POS ও বিজনেস অপারেটিং সিস্টেম — শুরু মোবাইল/ইলেকট্রনিক্স ও ফার্মেসি থেকে,
+    দুটো বৃহত্তম রেগুলেটেড-ইনভেন্টরি নিচ।</p>
+    <div style="margin-top: 36px;">
+      <span class="pill">POS ও ইনভেন্টরি</span>
+      <span class="pill">EMI ও ওয়ারেন্টি</span>
+      <span class="pill">IMEI / সিরিয়াল ট্র্যাকিং</span>
+      <span class="pill">রিপেয়ার জব অর্ডার</span>
+      <span class="pill">অফলাইন-ফার্স্ট সিঙ্ক</span>
+      <span class="pill">অ্যান্ড্রয়েড · উইন্ডোজ · ওয়েব</span>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>ব্যবসাঘর (ByabshaGhor) · গোপনীয় ইনভেস্টর ডেক</span>
+    <span>ঢাকা, বাংলাদেশ</span>
+  </div>
 </div>
 
 <!-- স্লাইড ২: সমস্যা -->
-<div class="slide">
-  <div class="kicker">সমস্যা</div>
-  <h2>বাংলাদেশের দোকান এখনো কাগজের খাতায় চলে —<br>আর এতে লোকসান হচ্ছে প্রতিদিন।</h2>
-  <div class="grid grid-3" style="margin-top:20px">
-    <div class="card"><h3>খাতার হিসাব</h3><p>বিক্রি, বাকি আর EMI সব খাতায়। মাস শেষে হিসাব মেলাতে দিনের পর দিন যায়; ভুল আর উধাও মালের খোঁজ মেলে না।</p></div>
-    <div class="card"><h3>সিরিয়ালাইজড ইনভেন্টরি</h3><p>মোবাইল ও ইলেকট্রনিক্স দোকানে প্রতিটা IMEI/সিরিয়াল, ওয়ারেন্টি আর রিপেয়ার ট্র্যাক করতে হয় — সাধারণ খাতা অ্যাপে এটা সম্ভব না।</p></div>
-    <div class="card"><h3>অস্থির ইন্টারনেট</h3><p>ক্লাউড-নির্ভর POS ইন্টারনেট গেলে থেমে যায়। দোকানের দরকার অফলাইনে বিক্রি, পরে সিঙ্ক।</p></div>
+<div class="slide" id="slide-2">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">সমস্যা</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle">English ↗</a>
+      <span class="slide-counter">০২ / ১১</span>
+    </div>
   </div>
-  <div class="footnote">সোর্স: ফিল্ড ইন্টারভিউ (চলমান), BBS Wholesale &amp; Retail Trade Survey</div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>সমস্যা</div>
+    <h2>বাংলাদেশের দোকান এখনো কাগজের খাতায় চলে —<br>আর এতে লোকসান হচ্ছে প্রতিদিন।</h2>
+    <div class="grid grid-3" style="margin-top: 14px;">
+      <div class="card">
+        <h3>📓 খাতার হিসাব</h3>
+        <p>বিক্রি, বাকি আর EMI সব খাতায়। মাস শেষে হিসাব মেলাতে দিনের পর দিন যায়; ভুল আর উধাও মালের কোনো খোঁজ মেলে না।</p>
+      </div>
+      <div class="card">
+        <h3>🔍 সিরিয়ালাইজড ইনভেন্টরি</h3>
+        <p>মোবাইল ও ইলেকট্রনিক্স দোকানে প্রতিটা IMEI/সিরিয়াল, ওয়ারেন্টি আর রিপেয়ার ট্র্যাক করতে হয় — সাধারণ খাতা অ্যাপে এটা সম্ভব না।</p>
+      </div>
+      <div class="card">
+        <h3>⚡ অস্থির ইন্টারনেট</h3>
+        <p>ক্লাউড-নির্ভর POS ইন্টারনেট ড্রপ করলেই থেমে যায়। দোকানের বাস্তব প্রয়োজন অফলাইনে নির্বিঘ্নে বিক্রি, পরে অটো সিঙ্ক।</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>সোর্স: ফিল্ড ইন্টারভিউ (চলমান)</span>
+    <span>BBS Wholesale &amp; Retail Trade Survey</span>
+  </div>
 </div>
 
 <!-- স্লাইড ৩: সমাধান -->
-<div class="slide">
-  <div class="kicker">সমাধান</div>
-  <h2>দোকানের পুরো কারবার এক সিস্টেমে।</h2>
-  <div class="grid grid-2">
-    <div>
-      <ul class="feat">
-        <li>POS, কেনা, রিটার্ন, স্টক ট্রান্সফার <span>— পুরো ইনভেন্টরি সাইকেল</span></li>
-        <li>IMEI/সিরিয়াল ট্র্যাকিং, ওয়ারেন্টি, এক্সচেঞ্জ <span>— মোবাইল ও ইলেকট্রনিক্সের জন্য</span></li>
-        <li>ব্যাচ ও মেয়াদ ট্র্যাকিং, FEFO <span>— ফার্মেসি কাউন্টারের মূল দরকার</span></li>
-        <li>EMI/কিস্তি বিক্রি ও ক্রেডিট লিমিট <span>— বাংলাদেশে কাস্টমার যেভাবে কেনে</span></li>
-        <li>রিপেয়ার জব অর্ডার ও সার্ভিসিং <span>— মোবাইল দোকানের দ্বিতীয় ব্যবসা</span></li>
-        <li>HRM, CRM, খরচ, খাতা রিপোর্ট <span>— পাঁচটা অ্যাপ না, একটা সিস্টেম</span></li>
-        <li>AI দিয়ে কেনার এন্ট্রি, WhatsApp/SMS গেটওয়ে <span>— আধুনিক সুবিধা</span></li>
-      </ul>
+<div class="slide" id="slide-3">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">সমাধান</span>
     </div>
-    <div>
-      <div class="card" style="margin-bottom:16px"><h3>অফলাইন-ফার্স্ট সিঙ্ক</h3><p>ইন্টারনেট ছাড়াই বিক্রি চলবে; লোকাল ডেটাবেস পরে ক্লাউডে সিঙ্ক হয়। বাংলাদেশের বাস্তবতার জন্যই তৈরি।</p></div>
-      <div class="card" style="margin-bottom:16px"><h3>সত্যিকারের মাল্টি-টেন্যান্ট SaaS</h3><p>প্রতি দোকানের ডেটা আলাদা স্কিমায়, AES-256-GCM এনক্রিপ্ট করা PII, সাবস্ক্রিপশন প্ল্যান — হাজার দোকানে স্কেল করতে প্রস্তুত।</p></div>
-      <div class="card"><h3>সব ডিভাইসে</h3><p>অ্যান্ড্রয়েড অ্যাপ, উইন্ডোজ ডেস্কটপ, ওয়েব অ্যাপ — সাথে প্রতি দোকানের জন্য রেডিমেড ওয়েবসাইট।</p></div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle">English ↗</a>
+      <span class="slide-counter">০৩ / ১১</span>
     </div>
   </div>
-  <div class="footnote">উপরের সব ফিচার প্রোডাকশন বিল্ডে আছে এবং চালু</div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>সমাধান</div>
+    <h2>দোকানের পুরো কারবার এক সিস্টেমে।</h2>
+    <div class="grid grid-2" style="align-items: center; margin-top: 10px;">
+      <div>
+        <ul class="feat">
+          <li>POS, কেনা, রিটার্ন, স্টক ট্রান্সফার <span>— পুরো ইনভেন্টরি লাইফসাইকেল</span></li>
+          <li>IMEI/সিরিয়াল ট্র্যাকিং, ওয়ারেন্টি, এক্সচেঞ্জ <span>— মোবাইল ও ইলেকট্রনিক্সের জন্য</span></li>
+          <li>ব্যাচ ও মেয়াদ ট্র্যাকিং, FEFO <span>— ফার্মেসি কাউন্টারের মূল দরকার</span></li>
+          <li>EMI/কিস্তি বিক্রি ও ক্রেডিট লিমিট <span>— বাংলাদেশে কাস্টমার যেভাবে কেনে</span></li>
+          <li>রিপেয়ার জব অর্ডার ও সার্ভিসিং <span>— মোবাইল দোকানের দ্বিতীয় বড় ব্যবসা</span></li>
+          <li>HRM, CRM, খরচ, খাতা রিপোর্ট <span>— পাঁচটা আলাদা অ্যাপ না, একটা সিস্টেম</span></li>
+          <li>AI দিয়ে কেনার এন্ট্রি, WhatsApp/SMS গেটওয়ে <span>— আধুনিক অটোমেশন সুবিধা</span></li>
+        </ul>
+      </div>
+      <div class="grid" style="gap: 12px;">
+        <div class="card highlight">
+          <h3>⚡ অফলাইন-ফার্স্ট সিঙ্ক</h3>
+          <p>ইন্টারনেট ছাড়াই সুপারফাস্ট বিক্রি চলবে; লোকাল ডেটাবেস পরে ক্লাউডে সিঙ্ক হয়। বাংলাদেশের নেটওয়ার্ক বাস্তবতার জন্যই তৈরি।</p>
+        </div>
+        <div class="card">
+          <h3>🛡️ সত্যিকারের মাল্টি-টেন্যান্ট SaaS</h3>
+          <p>প্রতি দোকানের ডেটা আলাদা স্কিমায় সম্পূর্ণ আইসোলেটেড, AES-256-GCM এনক্রিপ্টেড PII — হাজার দোকানে স্কেল করতে প্রস্তুত।</p>
+        </div>
+        <div class="card">
+          <h3>📱 সব ডিভাইসে এক সাথে</h3>
+          <p>অ্যান্ড্রয়েড অ্যাপ, উইন্ডোজ ডেস্কটপ, ক্লাউড ওয়েব অ্যাপ — সাথে প্রতি দোকানের জন্য এক ক্লিকে রেডিমেড অনলাইন ক্যাটালগ।</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>উপরের সব ফিচার প্রোডাকশন বিল্ডে সম্পূর্ণ ইমপ্লিমেন্টেড এবং লাইভ</span>
+    <span>ব্যবসাঘর আর্কিটেকচার</span>
+  </div>
 </div>
 
 <!-- স্লাইড ৩.৫: প্রোডাক্ট -->
-<div class="slide">
-  <div class="kicker">প্রোডাক্ট</div>
-  <h2>দোকানদারের পকেটে, এখনই চালু।</h2>
-  <div style="display:flex; gap:48px; align-items:center">
-    <div style="flex-shrink:0">
-      <img src="assets/app-dashboard.png" alt="ব্যবসাঘর অ্যাপ ড্যাশবোর্ড" style="height:430px; border-radius:28px; border:3px solid rgba(148,163,184,.25); box-shadow:0 20px 60px rgba(0,0,0,.5)">
+<div class="slide" id="slide-4">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">লাইভ প্রোডাক্ট</span>
     </div>
-    <div>
-      <ul class="feat">
-        <li>বাংলা-ফার্স্ট ড্যাশবোর্ড <span>— আজকের বিক্রি, পাওনা, বিল এক নজরে</span></li>
-        <li>এক ট্যাপে নতুন বিক্রি <span>— কাউন্টারে স্পিডই আসল</span></li>
-        <li>কাস্টমারের বাকি ও পাওনা <span>— দোকানদারের আসল খাতা</span></li>
-        <li>৭ দিনের বিক্রির ধারা <span>— মালিকের ডেইলি পালস</span></li>
-        <li>ফোন, কম্পিউটার, ওয়েবে একই ডেটা <span>— অফলাইন-ফার্স্ট সিঙ্ক</span></li>
-      </ul>
-      <p class="sub" style="margin-top:18px; font-size:14px">প্রোডাকশন অ্যান্ড্রয়েড অ্যাপের আসল স্ক্রিনশট।</p>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle">English ↗</a>
+      <span class="slide-counter">০৪ / ১১</span>
     </div>
   </div>
-  <div class="footnote">ব্যবসাঘর · গোপনীয়</div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>প্রোডাক্ট ইন্টারফেস</div>
+    <h2>দোকানদারের পকেটে, এখনই চালু ও কার্যকরী।</h2>
+    <div style="display: flex; gap: 40px; align-items: center; margin-top: 8px;">
+      <div class="device-mockup" style="flex-shrink: 0;">
+        <img src="assets/app-dashboard.png" alt="ব্যবসাঘর অ্যাপ ড্যাশবোর্ড">
+      </div>
+      <div style="flex: 1;">
+        <ul class="feat" style="font-size: 16.5px;">
+          <li>বাংলা-ফার্স্ট ইউজার ইন্টারফেস <span>— আজকের বিক্রি, বাকি ও ক্যাশ এক নজরে</span></li>
+          <li>এক ট্যাপে নতুন সেল কাউন্টার <span>— পিক আওয়ার কাউন্টারে আল্ট্রাফাস্ট বিলিং</span></li>
+          <li>কাস্টমারের খাতা ও বকেয়া হিসাব <span>— স্বয়ংক্রিয় SMS রিমাইন্ডার পাঠানোর সুবিধা</span></li>
+          <li>৭ দিনের বিক্রির গ্রাফ ও পালস <span>— ব্যবসার প্রবৃদ্ধি হাতের মুঠোয়</span></li>
+          <li>ফোন, কম্পিউটার ও ট্যাবলেটে ইনস্ট্যান্ট সিঙ্ক <span>— নিরবচ্ছিন্ন অফলাইন আর্কিটেকচার</span></li>
+        </ul>
+        
+        <!-- Live Dashboard Mini Pulse Chart -->
+        <div class="card" style="margin-top: 18px; padding: 14px 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 13px; font-weight: 700; color: var(--text-primary);">📈 ৭ দিনের বিক্রির ট্রেন্ড (দোকানদারের লাইভ পালস)</span>
+            <span style="font-size: 12px; font-weight: 700; color: var(--accent);">+২৩% সাপ্তাহিক গ্রোথ</span>
+          </div>
+          <svg viewBox="0 0 460 65" style="width: 100%; height: 55px; overflow: visible;">
+            <defs>
+              <linearGradient id="pulseGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <path d="M 10 48 Q 75 42, 140 32 T 270 24 T 370 14 T 450 8 L 450 60 L 10 60 Z" fill="url(#pulseGrad)"/>
+            <path d="M 10 48 Q 75 42, 140 32 T 270 24 T 370 14 T 450 8" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="140" cy="32" r="3.5" fill="var(--accent)"/>
+            <circle cx="270" cy="24" r="3.5" fill="var(--accent)"/>
+            <circle cx="370" cy="14" r="3.5" fill="var(--accent)"/>
+            <circle cx="450" cy="8" r="4.5" fill="var(--accent)" stroke="#fff" stroke-width="1.5"/>
+            <text x="450" y="0" text-anchor="end" fill="var(--accent)" font-weight="700" font-size="10.5" font-family="'Plus Jakarta Sans', sans-serif">আজকে: ৳৮২,৫০০</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>ব্যবসাঘর · প্রোডাক্ট আর্কিটেকচার</span>
+    <span>Google Play Store &amp; Windows Desktop Ready</span>
+  </div>
 </div>
 
-<!-- স্লাইড ৪: মার্কেট -->
-<div class="slide">
-  <div class="kicker">মার্কেট সাইজ</div>
-  <h2>বিশাল, প্রমাণিত, কিন্তু আনসার্ভড মার্কেট।</h2>
-  <div class="funnel">
-    <div class="stage tam"><div class="v">৩৯.৫ লাখ</div><div class="l">খুচরা ও পাইকারি দোকান<br>(TAM — BBS)</div></div>
-    <div class="arrow">→</div>
-    <div class="stage sam"><div class="v">১–২ লাখ</div><div class="l">ডিজিটালি প্রস্তুত, হাই-ভ্যালু ইনভেন্টরির দোকান<br>(SAM)</div></div>
-    <div class="arrow">→</div>
-    <div class="stage som"><div class="v">১–২ হাজার</div><div class="l">৩ বছরে পেইং দোকান<br>(SOM — ১–২%)</div></div>
+<!-- স্লাইড ৪: মার্কেট ও গ্রোথ প্রজেকশন -->
+<div class="slide" id="slide-5">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">মার্কেট সাইজ ও প্রজেকশন</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle">English ↗</a>
+      <span class="slide-counter">০৫ / ১১</span>
+    </div>
   </div>
-  <div class="grid grid-3" style="margin-top:26px">
-    <div class="card"><div class="num">১০ লাখ+</div><div class="lbl">টালিখাতায় মাসিক অ্যাক্টিভ দোকান — প্রমাণ যে বাংলাদেশি দোকানদার ডিজিটাল টুল ব্যবহার করে</div></div>
-    <div class="card"><div class="num blue">২.২৬ লাখ+</div><div class="lbl">রেজিস্টার্ড ফার্মেসি (DGDA) + ~২০ হাজার মোবাইল রিটেইলার — দুটো রেগুলেটেড-ইনভেন্টরি বিচহেড</div></div>
-    <div class="card"><div class="num blue">৪০০ কোটি টাকা+</div><div class="lbl">মাসিক তাত্ত্বিক সাবস্ক্রিপশন মার্কেট, সব রিটেইল জুড়ে (TAM, ১,০০০ টাকা ARPU-তে)</div></div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>মার্কেট সাইজ ও রাজস্ব লক্ষ্য</div>
+    <h2>বিশাল মার্কেট ও ৩ বছরের সাবস্ক্রিপশন স্কেল।</h2>
+    
+    <div class="funnel">
+      <div class="stage tam">
+        <span class="badge">TAM · পুরো মার্কেট</span>
+        <div class="v">৩৯.৫ লাখ</div>
+        <div class="l">খুচরা ও পাইকারি দোকান<br>(BBS ট্রেড সার্ভে)</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="stage sam">
+        <span class="badge">SAM · টার্গেট সেগমেন্ট</span>
+        <div class="v">১–২ লাখ</div>
+        <div class="l">ডিজিটালি প্রস্তুত, হাই-ভ্যালু ইনভেন্টরি শপ</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="stage som">
+        <span class="badge">SOM · ৩ বছরের লক্ষ্য</span>
+        <div class="v">১–২ হাজার</div>
+        <div class="l">পেইং সাবস্ক্রাইবার দোকান<br>(SAM-এর ১–২%)</div>
+      </div>
+    </div>
+
+    <!-- ৩ বছরের ARR প্রজেকশন চার্ট ও মেট্রিক্স -->
+    <div class="grid grid-2" style="margin-top: 18px; align-items: stretch;">
+      <!-- গ্রাফ কার্ড: ARR গ্রোথ ট্র্যাজেক্টরি -->
+      <div class="card" style="padding: 16px 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-size: 13.5px; font-weight: 700; color: var(--text-primary);">📊 ৩ বছরের বাৎসরিক আয় (ARR) স্কেল প্রজেকশন</span>
+          <span style="font-size: 12px; font-weight: 800; color: var(--accent);">বছর ৩: ~৳২.৯ কোটি ARR</span>
+        </div>
+        <svg viewBox="0 0 460 110" style="width: 100%; height: 95px; overflow: visible;">
+          <!-- Bar 1: Year 1 -->
+          <rect x="50" y="70" width="60" height="30" rx="6" fill="var(--accent2)" opacity="0.8"/>
+          <text x="80" y="62" text-anchor="middle" fill="var(--text-primary)" font-weight="700" font-size="11" font-family="'Plus Jakarta Sans', sans-serif">৳১৮ লাখ</text>
+          <text x="80" y="116" text-anchor="middle" fill="var(--text-secondary)" font-size="11">বছর ১ (১০০ দোকান)</text>
+
+          <!-- Bar 2: Year 2 -->
+          <rect x="190" y="42" width="60" height="58" rx="6" fill="var(--accent-secondary)" opacity="0.85"/>
+          <text x="220" y="34" text-anchor="middle" fill="var(--text-primary)" font-weight="700" font-size="11" font-family="'Plus Jakarta Sans', sans-serif">৳৮৫ লাখ</text>
+          <text x="220" y="116" text-anchor="middle" fill="var(--text-secondary)" font-size="11">বছর ২ (৫০০ দোকান)</text>
+
+          <!-- Bar 3: Year 3 -->
+          <rect x="330" y="12" width="60" height="88" rx="6" fill="var(--accent)"/>
+          <text x="360" y="4" text-anchor="middle" fill="var(--accent)" font-weight="800" font-size="12" font-family="'Plus Jakarta Sans', sans-serif">৳২.৯ কোটি 🚀</text>
+          <text x="360" y="116" text-anchor="middle" fill="var(--text-primary)" font-weight="700" font-size="11">বছর ৩ (২,০০০ দোকান)</text>
+
+          <!-- Growth Arrow Arc -->
+          <path d="M 80 50 Q 220 18, 330 10" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+
+      <!-- প্রমাণ ও ব্যাকগ্রাউন্ড কার্ড -->
+      <div class="grid" style="gap: 10px;">
+        <div class="card" style="padding: 12px 18px;">
+          <div class="num" style="font-size: 26px;">১০ লাখ+ দোকান</div>
+          <div class="lbl" style="margin-top: 2px;">টালিখাতায় মাসিক সক্রিয় — প্রমাণ করে দোকানদার ডিজিটাল টুলে অভ্যস্ত।</div>
+        </div>
+        <div class="card" style="padding: 12px 18px;">
+          <div class="num blue" style="font-size: 26px;">২.৪৬ লাখ+ শপ</div>
+          <div class="lbl" style="margin-top: 2px;">রেজিস্টার্ড ফার্মেসি + মোবাইল রিটেইলার — দুটি রেগুলেটেড বিচহেড মার্কেট।</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="footnote">সোর্স: <a href="https://www.adb.org/sites/default/files/linked-documents/36200-024-ssa.pdf">BBS Economic Census 2024 (ADB)</a>, <a href="https://www.thedailystar.net/business/economy/industries/news/395-lakh-trading-firms-contribute-14pc-gdp-2206521">BBS Wholesale &amp; Retail Trade Survey</a>, <a href="https://en.techworldbd.com/mobile-phone/138">MIOB</a>, <a href="https://www.tallykhata.com">টালিখাতা</a></div>
+
+  <div class="footnote">
+    <span>সোর্স: <a href="https://www.adb.org/sites/default/files/linked-documents/36200-024-ssa.pdf">BBS Census 2024 (ADB)</a>, <a href="https://www.thedailystar.net/business/economy/industries/news/395-lakh-trading-firms-contribute-14pc-gdp-2206521">BBS Trade Survey</a>, <a href="https://en.techworldbd.com/mobile-phone/138">MIOB</a></span>
+    <span>টালিখাতা ও DGDA পাবলিক ডেটা</span>
+  </div>
 </div>
 
 <!-- স্লাইড ৫: কেন এখন -->
-<div class="slide">
-  <div class="kicker">কেন এখন</div>
-  <h2>রেগুলেশন আমাদের নিচের ব্যথাকে<br>বাধ্যতামূলক করে দিচ্ছে।</h2>
-  <div class="quote" style="margin-top:10px">BTRC-এর NEIR হ্যান্ডসেট রেজিস্ট্রেশনে প্রতিটা মোবাইল দোকানের জন্য
-  IMEI-লেভেল ইনভেন্টরি ট্র্যাকিং এখন অপরিহার্য — ট্রেড বডিগুলো এটাকে খাতায় চলা
-  দোকানের জন্য "existential crisis" বলছে।</div>
-  <div class="grid grid-3" style="margin-top:30px">
-    <div class="card"><h3>৩২–৩৫ লাখ</h3><p>প্রতি মাসে স্মার্টফোন বিক্রি — প্রতিটার IMEI দোকানকে ট্র্যাক করতে হয়</p></div>
-    <div class="card"><h3>৬০%+</h3><p>হ্যান্ডসেট historically গ্রে-মার্কেট — ইনভেন্টরি কমপ্লায়েন্সের চাপ শুধু বাড়ছে</p></div>
-    <div class="card"><h3>আমরা প্রস্তুত</h3><p>IMEI ট্র্যাকিং, ওয়ারেন্টি, জব অর্ডার — সবই প্রোডাকশনে শিপড</p></div>
+<div class="slide" id="slide-6">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">মার্কেট টাইমিং</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle">English ↗</a>
+      <span class="slide-counter">০৬ / ১১</span>
+    </div>
   </div>
-  <div class="footnote">সোর্স: <a href="https://www.dhakatribune.com/feature/tech/400169/mobile-retailers-neir-rollout-and-future-of">Dhaka Tribune</a>, <a href="https://www.tbsnews.net/economy/smartphones-must-now-too-high-tax-makes-them-unaffordable-many-1306936">The Business Standard</a>, <a href="https://en.techworldbd.com/mobile-phone/138">TechWorldBD</a></div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>কেন এখনই সঠিক সময়</div>
+    <h2>সরকারি রেগুলেশন দোকানের খাতা ছাড়াকে<br>বাধ্যতামূলক করে দিচ্ছে।</h2>
+    
+    <div class="quote">
+      "BTRC-এর NEIR হ্যান্ডসেট রেজিস্ট্রেশন নিয়মের কারণে প্রতিটা মোবাইল দোকানের জন্য IMEI-লেভেল ইনভেন্টরি ট্র্যাকিং এখন আইনি বাধ্যবাধকতা — ব্যবসায়ী সমিতিগুলো একে কাগজের খাতায় চলা দোকানের জন্য 'অস্তিত্বের সংকট' বলছে।"
+    </div>
+
+    <div class="grid grid-3" style="margin-top: 24px;">
+      <div class="card">
+        <div class="num">৩২–৩৫ লাখ</div>
+        <div class="lbl"><b>প্রতি মাসে নতুন হ্যান্ডসেট বিক্রি</b> — যার প্রতিটির স্বতন্ত্র IMEI নম্বর দোকানকে ট্র্যাক ও রিপোর্ট করতে হয়।</div>
+      </div>
+      <div class="card">
+        <div class="num blue">৬০%+</div>
+        <div class="lbl"><b>গ্রে-মার্কেট নিয়ন্ত্রণের কড়াকড়ি</b> — ট্যাক্স ও ইনভেন্টরি কমপ্লায়েন্স নিশ্চিত করার জন্য সফটওয়্যার ছাড়া গতি নেই।</div>
+      </div>
+      <div class="card highlight">
+        <div class="num">১০০% প্রস্তুত</div>
+        <div class="lbl"><b>ইনস্ট্যান্ট সলিউশন</b> — IMEI ওয়্যারেন্টি ট্র্যাকিং, সিরিয়াল লগ এবং সার্ভিস জব অর্ডার প্রোডাকশনে রেডি।</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>তথ্যসূত্র: <a href="https://www.dhakatribune.com/feature/tech/400169/mobile-retailers-neir-rollout-and-future-of">Dhaka Tribune</a>, <a href="https://www.tbsnews.net/economy/smartphones-must-now-too-high-tax-makes-them-unaffordable-many-1306936">The Business Standard</a></span>
+    <span>TechWorldBD ইন্ডাস্ট্রি ইনসাইটস</span>
+  </div>
 </div>
 
 <!-- স্লাইড ৫.৫: ফার্মেসি নিচ -->
-<div class="slide">
-  <div class="kicker">বিচহেড #২ · ফার্মেসি</div>
-  <h2>২.২৬ লাখ+ ফার্মেসির মাল প্রতি বছর মেয়াদে নষ্ট হয়।</h2>
-  <div class="grid grid-2">
-    <div>
-      <div class="card" style="margin-bottom:16px"><h3>ব্যথাটা</h3><p>ওষুধ তাকে চুপে চুপে এক্সপায়ার হয়। মালিক টের পায় যখন মালটা আর বিক্রিই হয় না — লোকসান বুকে নিতে হয়, না হলে ভুলে বিক্রি হয়ে যায়। ব্যাচ রিকল? খাতায় প্রায় অসম্ভব।</p></div>
-      <div class="card"><h3>স্ট্রিপ-পিসের ঝামেলা</h3><p>মাল আসে বক্সে, বিক্রি হয় স্ট্রিপে, কখনো পিসে। হাজার আইটেমে এই হিসাবই ভুলের আর উধাও মালের আড়াল।</p></div>
+<div class="slide" id="slide-7">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">বিচহেড #২ · ফার্মেসি</span>
     </div>
-    <div>
-      <ul class="feat">
-        <li>কেনার সময়ই ব্যাচ + মেয়াদ ঢোকে <span>— প্রতিটা ইউনিট জানে তার শেলফ লাইফ</span></li>
-        <li>বিলিংয়ে FEFO অ্যালোকেশন <span>— আগের মেয়াদের মাল আগে যায়, নিজে নিজে</span></li>
-        <li>এক্সপায়ারি অ্যালার্ট রিপোর্ট <span>— ৩০/৬০/৯০ দিন পরে কী মরছে, ফেরত বা ডিস্কাউন্টে ছাড়ুন</span></li>
-        <li>স্ট্রিপ ↔ পিস ইউনিট কনভার্সন <span>— যেভাবে বিক্রি করুন, স্টক ঠিক থাকে</span></li>
-        <li>অফলাইন-ফার্স্ট + মাল্টি-ডিভাইস <span>— কাউন্টার চলতেই থাকে, পরে সিঙ্ক</span></li>
-      </ul>
-      <div class="card" style="margin-top:16px"><h3>২,২৬,১১৮</h3><p>দেশে রেজিস্টার্ড ফার্মেসি (DGDA) + ~১ লাখ আনলাইসেন্সড — দেশের সবচেয়ে ঘন রিটেইল নেটওয়ার্ক</p></div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle">English ↗</a>
+      <span class="slide-counter">০৭ / ১১</span>
     </div>
   </div>
-  <div class="footnote">প্রোডাকশনে শিপড: ব্যাচ/মেয়াদ, FEFO, expiry-alert, UOM কনভার্সন · সোর্স: DGDA</div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>বিচহেড #২ · ফার্মেসি নিচ</div>
+    <h2>২.২৬ লাখ+ ফার্মেসির ওষুধ প্রতি বছর মেয়াদের ভুলে নষ্ট হয়।</h2>
+    
+    <div class="grid grid-2" style="margin-top: 10px;">
+      <div class="grid" style="gap: 12px;">
+        <div class="card">
+          <h3>⚠️ মেয়াদোত্তীর্ণের নীরব লোকসান</h3>
+          <p>ওষুধ তাকে চুপিসারে এক্সপায়ার হয়। দোকানদার টের পান যখন মাল ফেলে দিতে হয় — শতভাগ লোকসান। ড্রাগ অ্যাডমিনিস্ট্রেশনের ব্যাচ রিকল খাতায় মেলা অসম্ভব।</p>
+        </div>
+        <div class="card">
+          <h3>📦 বক্স বনাম পাতার গরমিল</h3>
+          <p>সাপ্লায়ার থেকে আসে পুরো বক্সে, বিক্রি হয় স্ট্রিপ বা পাতায়, কখনো খুচরা এক-দুই পিসে। এই ইউনিট কনভার্সনই হিসাবে গোলমাল আর চুরির উৎস।</p>
+        </div>
+      </div>
+
+      <div>
+        <ul class="feat">
+          <li>কেনার সময় ব্যাচ ও এক্সপায়ারি এন্ট্রি <span>— প্রতিটা ইউনিট তার শেলফ-লাইফ ট্র্যাক করে</span></li>
+          <li>অটোমেটিক FEFO বিলিং <span>— ফার্স্ট-এক্সপায়ারি-ফার্স্ট-আউট নিয়মে আগে মেয়াদোত্তীর্ণ মাল আগে কাটে</span></li>
+          <li>এক্সপায়ারি অ্যালার্ট ড্যাশবোর্ড <span>— ৩০/৬০/৯০ দিন আগের অ্যালার্টে সময়মতো ফেরত পাঠানো যায়</span></li>
+          <li>বক্স ↔ স্ট্রিপ ↔ পিস ইউনিট কনভার্সন <span>— যেকোনো ইউনিটে নির্ভুল বিক্রি</span></li>
+          <li>ফুল অফলাইন কাউন্টার <span>— বিদ্যুৎ বা ইন্টারনেট ড্রপ করলেও বিল আটকাবে না</span></li>
+        </ul>
+        <div class="card highlight" style="margin-top: 14px;">
+          <div class="num" style="font-size: 28px;">২,২৬,১১৮+</div>
+          <div class="lbl">DGDA অনুমোদিত মডেল ও সাধারণ ফার্মেসি — দেশের প্রতিটি পাড়া ও বাজারে ক্যাশ-ফ্লো জেনারেটর।</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>প্রোডাকশনে শিপড: ব্যাচ ট্র্যাকিং, FEFO, Expiry Alert Engine, UOM কনভার্সন</span>
+    <span>সোর্স: DGDA Annual Report</span>
+  </div>
 </div>
 
 <!-- স্লাইড ৬: প্রতিদ্বন্দ্বী -->
-<div class="slide">
-  <div class="kicker">প্রতিদ্বন্দ্বিতা</div>
-  <h2>মার্কেট ভরা — কিন্তু আমাদের নিচ কারো দখলে নেই।</h2>
-  <table style="margin-top:8px">
-    <tr><th>শ্রেণী</th><th>কারা</th><th>যে ফাঁকে আমরা</th></tr>
-    <tr><td>খাতা অ্যাপ</td><td class="dim">টালিখাতা (১০ লাখ+ MAU), হিসাবী, Bisnesy, হিসাবপতি</td><td class="dim">খাতা-কেন্দ্রিক — IMEI, EMI, ওয়ারেন্টি, সার্ভিস ওয়ার্কফ্লো নেই</td></tr>
-    <tr><td>লোকাল POS</td><td class="dim">Mediasoft, SK POS, Smart Dokani, AmarSolution, Sunshine IT</td><td class="dim">জেনারিক বা এক PC-র — অফলাইন দুর্বল, ফোন+কম্পিউটার+ওয়েব নেই, সিরিয়ালাইজড ইনভেন্টরি নেই</td></tr>
-    <tr><td>রিটেইল ERP</td><td class="dim">Managerium (iBOS), Odoo, TallyPrime</td><td class="dim">চেইনের জন্য — ভারী সেটআপ ফি, দোকানের জন্য অতিরিক্ত</td></tr>
-    <tr><td>খাতা / এক্সেল</td><td class="dim">আসল প্রতিদ্বন্দ্বী</td><td class="dim">ভুল হয়, রিপোর্ট নেই, EMI/IMEI ট্র্যাকিং নেই, ব্যাকআপ নেই</td></tr>
-  </table>
-  <p class="sub" style="margin-top:22px; font-size:17px">খাতা অ্যাপ ডিজিটাইজ করেছে <b style="color:#e2e8f0">খাতা</b>, ERP সার্ভ করে <b style="color:#e2e8f0">চেইন</b>। মোবাইল/ইলেকট্রনিক্স দোকানের সম্পূর্ণ বিজনেস OS কেউ দেয় না — <b style="color:#22c55e">সেটাই আমরা</b>।</p>
-  <div class="footnote">বিশ্লেষণ: <a href="https://itlab.solutions/blog/the-ultimate-guide-to-pos-and-shop-management-system-in-bangladesh">IT Lab</a>, <a href="https://bisnesy.com/compare">Bisnesy</a>, <a href="https://financfy.com/blog/pos-software-in-bangladesh/">Financfy</a>, <a href="https://www.softeko.co/software/pos/bangladesh/">Softeko</a>, <a href="https://ibos.io/top-10-pos-software-in-bangladesh-2026-managerium-retail-erp-1-ranked/">iBOS</a> + ফিল্ড রিসার্চ</div>
+<div class="slide" id="slide-8">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">প্রতিদ্বন্দ্বিতা ও পার্থক্য</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle">English ↗</a>
+      <span class="slide-counter">০৮ / ১১</span>
+    </div>
+  </div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>প্রতিদ্বন্দ্বিতা</div>
+    <h2>মার্কেট ভিড়ে ভরা — কিন্তু আমাদের নিচ সম্পূর্ণ খালি।</h2>
+    
+    <div class="table-wrap" style="margin-top: 12px;">
+      <table>
+        <tr>
+          <th>ক্যাটেগরি</th>
+          <th>বিদ্যমান সফটওয়্যার</th>
+          <th>তাদের সীমাবদ্ধতা</th>
+          <th>ব্যবসাঘরের সুবিধা</th>
+        </tr>
+        <tr>
+          <td><b>খাতা অ্যাপস</b></td>
+          <td class="dim">টালিখাতা, হিসাবী, হিসাবপতি</td>
+          <td class="dim">শুধু ক্যাশ-বাকি লেজার; কোনো ইনভেন্টরি, IMEI বা EMI নেই</td>
+          <td class="highlight-cell">সম্পূর্ণ রিটেইল ইকোসিস্টেম</td>
+        </tr>
+        <tr>
+          <td><b>লোকাল POS</b></td>
+          <td class="dim">Mediasoft, SK POS, Smart Dokani</td>
+          <td class="dim">একক PC-নির্ভর, দুর্বল মোবাইল সাপোর্ট, অফলাইন ক্লাউড সিঙ্ক নেই</td>
+          <td class="highlight-cell">অফলাইন-ফার্স্ট + সব ডিভাইস</td>
+        </tr>
+        <tr>
+          <td><b>রিটেইল ERP</b></td>
+          <td class="dim">Managerium (iBOS), Odoo, Tally</td>
+          <td class="dim">জটিল সেটআপ ফি, ভারী কর্পোরেট চেইন লক্ষ্য করে তৈরি</td>
+          <td class="highlight-cell">সহজ, সাশ্রয়ী ও দ্রুত অনবোর্ডিং</td>
+        </tr>
+        <tr>
+          <td><b>কাগজের খাতা</b></td>
+          <td class="dim">বাস্তব প্রধান প্রতিদ্বন্দ্বী</td>
+          <td class="dim">ভুল হয়, হিসাব মেলে না, রিপোর্ট নেই, আগুনে পুড়ে যাওয়ার ঝুঁকি</td>
+          <td class="highlight-cell">১০০% ক্লাউড ব্যাকআপ ও নিশ্চিন্ততা</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card" style="margin-top: 16px; background: rgba(125, 125, 125, 0.06); border-color: var(--accent);">
+      <p style="font-size: 15.5px;">💡 <b>মূল তফাত:</b> খাতা অ্যাপ ডিজিটাইজ করেছে শুধুই <b>কাগজের খাতা</b>; বড় ERP কাজ করে <b>সুপারশপ চেইনে</b>। দেশের লাখ লাখ মোবাইল, গ্যাজেট ও ফার্মেসির সম্পূর্ণ বিজনেস OS কেউ দিচ্ছে না — <b>ব্যবসাঘর ঠিক সেখানেই নেতৃত্ব দিচ্ছে।</b></p>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>কম্প্যারিজন স্টাডি: IT Lab, Bisnesy, Financfy, Softeko, iBOS এবং রিটেইল ফিল্ড সার্ভে</span>
+    <span>গোপনীয়</span>
+  </div>
 </div>
 
 <!-- স্লাইড ৭: বিজনেস মডেল -->
-<div class="slide">
-  <div class="kicker">বিজনেস মডেল</div>
-  <h2>এখন সাবস্ক্রিপশন। পরে প্ল্যাটফর্ম রেভেনিউ।</h2>
-  <div class="grid grid-3" style="margin-top:10px">
-    <div class="card"><div class="num">ফ্রি → ১.৫ হাজার টাকা</div><div class="lbl"><b>খাতা (ফ্রি)</b> এন্ট্রি টিয়ার — শুধু হিসাব চায় এমন দোকান ঢুকে, IMEI/EMI/রিপেয়ার লাগলে Pro-তে ওঠে — টালিখাতার প্লেবুক, আসল প্রোডাক্টসহ</div></div>
-    <div class="card"><div class="num blue">~২.৯ কোটি টাকা</div><div class="lbl">বছরে (ARR), ২,০০০ পেইং দোকানে (বেস কেস, ৩য় বছর)</div></div>
-    <div class="card"><div class="num blue">একাধিক লাইন</div><div class="lbl">এক্সপ্যানশন: পেমেন্ট মার্জিন, SMS/WhatsApp ক্রেডিট, দোকানের ওয়েবসাইট, partner API, ডেটা-বেসড ক্রেডিট রেফারেল</div></div>
+<div class="slide" id="slide-9">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">বিজনেস মডেল</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle">English ↗</a>
+      <span class="slide-counter">০৯ / ১১</span>
+    </div>
   </div>
-  <div class="grid grid-2" style="margin-top:22px">
-    <div class="card"><h3>গো-টু-মার্কেট</h3><p>মোবাইল/ইলেকট্রনিক্স মার্কেটে ফিল্ড সেলস → ১৪ দিনের অ্যাসিস্টেড ট্রায়াল (আমরাই স্টক ঢুকিয়ে দিই) → রেফারেল ইনসেন্টিভ → Partner API দিয়ে কমিশন-বেসড জেলা এজেন্ট।</p></div>
-    <div class="card"><h3>মোট (প্রতিরক্ষা দেয়াল)</h3><p>মাইগ্রেশন খরচ (ইনভেন্টরি + IMEI হিস্টোরি), প্রতিদিনের অপারেশনাল নির্ভরতা, অফলাইন সিঙ্ক ডেটা, আর জমা হওয়া বিক্রি/ক্রেডিট ডেটা — ভবিষ্যতের ফিনটেক প্রোডাক্টের ভিত্তি।</p></div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>বিজনেস মডেল ও রেভিনিউ</div>
+    <h2>এখন SaaS সাবস্ক্রিপশন। পরবর্তীতে ফিনটেক প্ল্যাটফর্ম।</h2>
+    
+    <div class="grid grid-3" style="margin-top: 10px;">
+      <div class="card highlight">
+        <div class="num">ফ্রি → ১.৫K ৳</div>
+        <div class="lbl"><b>প্রিমিয়াম আপসেল ফানেল:</b> বেসিক খাতা ফ্রি। IMEI, EMI, রিপেয়ার বা ক্লাউড সিঙ্ক চাইলে প্রো সাবস্ক্রিপশন (টালিখাতার বিশাল প্লেবুক + আসল সফটওয়্যার)।</div>
+      </div>
+      <div class="card">
+        <div class="num blue">~২.৯ কোটি ৳</div>
+        <div class="lbl"><b>বাৎসরিক রেভিনিউ (ARR):</b> মাত্র ২,০০০ পেইং দোকান থেকে (৩য় বছরে কনজারভেটিভ বেস কেস লক্ষ্যমাত্রা)।</div>
+      </div>
+      <div class="card">
+        <div class="num blue">মাল্টিপল স্ট্রিম</div>
+        <div class="lbl"><b>এক্সপ্যানশন রেভিনিউ:</b> পেমেন্ট ফি মার্জিন, WhatsApp/SMS ক্রেডিট বান্ডেল, ই-কমার্স ক্যাটালগ এবং ডেটা-চালিত MSME মাইক্রো-লোন রেফারেল ফি।</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top: 16px;">
+      <div class="card">
+        <h3>🚀 গো-টু-মার্কেট (GTM)</h3>
+        <p>প্রধান প্রধান মোবাইল ও ইলেকট্রনিক্স মার্কেটে সরাসরি ফিল্ড টিম → ১৪ দিনের হ্যান্ডস-অন ট্রায়াল (আমাদের টিম নিজেই আগের স্টক এন্ট্রি করে দেয়) → রেফারেল প্রোগ্রাম ও জেলাভিত্তিক কমিশন এজেন্ট নেটওয়ার্ক।</p>
+      </div>
+      <div class="card">
+        <h3>🏰 ডিফেন্সিভ মোট (Moat)</h3>
+        <p>উচ্চ মাইগ্রেশন কস্ট (বছরব্যাপী IMEI ও কাস্টমার হিস্ট্রি অন্য কোথাও নেওয়া অসম্ভব), দৈনন্দিন সেলস ডিপেন্ডেন্সি, অফলাইন সিঙ্ক এবং খাঁটি লেনদেন হিস্ট্রি যা ভবিষ্যতের ডিজিটাল ক্রেডিট স্কোরিংয়ের ভিত্তি।</p>
+      </div>
+    </div>
   </div>
-  <div class="footnote">সাবস্ক্রিপশন আর্কিটেকচার ও প্ল্যান সিস্টেম ব্যাকএন্ডে ইমপ্লিমেন্টেড</div>
+
+  <div class="footnote">
+    <span>সাবস্ক্রিপশন আর্কিটেকচার ও প্ল্যান ম্যানেজমেন্ট ব্যাকএন্ডে সম্পূর্ণ তৈরি</span>
+    <span>SaaS Metrics &amp; Expansion</span>
+  </div>
 </div>
 
-<!-- স্লাইড ৭.৫: দোকানের ROI -->
-<div class="slide">
-  <div class="kicker">দোকানের হিসাব</div>
-  <h2>বছরে ৪০ হাজার+ টাকা সাশ্রয়। খরচ ১৪,৪০০।</h2>
-  <p class="sub">ম্যানুয়াল বনাম ব্যবসাঘর — মাঝারি দোকান (~৩ লাখ টাকা মাসিক বিক্রি)</p>
-  <table style="margin-top:14px">
-    <tr><th>কোথায় লোকসান</th><th>ম্যানুয়ালে</th><th>আমাদের দিয়ে</th><th>বছরে সাশ্রয়</th></tr>
-    <tr><td>হিসাব মেলানোর সময়</td><td class="dim">দিনে ১-২ ঘণ্টা</td><td class="dim">~১৫ মিনিট</td><td class="dim">৳১০-১৫ হাজার</td></tr>
-    <tr><td>ভুল/উধাও স্টক</td><td class="dim">বিক্রির ০.৫-১%</td><td class="dim">প্রতিটা ট্র্যাকড</td><td class="dim">৳১৫-২৫ হাজার</td></tr>
-    <tr><td>ভুলে যাওয়া বাকি</td><td class="dim">~৫% ডুবে যায়</td><td class="dim">অটো লিস্ট + রিমাইন্ডার</td><td class="dim">৳১০-১৮ হাজার</td></tr>
-    <tr><td>EMI কিস্তি হারানো</td><td class="dim">মনে রাখার উপর</td><td class="dim">অটো সিডিউল</td><td class="dim">৳৫-৮ হাজার</td></tr>
-    <tr><td>IMEI/ওয়ারেন্টি ঝামেলা</td><td class="dim">কাগজের রসিদ</td><td class="dim">IMEI দিয়ে সার্চ</td><td class="dim">৳৩-৫ হাজার</td></tr>
-    <tr><td>এক্সপায়ারি লোকসান (ফার্মেসি)</td><td class="dim">স্টকের ১-৩%</td><td class="dim">FEFO + অ্যালার্ট</td><td class="dim">৳৫-১৫ হাজার</td></tr>
-  </table>
-  <p class="sub" style="margin-top:16px; font-size:15px"><b style="color:#22c55e">৩-৫ গুণ ROI</b> — একটা ভুল IMEI বা একটা এক্সপায়ারড ব্যাচের লোকসানই কয়েক মাসের দাম।</p>
-  <div class="footnote">কনজারভেটিভ ফিল্ড এস্টিমেট — পাইলট ডেটা দিয়ে রিপ্লেস করুন</div>
+<!-- স্লাইড ৭.৫: দোকানের ROI ও সাশ্রয় চিত্র -->
+<div class="slide" id="slide-10">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">দোকানের রিটার্ন (ROI)</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle">English ↗</a>
+      <span class="slide-counter">১০ / ১১</span>
+    </div>
+  </div>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>দোকানের অর্থনীতি ও সাশ্রয়</div>
+    <h2>বছরে ৪০,০০০+ টাকা সাশ্রয়। বার্ষিক সফটওয়্যার খরচ মাত্র ১৪,৪০০ টাকা।</h2>
+    
+    <div class="table-wrap" style="margin-top: 6px;">
+      <table>
+        <tr>
+          <th>কোথায় লোকসান হচ্ছিল</th>
+          <th>ম্যানুয়াল খাতায় অবস্থা</th>
+          <th>ব্যবসাঘর ব্যবহারে সমাধান</th>
+          <th>বছরে আর্থিক সাশ্রয়</th>
+        </tr>
+        <tr>
+          <td>হিসাব মেলানোর কর্মঘণ্টা</td>
+          <td class="dim">প্রতিদিন ১-২ ঘণ্টা অপচয়</td>
+          <td>অটো রিপোর্ট ও ১৫ মিনিটে ব্যালেন্স</td>
+          <td class="highlight-cell">৳১০,০০০ – ১৫,০০০</td>
+        </tr>
+        <tr>
+          <td>ভুল এন্ট্রি ও উধাও স্টক</td>
+          <td class="dim">মোট বিক্রির ০.৫–১% ক্ষতি</td>
+          <td>প্রতিটি সিরিয়াল ও স্টক নিখুঁত ট্র্যাকিং</td>
+          <td class="highlight-cell">৳১৫,০০০ – ২৫,০০০</td>
+        </tr>
+        <tr>
+          <td>ভুলে যাওয়া অনাদায়ী বাকি</td>
+          <td class="dim">প্রায় ৫% বাকি সম্পূর্ণ ডুবে যায়</td>
+          <td>অটো বাকি তালিকা ও SMS নোটিফিকেশন</td>
+          <td class="highlight-cell">৳১০,০০০ – ১৮,০০০</td>
+        </tr>
+        <tr>
+          <td>কিস্তি (EMI) সংগ্রহ মিস হওয়া</td>
+          <td class="dim">স্মরণশক্তির ওপর নির্ভরশীল</td>
+          <td>অটোমেটেড কিস্তি সিডিউল ও রিমাইন্ডার</td>
+          <td class="highlight-cell">৳৫,০০০ – ৮,০০০</td>
+        </tr>
+        <tr>
+          <td>ওষুধের মেয়াদ লোকসান</td>
+          <td class="dim">স্টকের ১–৩% ফেলে দিতে হয়</td>
+          <td>FEFO অ্যালগরিদম ও আগাম এক্সপায়ারি অ্যালার্ট</td>
+          <td class="highlight-cell">৳৫,০০০ – ১৫,০০০</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ভিজ্যুয়াল ROI কম্প্যারিজন চার্ট বার -->
+    <div class="card highlight" style="margin-top: 14px; padding: 14px 22px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span style="font-size: 14px; font-weight: 700; color: var(--text-primary);">📊 বার্ষিক খরচ বনাম নিট আর্থিক সাশ্রয় তুলনা</span>
+        <div class="num" style="font-size: 24px;">3x - 5x Net ROI</div>
+      </div>
+      
+      <!-- Comparison Bar -->
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 3px;">
+            <span style="color: #ef4444; font-weight: 600;">কাগজের খাতা (বার্ষিক অদৃশ্য অপচয় ও লোকসান):</span>
+            <span style="color: #ef4444; font-weight: 800;">-৳৫৮,০০০+ লোকসান/বছর</span>
+          </div>
+          <div style="height: 12px; background: rgba(239, 68, 68, 0.15); border-radius: 999px; overflow: hidden; border: 1px solid rgba(239, 68, 68, 0.3);">
+            <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #ef4444, #f87171); border-radius: 999px;"></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 3px;">
+            <span style="color: var(--accent); font-weight: 600;">ব্যবসাঘর ব্যবহার করলে (খরচ ৳১৪,৪০০ → ক্যাশ সাশ্রয় ৳৪৩,৬০০+):</span>
+            <span style="color: var(--accent); font-weight: 800;">+৳৪৩,৬০০ নিট পকেটে সেভ</span>
+          </div>
+          <div style="height: 12px; background: var(--accent-glow); border-radius: 999px; overflow: hidden; border: 1px solid var(--accent); display: flex;">
+            <div style="width: 25%; height: 100%; background: var(--accent2);" title="সফটওয়্যার ফি"></div>
+            <div style="width: 75%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light));" title="নিট সেভিংস"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-top: 3px;">
+            <span>🔵 সফটওয়্যার বিনিয়োগ: ৳১৪,৪০০</span>
+            <span>🟢 নিট প্রত্যক্ষ সাশ্রয়: ৳৪৩,৬০০+ (সরাসরি প্রফিট)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <span>কনজারভেটিভ ফিল্ড মডেলিং — মাঝারি সাইজের রিটেইল শপের বাস্তব প্রজেকশন</span>
+    <span>ব্যবসাঘর ভ্যালু প্রপোজিশন</span>
+  </div>
 </div>
 
-<!-- স্লাইড ৮: রোডম্যাপ ও অ্যাস্ক -->
-<div class="slide">
-  <div class="kicker">রোডম্যাপ ও ফান্ডিং</div>
-  <h2>আগে ট্রাকশন, তারপর টাকা।</h2>
-  <div class="grid grid-4" style="margin-top:10px">
-    <div class="card"><h3>মাস ১–২</h3><p>২০টা দোকান ইন্টারভিউ → ৫টা পাইলট দোকান চালু (ফ্রি)</p></div>
-    <div class="card"><h3>মাস ৩–৪</h3><p>পাইলট → পেইড কনভার্সন · প্রাইসিং ফাইনাল</p></div>
-    <div class="card"><h3>মাস ৫–৮</h3><p>৩০–৫০ পেইং দোকান · ১ জেলা এজেন্ট · রেফারেল প্রোগ্রাম</p></div>
-    <div class="card"><h3>মাস ৯–১২</h3><p>১০০ পেইং দোকান · ১.৫ লাখ+ টাকা MRR · churn &lt;৫%</p></div>
+<!-- স্লাইড ৮: রোডম্যাপ ও ফান্ডিং (টাকায় ও গ্রাফসহ) -->
+<div class="slide" id="slide-11">
+  <div class="slide-header">
+    <div class="brand-group">
+      <div class="brand-logo-pill"><span class="brand-dot"></span>ব্যবসাঘর</div>
+      <span class="brand-badge">রোডম্যাপ ও ফান্ডিং আস্ক</span>
+    </div>
+    <div class="slide-meta-group">
+      <a href="pitch-deck.html" class="lang-toggle">English ↗</a>
+      <span class="slide-counter">১১ / ১১</span>
+    </div>
   </div>
-  <div class="card" style="margin-top:26px; border-color: rgba(34,197,94,.4)">
-    <h3 style="color:var(--accent); font-size:19px">আমরা যা তুলছি</h3>
-    <p style="font-size:16px">পাইলট ট্রাকশনের পর প্রি-সিড/অ্যাঞ্জেল রাউন্ড — লক্ষ্য <b style="color:#e2e8f0">US$৫০–১৫০ হাজার</b>,
-    যা যাবে ফিল্ড সেলস, অনবোর্ডিং অপারেশন আর প্রোডাক্ট শক্ত করায়। বাংলাদেশের রিটেইল
-    মার্কেট চেনা অ্যাঞ্জেলদের সাথে এখন থেকেই কথা বলতে আগ্রহী।</p>
+
+  <div class="slide-content">
+    <div class="kicker"><span class="kicker-dot"></span>রোডম্যাপ ও লক্ষ্য</div>
+    <h2>আগে বাস্তব ট্রাকশন, তারপর স্কেলিং ক্যাপিটাল।</h2>
+    
+    <div class="grid grid-4" style="margin-top: 6px;">
+      <div class="card">
+        <h3 style="color: var(--accent2); font-size: 16px;">মাস ১–২</h3>
+        <p style="font-size: 13.5px;">২০টি গভীর দোকানদার ইন্টারভিউ → ৫টি পাইলট দোকান লাইভ অনবোর্ডিং (ফ্রি হ্যান্ডহোল্ডিং)।</p>
+      </div>
+      <div class="card">
+        <h3 style="color: var(--accent2); font-size: 16px;">মাস ৩–৪</h3>
+        <p style="font-size: 13.5px;">পাইলট থেকে পেইড কনভার্সন যাচাই · সাবস্ক্রিপশন প্যাকেজ ও প্রাইসিং ফাইনাল।</p>
+      </div>
+      <div class="card">
+        <h3 style="color: var(--accent-light); font-size: 16px;">মাস ৫–৮</h3>
+        <p style="font-size: 13.5px;">৩০–৫০টি সক্রিয় পেইং দোকান · ১ম জেলা সেলস এজেন্ট অনবোর্ড · রেফারেল প্রোগ্রাম।</p>
+      </div>
+      <div class="card highlight">
+        <h3 style="color: var(--text-primary); font-size: 16px;">মাস ৯–১২</h3>
+        <p style="font-size: 13.5px;"><b>১০০টি পেইং দোকান</b> · ১.৫ লাখ+ টাকা MRR · Churn রেট &lt;৫% নিশ্চিতকরণ।</p>
+      </div>
+    </div>
+
+    <!-- ১২ মাসের MRR প্রবৃদ্ধি গ্রাফ চার্ট -->
+    <div class="card" style="margin-top: 14px; padding: 14px 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+        <span style="font-size: 13.5px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent); display: inline-block;"></span>
+          ১২ মাসের দোকান সংখ্যা ও মাসিক রিকারিং রেভিনিউ (MRR) গ্রোথ কার্ভ
+        </span>
+        <span style="font-size: 12.5px; font-weight: 800; color: var(--accent);">টার্গেট: ৳১.৫ লাখ+ MRR (১০০ দোকান)</span>
+      </div>
+      <svg viewBox="0 0 760 100" style="width: 100%; height: 85px; overflow: visible;">
+        <defs>
+          <linearGradient id="mrrGradBn" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.32"/>
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.0"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid horizontal lines -->
+        <line x1="40" y1="20" x2="740" y2="20" stroke="var(--card-border)" stroke-dasharray="3"/>
+        <line x1="40" y1="55" x2="740" y2="55" stroke="var(--card-border)" stroke-dasharray="3"/>
+        <line x1="40" y1="85" x2="740" y2="85" stroke="var(--card-border)"/>
+
+        <!-- Area Fill -->
+        <path d="M 60 85 Q 240 82, 420 58 T 720 18 L 720 85 L 60 85 Z" fill="url(#mrrGradBn)"/>
+        <!-- Curve Line -->
+        <path d="M 60 85 Q 240 82, 420 58 T 720 18" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- Points & text -->
+        <circle cx="60" cy="85" r="4.5" fill="var(--bg-page)" stroke="var(--accent2)" stroke-width="2"/>
+        <text x="60" y="74" text-anchor="middle" fill="var(--text-secondary)" font-size="10.5">মাস ২: ৫ পাইলট (৳০)</text>
+        <text x="60" y="98" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">M2</text>
+
+        <circle cx="280" cy="74" r="4.5" fill="var(--bg-page)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="280" y="62" text-anchor="middle" fill="var(--text-secondary)" font-size="10.5">মাস ৪: ১৫ পেইড (৳২২K)</text>
+        <text x="280" y="98" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">M4</text>
+
+        <circle cx="500" cy="52" r="5" fill="var(--bg-page)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="500" y="38" text-anchor="middle" fill="var(--text-secondary)" font-size="10.5">মাস ৮: ৪৫ পেইড (৳৬৫K)</text>
+        <text x="500" y="98" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">M8</text>
+
+        <circle cx="720" cy="18" r="6" fill="var(--accent)" stroke="#fff" stroke-width="2"/>
+        <text x="700" y="8" text-anchor="end" fill="var(--accent)" font-weight="800" font-size="12">মাস ১২: ১০০ দোকান · ৳১.৫ লাখ+ MRR 🚀</text>
+        <text x="720" y="98" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">M12</text>
+      </svg>
+    </div>
+
+    <!-- ফান্ডিং আস্ক কার্ড (টাকায় / BDT) -->
+    <div class="card highlight" style="margin-top: 14px; padding: 18px 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+        <div>
+          <h3 style="color: var(--accent-light); font-size: 19px; margin-bottom: 4px;">💼 আমাদের ফান্ডিং আস্ক (Target Raise)</h3>
+          <p style="font-size: 15px; color: var(--text-primary); line-height: 1.55;">
+            পাইলট ট্রাকশন নিশ্চিত করার পর আমাদের লক্ষ্য প্রাক-বীজ (Pre-Seed / Angel) রাউন্ডে <b style="font-size: 17px; color: var(--accent);">৳৫০ লাখ – ১.৫ কোটি টাকা</b> তোলা। 
+            এই ক্যাপিটাল সরাসরি ব্যবহার করা হবে জেলাভিত্তিক ফিল্ড সেলস টিম সম্প্রসারণ, দ্রুত অনবোর্ডিং অপারেশন এবং কোর প্ল্যাটফর্ম স্কেলিংয়ে।
+          </p>
+        </div>
+        <div style="text-align: right; flex-shrink: 0;">
+          <div class="num" style="font-size: 28px;">৳৫০ লাখ – ১.৫ কোটি</div>
+          <span style="font-size: 12.5px; color: var(--text-secondary); font-weight: 600;">Pre-Seed / Angel Round</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="footnote">ব্যবসাঘর · গোপনীয় · দেওয়া সংখ্যাগুলো লক্ষ্য, প্রতিশ্রুতি নয়</div>
+
+  <div class="footnote">
+    <span>ব্যবসাঘর · প্রতিষ্ঠাতা যোগাযোগ: founders@byabshaghor.com</span>
+    <span>প্রজেকশন ও টার্গেটসমূহ কনফিডেন্সিয়াল</span>
+  </div>
 </div>
 
-<button class="pdfbtn" onclick="window.print()" title="PDF সেভ করুন">⬇ PDF ডাউনলোড</button>
+<!-- Floating Presentation Dock -->
+<div class="deck-nav-bar">
+  <button class="deck-nav-btn" onclick="navigateSlide(-1)" title="Previous Slide (Left Arrow)">◀ পূর্ববর্তী</button>
+  <span class="nav-counter" id="navCounter">০১ / ১১</span>
+  <button class="deck-nav-btn" onclick="navigateSlide(1)" title="Next Slide (Right Arrow or Space)">পরবর্তী ▶</button>
+  
+  <!-- Segmented Theme Switcher -->
+  <div class="theme-switch-group" title="থিম পরিবর্তন করুন (Change Theme)">
+    <button class="theme-btn active" data-set-theme="fintech" onclick="setDeckTheme('fintech')">🌙 FinTech</button>
+    <button class="theme-btn" data-set-theme="executive" onclick="setDeckTheme('executive')">☀️ Light</button>
+    <button class="theme-btn" data-set-theme="cyber" onclick="setDeckTheme('cyber')">⚡ Cyber</button>
+  </div>
+
+  <button class="deck-nav-btn" onclick="toggleDeckFullscreen()" title="Toggle Fullscreen (F)">⛶ ফুলস্ক্রিন</button>
+  <a href="pitch-deck.html" class="deck-nav-btn" title="English Version">🌐 English</a>
+  <button class="deck-nav-btn primary" onclick="window.print()" title="PDF সেভ করুন">⬇ PDF ডাউনলোড</button>
+</div>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const counterEl = document.getElementById('navCounter');
+
+  /* Theme Switcher Engine */
+  function setDeckTheme(themeName) {
+    document.documentElement.setAttribute('data-theme', themeName);
+    localStorage.setItem('byabshaghor_pitch_theme', themeName);
+    
+    // update button states
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      if (btn.getAttribute('data-set-theme') === themeName) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Restore saved theme on load
+  const savedTheme = localStorage.getItem('byabshaghor_pitch_theme') || 'fintech';
+  setDeckTheme(savedTheme);
+
+  function updateCounter() {
+    if (counterEl) {
+      const bnDigits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+      const toBn = n => String(n).padStart(2, '0').split('').map(d => bnDigits[d] || d).join('');
+      counterEl.textContent = `${toBn(currentSlide + 1)} / ${toBn(slides.length)}`;
+    }
+  }
+
+  function navigateSlide(dir) {
+    currentSlide += dir;
+    if (currentSlide < 0) currentSlide = 0;
+    if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+    slides[currentSlide].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    updateCounter();
+  }
+
+  function toggleDeckFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => console.log(err));
+    } else {
+      document.exitFullscreen().catch(err => console.log(err));
+    }
+  }
+
+  // Keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      navigateSlide(1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      navigateSlide(-1);
+    } else if (e.key.toLowerCase() === 'f') {
+      toggleDeckFullscreen();
+    }
+  });
+
+  // Track scroll position to update counter
+  window.addEventListener('scroll', () => {
+    let closestIndex = 0;
+    let minDiff = Infinity;
+    slides.forEach((slide, idx) => {
+      const rect = slide.getBoundingClientRect();
+      const diff = Math.abs(rect.top);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = idx;
+      }
+    });
+    if (closestIndex !== currentSlide) {
+      currentSlide = closestIndex;
+      updateCounter();
+    }
+  }, { passive: true });
+</script>
 </body>
 </html>

@@ -38,38 +38,81 @@ WRAPPER = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Internal — ByabshaGhor</title>
+<title>Internal — ব্যবসাঘর</title>
 <!-- PG_PROTECTED_V1 -->
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  body {{ margin:0; font-family:'Hind Siliguri',sans-serif; background:#0b1120; color:#f1f5f9;
-         display:flex; align-items:center; justify-content:center; min-height:100vh; }}
-  .box {{ background:#1e293b; border:1px solid rgba(148,163,184,.2); border-radius:16px;
-          padding:36px 40px; text-align:center; max-width:380px; width:90%; }}
-  .lock {{ font-size:44px; margin-bottom:12px; }}
-  h1 {{ font-size:20px; margin:0 0 8px; }}
-  p {{ color:#94a3b8; font-size:14px; margin:0 0 20px; }}
-  input {{ background:#0b1120; border:1px solid rgba(148,163,184,.3); border-radius:10px;
-           color:#f1f5f9; padding:11px 14px; font-size:17px; width:140px; text-align:center;
-           letter-spacing:5px; font-family:inherit; }}
-  button {{ background:rgba(34,197,94,.15); color:#22c55e; border:1px solid rgba(34,197,94,.4);
-            border-radius:10px; padding:11px 22px; font-size:15px; font-weight:700;
-            cursor:pointer; font-family:inherit; margin-left:8px; }}
-  .err {{ color:#fca5a5; font-size:13px; margin-top:12px; display:none; }}
-  .back {{ display:block; margin-top:18px; font-size:13px; color:#38bdf8; text-decoration:none; }}
+  body {{
+    margin: 0; font-family: 'Anek Bangla', 'Hind Siliguri', sans-serif;
+    background-color: #050814;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(0, 242, 169, 0.08), transparent 50%);
+    color: #f8fafc;
+    display: flex; align-items: center; justify-content: center; min-height: 100vh;
+  }}
+  .box {{
+    background: rgba(16, 23, 44, 0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
+    padding: 40px 44px; text-align: center; max-width: 400px; width: 90%;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 242, 169, 0.08);
+  }}
+  .lock {{
+    font-size: 46px; margin-bottom: 12px;
+    filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.4));
+  }}
+  h1 {{
+    font-size: 22px; font-weight: 700; margin: 0 0 8px; color: #fff;
+    letter-spacing: -0.3px;
+  }}
+  p {{ color: #94a3b8; font-size: 14.5px; margin: 0 0 24px; line-height: 1.55; }}
+  input {{
+    background: rgba(11, 17, 32, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    color: #fff; padding: 11px 16px; font-size: 18px; width: 140px; text-align: center;
+    letter-spacing: 6px; font-family: 'Plus Jakarta Sans', sans-serif;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  }}
+  input:focus {{
+    border-color: #00f2a9;
+    box-shadow: 0 0 15px rgba(0, 242, 169, 0.25);
+  }}
+  button {{
+    background: #00f2a9; color: #04120a;
+    border: none;
+    border-radius: 12px; padding: 12px 24px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; margin-left: 8px;
+    transition: all 0.2s; box-shadow: 0 4px 14px rgba(0, 242, 169, 0.3);
+  }}
+  button:hover {{
+    filter: brightness(1.1); transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 242, 169, 0.45);
+  }}
+  .err {{ color: #fca5a5; font-size: 13.5px; margin-top: 14px; display: none; font-weight: 600; }}
+  .back {{
+    display: inline-block; margin-top: 22px; font-size: 13.5px; color: #38bdf8;
+    text-decoration: none; font-weight: 600; transition: color 0.15s;
+  }}
+  .back:hover {{ color: #bae6fd; text-decoration: underline; }}
 </style>
 </head>
 <body>
 <div class="box">
   <div class="lock">🔒</div>
-  <h1>Internal Document</h1>
-  <p>এই ডকুমেন্টটি টিমের জন্য — PIN দিন</p>
+  <h1>সুরক্ষিত ইন্টারনাল ডকুমেন্ট</h1>
+  <p>এই ডকুমেন্টটি টিমের গোপনীয় ব্যবহারের জন্য — অনুগ্রহ করে ৬ ডিজিটের PIN দিন</p>
   <form onsubmit="tryUnlock(); return false;">
     <input id="pin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN" autocomplete="off">
     <button type="submit">Unlock</button>
   </form>
-  <div class="err" id="err">ভুল PIN বা ডেটা নষ্ট</div>
-  <a class="back" href="viewer.html">← ডক লিস্টে ফিরুন</a>
+  <div class="err" id="err">⚠️ ভুল PIN বা ডেটা নষ্ট হয়েছে</div>
+  <a class="back" href="viewer.html">← ডক সেন্টারে ফিরে যান</a>
 </div>
 <script>
 const P = "{payload}";
@@ -102,27 +145,28 @@ async function tryUnlock() {{
 </html>
 """
 
+def derive_key(pin: str, salt: bytes) -> bytes:
+    # PBKDF2-HMAC-SHA256 matching WebCrypto PBKDF2
+    return hashlib.pbkdf2_hmac("sha256", pin.encode(), salt, 100_000, dklen=32)
 
-def encrypt_html(html: str, pin: str) -> str:
-    salt, iv = os.urandom(16), os.urandom(12)
-    key = hashlib.pbkdf2_hmac("sha256", pin.encode(), salt, 100000, 32)
-    ct = AESGCM(key).encrypt(iv, html.encode("utf-8"), None)
-    payload = base64.b64encode(salt + iv + ct).decode()
-    return WRAPPER.format(payload=payload)
-
+def encrypt(html_bytes: bytes, pin: str) -> str:
+    salt = os.urandom(16)
+    iv = os.urandom(12)
+    key = derive_key(pin, salt)
+    ct = AESGCM(key).encrypt(iv, html_bytes, None)
+    return base64.b64encode(salt + iv + ct).decode()
 
 def main() -> None:
     for name in INTERNAL_FILES:
         path = DOCS / name
         if not path.exists():
             continue
-        text = path.read_text(encoding="utf-8")
-        if MARKER in text:
-            print(f"already locked {name}")
-            continue
-        path.write_text(encrypt_html(text, PIN), encoding="utf-8")
-        print(f"locked {name}")
-
+        content = path.read_text(encoding="utf-8")
+        if MARKER in content:
+            continue  # already protected
+        payload = encrypt(content.encode("utf-8"), PIN)
+        path.write_text(WRAPPER.format(payload=payload), encoding="utf-8")
+        print(f"protected {name}")
 
 if __name__ == "__main__":
     main()
