@@ -3,108 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ByabshaGhor — Document Viewer</title>
-<link rel="stylesheet" href="glossary.css">
-<script src="glossary.js" defer></script>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+<title>ByabshaGhor — Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0f172a; --card: #1e293b; --accent: #22c55e; --accent2: #38bdf8;
-    --text: #f1f5f9; --muted: #94a3b8; --line: rgba(148,163,184,.15);
+    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
+    --warn:#f59e0b; --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Hind Siliguri', 'Inter', sans-serif; background: #0b1120; color: var(--text); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Hind Siliguri',sans-serif; background:#0b1120; color:var(--text); }
   .topbar {
-    position: sticky; top: 0; z-index: 10; background: rgba(15,23,42,.95);
-    backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
-    padding: 14px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:14px 24px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
   }
-  .brand { font-weight: 700; font-size: 18px; color: var(--accent); }
-  select, button {
-    background: var(--card); color: var(--text); border: 1px solid var(--line);
-    border-radius: 10px; padding: 9px 14px; font-family: inherit; font-size: 14.5px; cursor: pointer;
+  .brand { font-weight:700; font-size:17px; color:var(--accent); }
+  .topbar .hint { color:var(--muted); font-size:13px; margin-left:auto; }
+  .wrap { max-width:900px; margin:0 auto; padding:40px 24px 80px; }
+  .section-title { font-size:14px; letter-spacing:2px; text-transform:uppercase; color:var(--accent2); margin:28px 0 12px; }
+  .section-title.locked { color:var(--warn); }
+  .doc {
+    display:flex; align-items:center; gap:14px; text-decoration:none;
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:16px 20px; margin-bottom:10px; transition:border-color .15s;
   }
-  select:hover, button:hover { border-color: var(--accent); }
-  button.print { background: rgba(34,197,94,.12); color: var(--accent); border-color: rgba(34,197,94,.4); font-weight: 600; }
-  .content { max-width: 960px; margin: 0 auto; padding: 40px 28px 80px; }
-  #doc h1 { font-size: 32px; color: var(--accent); margin: 0 0 18px; border-bottom: 2px solid rgba(34,197,94,.3); padding-bottom: 12px; }
-  #doc h2 { font-size: 23px; color: var(--accent2); margin: 34px 0 14px; }
-  #doc h3 { font-size: 18px; color: #e2e8f0; margin: 24px 0 10px; }
-  #doc p, #doc li { font-size: 15.5px; line-height: 1.75; color: #dbe4f0; }
-  #doc p { margin: 10px 0; }
-  #doc ul, #doc ol { padding-left: 26px; margin: 10px 0; }
-  #doc li { margin: 5px 0; }
-  #doc blockquote {
-    border-left: 4px solid var(--accent); background: rgba(34,197,94,.07);
-    padding: 14px 18px; border-radius: 0 10px 10px 0; margin: 14px 0; color: #d1fae5;
+  .doc:hover { border-color:var(--accent); }
+  .doc .icon { font-size:22px; }
+  .doc .t { font-size:16.5px; font-weight:600; color:#e2e8f0; }
+  .doc .d { font-size:13px; color:var(--muted); margin-top:2px; }
+  .doc .go { margin-left:auto; color:var(--accent); font-size:18px; }
+  .lockbox {
+    background:var(--card); border:1px dashed rgba(245,158,11,.45); border-radius:14px;
+    padding:22px 24px; display:flex; gap:14px; align-items:center; flex-wrap:wrap;
   }
-  #doc blockquote p { color: #d1fae5; }
-  #doc table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14.5px; }
-  #doc th { text-align: left; color: var(--accent); background: rgba(34,197,94,.08); padding: 10px 12px; font-size: 13px; border: 1px solid var(--line); }
-  #doc td { padding: 9px 12px; border: 1px solid var(--line); color: #dbe4f0; vertical-align: top; }
-  #doc tr:nth-child(even) td { background: rgba(30,41,59,.5); }
-  #doc code { background: #0b1120; padding: 2px 7px; border-radius: 5px; font-size: 13.5px; color: #fbbf24; }
-  #doc pre { background: #0b1120; border: 1px solid var(--line); border-radius: 10px; padding: 18px; overflow-x: auto; margin: 14px 0; }
-  #doc pre code { background: none; padding: 0; color: #e2e8f0; font-size: 13.5px; line-height: 1.6; }
-  #doc a { color: var(--accent2); text-decoration: none; }
-  #doc a:hover { text-decoration: underline; }
-  #doc hr { border: none; border-top: 1px solid var(--line); margin: 26px 0; }
-  #doc strong { color: #fff; }
-  .loading { text-align: center; color: var(--muted); padding: 80px 0; font-size: 17px; }
-  .err { text-align: center; color: #fca5a5; padding: 80px 20px; font-size: 16px; }
-  @media print {
-    .topbar { display: none; }
-    body { background: #fff; }
-    .content { padding: 0; }
-    #doc h1, #doc h2, #doc h3, #doc p, #doc li, #doc td, #doc th, #doc blockquote, #doc blockquote p { color: #111; }
-    #doc td, #doc th { border-color: #ccc; }
-    #doc th { background: #eee; }
-    #doc blockquote { background: #f5f5f5; }
+  .lockbox p { flex:1; min-width:200px; color:var(--muted); font-size:14.5px; line-height:1.6; }
+  .lockbox input {
+    background:#0b1120; border:1px solid var(--line); border-radius:10px; color:var(--text);
+    padding:10px 14px; font-size:16px; width:120px; text-align:center; letter-spacing:4px;
+    font-family:inherit;
   }
+  .lockbox button {
+    background:rgba(34,197,94,.15); color:var(--accent); border:1px solid rgba(34,197,94,.4);
+    border-radius:10px; padding:10px 20px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit;
+  }
+  .lockbox button:hover { background:rgba(34,197,94,.25); }
+  .err { color:#fca5a5; font-size:13px; width:100%; display:none; }
+  .hidden { display:none; }
+  .unlock-note { font-size:12px; color:var(--muted); margin-top:8px; width:100%; }
+  @media print { .topbar,.lockbox { display:none; } }
 </style>
 </head>
 <body>
 
 <div class="topbar">
   <span class="brand">ব্যবসাঘর Docs</span>
-  <select id="picker" onchange="if(this.value) location.href=this.value">
-    <option value="">📄 ডকুমেন্ট বেছে নিন…</option>
-    <optgroup label="বিজনেস">
-      <option value="market-research.html">Market Research</option>
-      <option value="competitor-analysis.html">Competitor Analysis</option>
-      <option value="sales-playbook.html">Sales Playbook</option>
-      <option value="financial-model.html">Financial Model</option>
-    </optgroup>
-    <optgroup label="লিগ্যাল ও অপস">
-      <option value="founders-agreement.html">Founders' Agreement</option>
-      <option value="investor-agreement-guide.html">Investor Agreement Guide</option>
-      <option value="company-setup-checklist.html">Company Setup Checklist</option>
-      <option value="founder-ops.html">Founder Ops</option>
-    </optgroup>
-    <optgroup label="প্রেজেন্টেশন">
-      <option value="pitch-deck.html">Pitch Deck (English)</option>
-      <option value="pitch-deck-bn.html">Pitch Deck (বাংলা)</option>
-      <option value="battlecards.html">Battlecards (Internal)</option>
-      <option value="company-setup.html">Company Setup (Checklist)</option>
-    </optgroup>
-    <optgroup label="টেকনিক্যাল">
-      <option value="custom-domains.html">Custom Domains</option>
-      <option value="job-orders-spec.html">Job Orders Spec</option>
-      <option value="offline-sync-contract.html">Offline Sync Contract</option>
-    </optgroup>
-  </select>
-  <button class="print" onclick="window.print()">🖨 Print / Save PDF</button>
-  <span style="color:var(--muted); font-size:13px; margin-left:auto">.md এডিট করার পর <code>python build.py</code> চালান</span>
+  <span class="hint">Internal + Investor documents</span>
 </div>
 
-<div class="content"><div id="doc">
-  <div style="text-align:center; padding:80px 20px; color:var(--muted)">
-    <p style="font-size:52px; margin-bottom:20px">📚</p>
-    <p style="font-size:19px; color:#dbe4f0">উপরের ড্রপডাউন থেকে ডকুমেন্ট বেছে নিন</p>
-    <p style="font-size:14px; margin-top:10px">.md ফাইল এডিট করলে <code style="color:#fbbf24">python build.py</code> চালিয়ে HTML আপডেট করুন</p>
+<div class="wrap">
+
+  <div class="section-title">🌐 Public — যে কাউকে শেয়ার করা যায়</div>
+
+  <a class="doc" href="pitch-deck-bn.html">
+    <span class="icon">📊</span>
+    <div><div class="t">Pitch Deck (বাংলা)</div><div class="d">ইনভেস্টর প্রেজেন্টেশন — ৮ স্লাইড</div></div>
+    <span class="go">→</span>
+  </a>
+  <a class="doc" href="pitch-deck.html">
+    <span class="icon">📊</span>
+    <div><div class="t">Pitch Deck (English)</div><div class="d">Investor presentation — 8 slides</div></div>
+    <span class="go">→</span>
+  </a>
+  <a class="doc" href="market-research.html">
+    <span class="icon">📈</span>
+    <div><div class="t">Market Research</div><div class="d">TAM/SAM/SOM, ডেটা ও সোর্স</div></div>
+    <span class="go">→</span>
+  </a>
+
+  <div class="section-title locked">🔒 Internal — PIN লাগবে</div>
+
+  <div id="gate" class="lockbox">
+    <p><b style="color:#e2e8f0">Internal ডকুমেন্ট</b> — স্ট্র্যাটেজি, battlecards, অ্যাগ্রিমেন্ট, ফাইন্যান্সিয়াল। টিমের জন্য।</p>
+    <input id="pin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN">
+    <button onclick="unlock()">Unlock</button>
+    <div class="err" id="err">ভুল PIN — আবার চেষ্টা করুন</div>
   </div>
-</div></div>
+
+  <div id="internal" class="hidden">
+    <a class="doc" href="competitor-analysis.html">
+      <span class="icon">⚔️</span>
+      <div><div class="t">Competitor Analysis</div><div class="d">প্রতিদ্বন্দ্বী ম্যাপ, ফিচার ম্যাট্রিক্স, battlecard টেমপ্লেট</div></div>
+      <span class="go">→</span>
+    </a>
+    <a class="doc" href="battlecards.html">
+      <span class="icon">🎯</span>
+      <div><div class="t">Battlecards</div><div class="d">Smart Dokani, টালিখাতা, হিসাবী, Mediasoft — killer lines</div></div>
+      <span class="go">→</span>
+    </a>
+    <a class="doc" href="sales-playbook.html">
+      <span class="icon">🤝</span>
+      <div><div class="t">Sales Playbook</div><div class="d">ইন্টারভিউ প্রশ্ন, ডেমো স্ক্রিপ্ট, objection handling, প্রাইসিং</div></div>
+      <span class="go">→</span>
+    </a>
+    <a class="doc" href="financial-model.html">
+      <span class="icon">💰</span>
+      <div><div class="t">Financial Model</div><div class="d">খরচ, MRR প্রজেকশন, ব্রেক-ইভেন, unit economics</div></div>
+      <span class="go">→</span>
+    </a>
+    <a class="doc" href="founders-agreement.html">
+      <span class="icon">📝</span>
+      <div><div class="t">Founders' Agreement</div><div class="d">ইক্যুইটি, ভেস্টিং, সিদ্ধান্ত, এক্সিট — সাইন-রেডি টেমপ্লেট</div></div>
+      <span class="go">→</span>
+    </a>
+    <a class="doc" href="investor-agreement-guide.html">
+      <span class="icon">🤵</span>
+      <div><div class="t">Investor Agreement Guide</div><div class="d">টার্ম শিটের ক্লজ, due diligence, SAFI/SAFE, red flags</div></div>
+      <span class="go">→</span>
+    </a>
+    <a class="doc" href="company-setup.html">
+      <span class="icon">✅</span>
+      <div><div class="t">Company Setup (Checklist)</div><div class="d">RJSC → ট্রেড লাইসেন্স → ব্যাংক — ইন্টারঅ্যাক্টিভ</div></div>
+      <span class="go">→</span>
+    </a>
+    <a class="doc" href="company-setup-checklist.html">
+      <span class="icon">📋</span>
+      <div><div class="t">Company Setup (Doc)</div><div class="d">একই চেকলিস্ট, টেক্সট ভার্সন</div></div>
+      <span class="go">→</span>
+    </a>
+    <a class="doc" href="founder-ops.html">
+      <span class="icon">🧭</span>
+      <div><div class="t">Founder Ops</div><div class="d">রোল, ড্রাইভ, ক্যালেন্ডার, মিনিট, অ্যাডভাইজর</div></div>
+      <span class="go">→</span>
+    </a>
+
+    <div class="section-title locked" style="margin-top:26px">🔧 টেকনিক্যাল</div>
+    <a class="doc" href="custom-domains.html">
+      <span class="icon">🌐</span>
+      <div><div class="t">Custom Domains</div><div class="d">টেন্যান্ট ডোমেইন সেটআপ স্পেক</div></div>
+      <span class="go">→</span>
+    </a>
+    <a class="doc" href="job-orders-spec.html">
+      <span class="icon">🔧</span>
+      <div><div class="t">Job Orders Spec</div><div class="d">রিপেয়ার ওয়ার্কফ্লো স্পেসিফিকেশন</div></div>
+      <span class="go">→</span>
+    </a>
+    <a class="doc" href="offline-sync-contract.html">
+      <span class="icon">🔄</span>
+      <div><div class="t">Offline Sync Contract</div><div class="d">সিঙ্ক প্রোটোকল ডকুমেন্ট</div></div>
+      <span class="go">→</span>
+    </a>
+  </div>
+
+</div>
+
+<script>
+  // ⚠️ এটা convenience gate, আসল সিকিউরিটি না — ফাইলের সরাসরি URL পাবলিকই থাকে।
+  // PIN এখানেই বদলান:
+  const PIN = '1701';
+
+  function unlock() {
+    const v = document.getElementById('pin').value;
+    if (v === PIN) {
+      document.getElementById('gate').classList.add('hidden');
+      document.getElementById('internal').classList.remove('hidden');
+      sessionStorage.setItem('docsUnlocked', '1');
+    } else {
+      document.getElementById('err').style.display = 'block';
+    }
+  }
+  document.getElementById('pin').addEventListener('keydown', e => {
+    if (e.key === 'Enter') unlock();
+  });
+  if (sessionStorage.getItem('docsUnlocked') === '1') {
+    document.getElementById('gate').classList.add('hidden');
+    document.getElementById('internal').classList.remove('hidden');
+  }
+</script>
 
 </body>
 </html>
