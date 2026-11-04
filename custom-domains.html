@@ -3,153 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Custom Domains & Subdomains — ByabshaGhor Docs</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="glossary.css">
-<script src="glossary.js" defer></script>
+<title>Internal — ByabshaGhor</title>
+<!-- PG_PROTECTED_V1 -->
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
-    --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Hind Siliguri','Inter',sans-serif; background:#0b1120; color:var(--text); }
-  .bar {
-    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line); padding:12px 24px;
-    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-  }
-  .brand { font-weight:700; color:var(--accent); font-size:16px; }
-  .bar a { color:var(--accent2); font-size:13.5px; text-decoration:none; }
-  .bar a:hover { text-decoration:underline; }
-  .bar button {
-    margin-left:auto; background:rgba(34,197,94,.12); color:var(--accent);
-    border:1px solid rgba(34,197,94,.4); border-radius:10px;
-    padding:7px 14px; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
-  }
-  .content { max-width:960px; margin:0 auto; padding:40px 28px 80px; }
-  h1 { font-size:32px; color:var(--accent); margin:0 0 18px; border-bottom:2px solid rgba(34,197,94,.3); padding-bottom:12px; }
-  h2 { font-size:23px; color:var(--accent2); margin:34px 0 14px; }
-  h3 { font-size:18px; color:#e2e8f0; margin:24px 0 10px; }
-  p, li { font-size:15.5px; line-height:1.75; color:#dbe4f0; }
-  p { margin:10px 0; }
-  ul, ol { padding-left:26px; margin:10px 0; }
-  li { margin:5px 0; }
-  blockquote {
-    border-left:4px solid var(--accent); background:rgba(34,197,94,.07);
-    padding:14px 18px; border-radius:0 10px 10px 0; margin:14px 0;
-  }
-  blockquote p { color:#d1fae5; }
-  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
-  th { text-align:left; color:var(--accent); background:rgba(34,197,94,.08); padding:10px 12px; font-size:13px; border:1px solid var(--line); }
-  td { padding:9px 12px; border:1px solid var(--line); color:#dbe4f0; vertical-align:top; }
-  tr:nth-child(even) td { background:rgba(30,41,59,.5); }
-  code { background:#0b1120; padding:2px 7px; border-radius:5px; font-size:13.5px; color:#fbbf24; }
-  pre { background:#0b1120; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; margin:14px 0; }
-  pre code { background:none; padding:0; color:#e2e8f0; font-size:13.5px; line-height:1.6; }
-  a { color:var(--accent2); text-decoration:none; }
-  a:hover { text-decoration:underline; }
-  hr { border:none; border-top:1px solid var(--line); margin:26px 0; }
-  strong { color:#fff; }
-  @media print {
-    .bar { display:none; }
-    body { background:#fff; }
-    .content { padding:0; }
-    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color:#111; }
-    td, th { border-color:#ccc; }
-    th { background:#eee; }
-    blockquote { background:#f5f5f5; }
-    a { color:#0369a1; }
-  }
+  body { margin:0; font-family:'Hind Siliguri',sans-serif; background:#0b1120; color:#f1f5f9;
+         display:flex; align-items:center; justify-content:center; min-height:100vh; }
+  .box { background:#1e293b; border:1px solid rgba(148,163,184,.2); border-radius:16px;
+          padding:36px 40px; text-align:center; max-width:380px; width:90%; }
+  .lock { font-size:44px; margin-bottom:12px; }
+  h1 { font-size:20px; margin:0 0 8px; }
+  p { color:#94a3b8; font-size:14px; margin:0 0 20px; }
+  input { background:#0b1120; border:1px solid rgba(148,163,184,.3); border-radius:10px;
+           color:#f1f5f9; padding:11px 14px; font-size:17px; width:140px; text-align:center;
+           letter-spacing:5px; font-family:inherit; }
+  button { background:rgba(34,197,94,.15); color:#22c55e; border:1px solid rgba(34,197,94,.4);
+            border-radius:10px; padding:11px 22px; font-size:15px; font-weight:700;
+            cursor:pointer; font-family:inherit; margin-left:8px; }
+  .err { color:#fca5a5; font-size:13px; margin-top:12px; display:none; }
+  .back { display:block; margin-top:18px; font-size:13px; color:#38bdf8; text-decoration:none; }
 </style>
 </head>
 <body>
-<div class="bar">
-  <span class="brand">ব্যবসাঘর Docs</span>
-  <a href="viewer.html">সব ডকের লিস্ট</a>
-  <a href="custom-domains.md">custom-domains.md (markdown)</a>
-  <button onclick="window.print()">🖨 Print / PDF</button>
+<div class="box">
+  <div class="lock">🔒</div>
+  <h1>Internal Document</h1>
+  <p>এই ডকুমেন্টটি টিমের জন্য — PIN দিন</p>
+  <form onsubmit="tryUnlock(); return false;">
+    <input id="pin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN" autocomplete="off">
+    <button type="submit">Unlock</button>
+  </form>
+  <div class="err" id="err">ভুল PIN বা ডেটা নষ্ট</div>
+  <a class="back" href="viewer.html">← ডক লিস্টে ফিরুন</a>
 </div>
-<div class="content">
-<h1>Custom Domains &amp; Subdomains</h1>
-<p>Tenants can reach the platform on their own hostname — either an assigned
-subdomain (<code>acme.byabshaghor.com</code>) or their own domain (<code>pos.acme.com</code>).</p>
-<p>Tenancy is resolved by JWT, not by hostname — no backend change is needed for
-routing. The domain layer only provides:</p>
-<ul>
-<li><strong>TLS approval</strong> — Caddy asks the backend before issuing a cert</li>
-<li><strong>White-label branding</strong> — verified domains show the shop's name/logo on
-  the login page (<code>GET /api/v1/platform/domain-info?host=...</code>)</li>
-</ul>
-<h2>Flow</h2>
-<ol>
-<li>Super admin adds the domain: <code>/admin/tenants/&lt;id&gt;</code> → <strong>Custom Domains</strong></li>
-<li>Customer creates DNS records:
-   - <code>CNAME  pos.acme.com → app.byabshaghor.com</code>
-   - <code>TXT   pos.acme.com → byabshaghor-verify=&lt;token&gt;</code> (shown in admin UI)</li>
-<li>Admin clicks <strong>Verify</strong> → <code>verified_at</code> is set → TLS + branding activate.</li>
-</ol>
-<h2>Caddyfile</h2>
-<p>The production config lives in <code>deploy/Caddyfile</code> — it routes <code>/api/v1/*</code>
-and <code>/uploads/*</code> to the backend and everything else to Next.js, on the same
-origin. Full setup steps: <code>deploy/README.md</code>.</p>
-<pre><code class="language-caddy">{
-    on_demand_tls {
-        ask http://localhost:4000/api/v1/platform/tls-ask
-        interval 2m
-        burst 5
-    }
-}
+<script>
+const P = "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";
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 
-byabshaghor.com, app.byabshaghor.com, *.byabshaghor.com {
-    tls {
-        dns cloudflare {env.CF_API_TOKEN}   # wildcard needs DNS challenge
-    }
-    @api path /api/v1/* /uploads/*
-    handle @api { reverse_proxy localhost:4000 }
-    handle { reverse_proxy localhost:3000 }
+async function unlock(pin) {
+  const raw = b64(P);
+  const salt = raw.slice(0, 16), iv = raw.slice(16, 28), ct = raw.slice(28);
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(pin),
+    'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name:'PBKDF2', salt, iterations:100000, hash:'SHA-256' },
+    km, { name:'AES-GCM', length:256 }, false, ['decrypt']);
+  const pt = await crypto.subtle.decrypt({ name:'AES-GCM', iv }, key, ct);
+  sessionStorage.setItem('docsPin', pin);
+  document.open();
+  document.write(new TextDecoder().decode(pt));
+  document.close();
 }
-
-:443 {
-    tls { on_demand }
-    @api path /api/v1/* /uploads/*
-    handle @api { reverse_proxy localhost:4000 }
-    handle { reverse_proxy localhost:3000 }
+async function tryUnlock() {
+  try { await unlock(document.getElementById('pin').value); }
+  catch(e) { document.getElementById('err').style.display = 'block'; }
 }
-</code></pre>
-<p>The web app resolves the API from <code>window.location.origin</code> + <code>/api/v1</code> in
-production (see <code>shop-app-web/src/lib/api.ts</code>), so a custom domain like
-<code>pos.acme.com</code> calls <code>pos.acme.com/api/v1</code> — same origin, no CORS, and no
-<code>NEXT_PUBLIC_API_URL</code> needed. Leave it empty in production builds.</p>
-<h2>Customer checklist</h2>
-<table>
-<thead>
-<tr>
-<th>Step</th>
-<th>Record</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>CNAME</td>
-<td><code>pos.acme.com</code> → <code>app.byabshaghor.com</code></td>
-</tr>
-<tr>
-<td>2</td>
-<td>TXT</td>
-<td><code>pos.acme.com</code> → <code>byabshaghor-verify=&lt;token&gt;</code></td>
-</tr>
-<tr>
-<td>3</td>
-<td>—</td>
-<td>Wait for DNS propagation (minutes–hours), ask admin to Verify</td>
-</tr>
-</tbody>
-</table>
-<p>Cloudflare users: the CNAME must be <strong>DNS only</strong> (grey cloud) — proxied mode
-breaks on-demand TLS issuance.</p>
-</div>
+(async () => {
+  const p = sessionStorage.getItem('docsPin');
+  if (p) try { await unlock(p); } catch(e) { sessionStorage.removeItem('docsPin'); }
+})();
+</script>
 </body>
 </html>

@@ -166,7 +166,7 @@
     if (v === PIN) {
       document.getElementById('gate').classList.add('hidden');
       document.getElementById('internal').classList.remove('hidden');
-      sessionStorage.setItem('docsUnlocked', '1');
+      sessionStorage.setItem('docsPin', v);
     } else {
       document.getElementById('err').style.display = 'block';
     }
@@ -174,7 +174,7 @@
   document.getElementById('pin').addEventListener('keydown', e => {
     if (e.key === 'Enter') unlock();
   });
-  if (sessionStorage.getItem('docsUnlocked') === '1') {
+  if (sessionStorage.getItem('docsPin')) {
     document.getElementById('gate').classList.add('hidden');
     document.getElementById('internal').classList.remove('hidden');
   }

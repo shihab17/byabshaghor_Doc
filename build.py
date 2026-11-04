@@ -113,5 +113,12 @@ def main() -> None:
         )
         print(f"built {out.name}")
 
+    # Re-encrypt internal pages so protected content stays locked after rebuilds.
+    protect = DOCS_DIR / "protect.py"
+    if protect.exists():
+        import subprocess
+        import sys
+        subprocess.run([sys.executable, str(protect)], check=True)
+
 if __name__ == "__main__":
     main()

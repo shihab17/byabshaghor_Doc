@@ -3,405 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Offline Sync Contract (v1 draft) — ByabshaGhor Docs</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="glossary.css">
-<script src="glossary.js" defer></script>
+<title>Internal — ByabshaGhor</title>
+<!-- PG_PROTECTED_V1 -->
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:#0f172a; --card:#1e293b; --accent:#22c55e; --accent2:#38bdf8;
-    --text:#f1f5f9; --muted:#94a3b8; --line:rgba(148,163,184,.15);
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Hind Siliguri','Inter',sans-serif; background:#0b1120; color:var(--text); }
-  .bar {
-    position:sticky; top:0; z-index:10; background:rgba(15,23,42,.95); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line); padding:12px 24px;
-    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-  }
-  .brand { font-weight:700; color:var(--accent); font-size:16px; }
-  .bar a { color:var(--accent2); font-size:13.5px; text-decoration:none; }
-  .bar a:hover { text-decoration:underline; }
-  .bar button {
-    margin-left:auto; background:rgba(34,197,94,.12); color:var(--accent);
-    border:1px solid rgba(34,197,94,.4); border-radius:10px;
-    padding:7px 14px; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
-  }
-  .content { max-width:960px; margin:0 auto; padding:40px 28px 80px; }
-  h1 { font-size:32px; color:var(--accent); margin:0 0 18px; border-bottom:2px solid rgba(34,197,94,.3); padding-bottom:12px; }
-  h2 { font-size:23px; color:var(--accent2); margin:34px 0 14px; }
-  h3 { font-size:18px; color:#e2e8f0; margin:24px 0 10px; }
-  p, li { font-size:15.5px; line-height:1.75; color:#dbe4f0; }
-  p { margin:10px 0; }
-  ul, ol { padding-left:26px; margin:10px 0; }
-  li { margin:5px 0; }
-  blockquote {
-    border-left:4px solid var(--accent); background:rgba(34,197,94,.07);
-    padding:14px 18px; border-radius:0 10px 10px 0; margin:14px 0;
-  }
-  blockquote p { color:#d1fae5; }
-  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14.5px; }
-  th { text-align:left; color:var(--accent); background:rgba(34,197,94,.08); padding:10px 12px; font-size:13px; border:1px solid var(--line); }
-  td { padding:9px 12px; border:1px solid var(--line); color:#dbe4f0; vertical-align:top; }
-  tr:nth-child(even) td { background:rgba(30,41,59,.5); }
-  code { background:#0b1120; padding:2px 7px; border-radius:5px; font-size:13.5px; color:#fbbf24; }
-  pre { background:#0b1120; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; margin:14px 0; }
-  pre code { background:none; padding:0; color:#e2e8f0; font-size:13.5px; line-height:1.6; }
-  a { color:var(--accent2); text-decoration:none; }
-  a:hover { text-decoration:underline; }
-  hr { border:none; border-top:1px solid var(--line); margin:26px 0; }
-  strong { color:#fff; }
-  @media print {
-    .bar { display:none; }
-    body { background:#fff; }
-    .content { padding:0; }
-    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color:#111; }
-    td, th { border-color:#ccc; }
-    th { background:#eee; }
-    blockquote { background:#f5f5f5; }
-    a { color:#0369a1; }
-  }
+  body { margin:0; font-family:'Hind Siliguri',sans-serif; background:#0b1120; color:#f1f5f9;
+         display:flex; align-items:center; justify-content:center; min-height:100vh; }
+  .box { background:#1e293b; border:1px solid rgba(148,163,184,.2); border-radius:16px;
+          padding:36px 40px; text-align:center; max-width:380px; width:90%; }
+  .lock { font-size:44px; margin-bottom:12px; }
+  h1 { font-size:20px; margin:0 0 8px; }
+  p { color:#94a3b8; font-size:14px; margin:0 0 20px; }
+  input { background:#0b1120; border:1px solid rgba(148,163,184,.3); border-radius:10px;
+           color:#f1f5f9; padding:11px 14px; font-size:17px; width:140px; text-align:center;
+           letter-spacing:5px; font-family:inherit; }
+  button { background:rgba(34,197,94,.15); color:#22c55e; border:1px solid rgba(34,197,94,.4);
+            border-radius:10px; padding:11px 22px; font-size:15px; font-weight:700;
+            cursor:pointer; font-family:inherit; margin-left:8px; }
+  .err { color:#fca5a5; font-size:13px; margin-top:12px; display:none; }
+  .back { display:block; margin-top:18px; font-size:13px; color:#38bdf8; text-decoration:none; }
 </style>
 </head>
 <body>
-<div class="bar">
-  <span class="brand">ব্যবসাঘর Docs</span>
-  <a href="viewer.html">সব ডকের লিস্ট</a>
-  <a href="offline-sync-contract.md">offline-sync-contract.md (markdown)</a>
-  <button onclick="window.print()">🖨 Print / PDF</button>
+<div class="box">
+  <div class="lock">🔒</div>
+  <h1>Internal Document</h1>
+  <p>এই ডকুমেন্টটি টিমের জন্য — PIN দিন</p>
+  <form onsubmit="tryUnlock(); return false;">
+    <input id="pin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN" autocomplete="off">
+    <button type="submit">Unlock</button>
+  </form>
+  <div class="err" id="err">ভুল PIN বা ডেটা নষ্ট</div>
+  <a class="back" href="viewer.html">← ডক লিস্টে ফিরুন</a>
 </div>
-<div class="content">
-<h1>Offline Sync Contract (v1 draft)</h1>
-<p>Contract between the <strong>ByabshaGhor offline POS app</strong> (Flutter, <code>byabshaghor_pos</code>)
-and <strong>shop-app-backend</strong>. Goal: a POS counter must be able to sell with zero
-connectivity and reconcile with the cloud later.</p>
-<p>Scope intentionally covers only <strong>master data pull</strong> + <strong>counter operations
-push</strong>. Reports, purchases, settings, etc. stay online-only in v1.</p>
-<hr />
-<h2>1. Principles</h2>
-<ul>
-<li><strong>Server-authoritative.</strong> Cloud DB is the source of truth. The device holds a
-  read replica of master data + an append-only outbox of its own operations.</li>
-<li><strong>Idempotent push.</strong> Every operation carries a client-generated <code>op_id</code>
-  (UUID). Retries are always safe — the server dedupes by <code>op_id</code>.</li>
-<li><strong>Delta pull.</strong> After the first full snapshot, devices pull only rows changed
-  since their last cursor (<code>updated_at</code> based).</li>
-<li><strong>Independent operations.</strong> A push batch is NOT atomic. Each op gets its own
-  result; one bad op never blocks the rest of the queue.</li>
-<li><strong>Tombstones.</strong> Deleted rows sync via <code>deleted_at</code>, not by disappearing.</li>
-</ul>
-<h2>2. Conventions</h2>
-<ul>
-<li>Base path: <code>/api/v1/sync</code> (new additive module <code>src/modules/sync/</code>).</li>
-<li>Same middleware chain as other routes: <code>authenticate</code> → <code>tenantResolver</code> →
-  <code>branchResolver</code>. Sync is always scoped to one tenant + one branch.</li>
-<li>All timestamps ISO-8601 UTC. All ids UUIDs.</li>
-<li>Device sends <code>X-Device-Id</code> + <code>X-Device-Token</code> headers on every sync call.</li>
-</ul>
-<h2>3. Device registration</h2>
-<pre><code>POST /api/v1/sync/devices/register
-Authorization: Bearer &lt;user jwt&gt;          # owner/manager registers a counter
-{
-  &quot;name&quot;: &quot;Counter-1&quot;,                    # human label
-  &quot;branchId&quot;: &quot;&lt;uuid&gt;&quot;,
-  &quot;platform&quot;: &quot;windows&quot;                   # windows|android
+<script>
+const P = "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";
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+
+async function unlock(pin) {
+  const raw = b64(P);
+  const salt = raw.slice(0, 16), iv = raw.slice(16, 28), ct = raw.slice(28);
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(pin),
+    'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name:'PBKDF2', salt, iterations:100000, hash:'SHA-256' },
+    km, { name:'AES-GCM', length:256 }, false, ['decrypt']);
+  const pt = await crypto.subtle.decrypt({ name:'AES-GCM', iv }, key, ct);
+  sessionStorage.setItem('docsPin', pin);
+  document.open();
+  document.write(new TextDecoder().decode(pt));
+  document.close();
 }
-→ 201
-{
-  &quot;deviceId&quot;: &quot;&lt;uuid&gt;&quot;,
-  &quot;deviceToken&quot;: &quot;&lt;random secret&gt;&quot;,       # stored in flutter_secure_storage
-  &quot;invoicePrefix&quot;: &quot;C1&quot;                   # per-device invoice prefix
+async function tryUnlock() {
+  try { await unlock(document.getElementById('pin').value); }
+  catch(e) { document.getElementById('err').style.display = 'block'; }
 }
-</code></pre>
-<ul>
-<li>One row per physical counter in <code>sync_devices</code>.</li>
-<li><code>deviceToken</code> is long-lived and revocable; shown once at registration.
-  Re-registering an existing <code>name</code>+<code>branchId</code> rotates the token and returns a
-  fresh one (covers a lost token) — never creates a duplicate row.</li>
-<li>Staff login on the device uses the counter PIN (<code>pin_hash</code> already on
-  <code>public.global_users</code> — see public migration 042); no user JWT is needed
-  for <code>/sync/*</code> device calls. When the server is unreachable the app verifies
-  the PIN locally against the pulled <code>pin_hash</code> (bcrypt) and restores the
-  last session profile.</li>
-</ul>
-<h3>Device + conflict management (owner JWT)</h3>
-<pre><code>GET   /api/v1/sync/devices                      # registered counters (with branch name)
-PATCH /api/v1/sync/devices/:id/revoke           # { &quot;revoked&quot;: true|false }
-                                                # suspended devices get 401 on /sync/*
-GET   /api/v1/sync/conflicts?resolved=false     # paginated review queue
-POST  /api/v1/sync/conflicts/:id/resolve        # marks the conflict resolved
-</code></pre>
-<h2>4. Pull — master data</h2>
-<pre><code>GET /api/v1/sync/pull?since=&lt;iso8601&gt;&amp;entities=products,units&amp;cursor=&lt;opaque&gt;
-X-Device-Id, X-Device-Token
-→ 200
-{
-  &quot;serverTime&quot;: &quot;2026-09-27T10:00:00.000Z&quot;,
-  &quot;nextCursor&quot;: &quot;eyJ...&quot;,
-  &quot;hasMore&quot;: true,
-  &quot;changes&quot;: {
-    &quot;products&quot;:  { &quot;upsert&quot;: [...], &quot;delete&quot;: [&quot;&lt;uuid&gt;&quot;, ...] },
-    &quot;units&quot;:     { &quot;upsert&quot;: [...], &quot;delete&quot;: [] }
-  }
-}
-</code></pre>
-<ul>
-<li><code>since</code> omitted → full snapshot (first sync).</li>
-<li><code>cursor</code> paginates large entities (IMEI stock can be thousands of rows).
-  Client keeps pulling until <code>hasMore=false</code>, then stores <code>serverTime</code> as its
-  new <code>since</code> watermark. <strong>Never</strong> use client clock as the watermark.</li>
-<li><code>delete</code> contains ids of rows soft-deleted since <code>since</code>.</li>
-</ul>
-<h3>Syncable entities (v1)</h3>
-<table>
-<thead>
-<tr>
-<th>entity</th>
-<th>source</th>
-<th>notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>products</code></td>
-<td>products + variants + barcodes</td>
-<td>incl. price, tax fields</td>
-</tr>
-<tr>
-<td><code>units</code></td>
-<td>serialized units / IMEI stock</td>
-<td>the big one — paginate</td>
-</tr>
-<tr>
-<td><code>customers</code></td>
-<td>customers</td>
-<td>incl. due/advance balance snapshot</td>
-</tr>
-<tr>
-<td><code>categories</code>,<code>brands</code>,<code>subcategories</code></td>
-<td>lookups</td>
-<td>small</td>
-</tr>
-<tr>
-<td><code>payment_methods</code></td>
-<td>payment methods + accounts</td>
-<td></td>
-</tr>
-<tr>
-<td><code>users</code></td>
-<td>counter staff</td>
-<td><code>id, name, role, pinHash</code> only — never password hash</td>
-</tr>
-<tr>
-<td><code>settings</code></td>
-<td>branch-scoped invoice/print/tax settings</td>
-<td>single object</td>
-</tr>
-<tr>
-<td><code>sales</code></td>
-<td>completed sales (for returns)</td>
-<td>see §8 — window via tenant settings</td>
-</tr>
-<tr>
-<td><code>sale_items</code></td>
-<td>line items of those sales</td>
-<td>streams by parent sale's <code>updated_at</code> (no own watermark columns)</td>
-</tr>
-</tbody>
-</table>
-<h2>5. Push — operations outbox</h2>
-<pre><code>POST /api/v1/sync/push
-X-Device-Id, X-Device-Token
-{
-  &quot;operations&quot;: [
-    {
-      &quot;opId&quot;: &quot;&lt;uuid&gt;&quot;,            // client-generated, idempotency key
-      &quot;type&quot;: &quot;sale.create&quot;,
-      &quot;clientTs&quot;: &quot;2026-09-27T09:41:12.000Z&quot;,
-      &quot;payload&quot;: { /* same shape as the matching REST schema */ }
-    }
-  ]
-}
-→ 200
-{
-  &quot;results&quot;: [
-    {
-      &quot;opId&quot;: &quot;&lt;uuid&gt;&quot;,
-      &quot;status&quot;: &quot;applied&quot;,          // applied | duplicate | conflict | rejected
-      &quot;serverId&quot;: &quot;&lt;uuid&gt;&quot;,         // created row id (e.g. sale id)
-      &quot;invoiceNo&quot;: &quot;INV-000412&quot;,    // official number where applicable
-      &quot;message&quot;: null               // human-readable reason on conflict/rejected
-    }
-  ]
-}
-</code></pre>
-<h3>Operation types (v1)</h3>
-<table>
-<thead>
-<tr>
-<th>type</th>
-<th>maps to</th>
-<th>payload</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>sale.create</code></td>
-<td><code>sale.service</code> create path</td>
-<td><code>createSaleSchema</code> + <code>clientRef = opId</code></td>
-</tr>
-<tr>
-<td><code>sale.pay</code></td>
-<td><code>POST /sales/:id/pay</code></td>
-<td><code>paySaleSchema</code> + target <code>saleId</code> or <code>clientRef</code></td>
-</tr>
-<tr>
-<td><code>sale.void</code></td>
-<td><code>POST /sales/:id/void</code></td>
-<td><code>voidSaleSchema</code> + target</td>
-</tr>
-<tr>
-<td><code>sale_return.create</code></td>
-<td>sale-return create</td>
-<td>return schema + original sale ref</td>
-</tr>
-<tr>
-<td><code>customer.create</code> / <code>customer.update</code></td>
-<td>customer module</td>
-<td>customer schema</td>
-</tr>
-<tr>
-<td><code>cashbox.deposit</code> / <code>cashbox.withdraw</code></td>
-<td><code>addTransaction</code></td>
-<td>amount + note + paymentAccountId</td>
-</tr>
-</tbody>
-</table>
-<p>Every counter op also carries <code>soldBy</code> (staff user uuid) — audit columns
-can't come from a JWT on device-authenticated calls.</p>
-<p>Payloads reuse the existing zod schemas verbatim — the sync module validates
-then calls the same service functions as the REST routes. No duplicated
-business logic.</p>
-<p>v1 restrictions on push ops:</p>
-<ul>
-<li><code>sale.create</code> with <code>emi</code> set → <code>rejected</code> ("EMI requires connectivity").
-  Exchange/trade-in inside a sale IS allowed.</li>
-<li><code>sale.void</code> is allowed only if the device has offline-void permission —
-  owner/manager PIN required on-device.</li>
-</ul>
-<h3>Result semantics</h3>
-<ul>
-<li><code>applied</code> — committed.</li>
-<li><code>duplicate</code> — <code>opId</code> already applied; <code>serverId</code>/<code>invoiceNo</code> return the
-  original result. Client marks synced, does not retry.</li>
-<li><code>conflict</code> — committed but needs human review (see §6). The op is NOT lost.</li>
-<li><code>rejected</code> — hard failure (invalid payload, voided target, etc.). Client
-  surfaces it to staff; does not auto-retry.</li>
-</ul>
-<p>Ops are applied <strong>in array order</strong> per device, so <code>sale.pay</code> after
-<code>sale.create</code> in one batch sees its own sale.</p>
-<h2>6. Conflicts</h2>
-<table>
-<thead>
-<tr>
-<th>case</th>
-<th>rule</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Same <code>unitId</code> (IMEI) sold on 2 devices while offline</td>
-<td>Second op applies → <code>conflict</code>, row created with <code>flagged=true</code>, lands in a review queue for owner. Never silently drop a real-world sale.</td>
-</tr>
-<tr>
-<td><code>sale.pay</code>/<code>sale.void</code> targeting a sale that doesn't exist on server (e.g. original was itself voided)</td>
-<td><code>rejected</code> with message.</td>
-</tr>
-<tr>
-<td>Stock goes negative after replay</td>
-<td>Allowed. Sale applies; stock row flagged. Counters must never block a sale.</td>
-</tr>
-<tr>
-<td><code>customer.create</code> with same phone as existing</td>
-<td>Server merges → returns existing <code>serverId</code>, status <code>applied</code>.</td>
-</tr>
-</tbody>
-</table>
-<p><code>sync_conflicts</code> table stores every conflict for owner review in the web UI.</p>
-<h2>7. Invoice numbering</h2>
-<ul>
-<li>Offline invoice shows a provisional number: <code>&lt;prefix&gt;-&lt;local seq&gt;</code>
-  (e.g. <code>C1-000137</code>). Prefix comes from device registration — no cross-device
-  collisions by construction.</li>
-<li>On push, server assigns the official <code>invoiceNo</code> via the existing
-  number-series and returns it in the result. App stores the mapping and
-  reprints/shows official number once synced.</li>
-<li><code>clientRef</code> (already in <code>createSaleSchema</code>) carries <code>opId</code> so a sale can be
-  traced back to its device operation.</li>
-</ul>
-<h2>8. Returns offline</h2>
-<p>A return needs the original sale. Options per sync policy:</p>
-<ul>
-<li>v1: pull <code>sales</code> for the last N days (configurable via tenant settings,
-  default 30) so most returns work offline. Return op carries
-  <code>saleId</code>/<code>invoiceNo</code> — if the original isn't on server yet it must be (it
-  was synced or made online).</li>
-<li>Edge: original sale was made offline on the SAME device → return references
-  <code>clientRef</code>; server resolves after the create op applies (ordering
-  guarantees this within a device queue).</li>
-</ul>
-<h2>9. Client-side requirements (Flutter)</h2>
-<ul>
-<li><code>outbox</code> table: <code>op_id, type, payload_json, status, attempts, created_at</code>.
-  FIFO drain on connectivity (<code>connectivity_plus</code> already present).</li>
-<li>Watermark per entity stored in <code>sync_meta</code> (replaces single <code>lastPulledAt</code>).</li>
-<li>Current full-replace pull (<code>replaceAllProducts</code>) must become upsert/delete
-  merge per entity.</li>
-<li>Exponential backoff on 5xx; never retry on 4xx/<code>rejected</code>.</li>
-<li>Pull on app start + after every successful push + periodic (e.g. 5 min).</li>
-</ul>
-<h2>10. Backend implementation notes</h2>
-<ul>
-<li>New module <code>src/modules/sync/</code> — <code>sync.routes.ts</code>, <code>sync.controller.ts</code>,
-  <code>sync.service.ts</code>, <code>sync.schema.ts</code>, <code>sync.middleware.ts</code>. Mounted at
-  <code>/api/v1/sync</code> <strong>before</strong> the <code>/api/v1</code> catch-all (templateRoutes) — its
-  router-level <code>authenticate</code> would 401 device calls that carry no JWT.</li>
-<li>Device auth: counters hold <code>X-Device-Id</code> + <code>X-Device-Token</code> (bcrypt hash on
-  file), no user JWT. <code>requireDevice</code> resolves tenant schema + branch from the
-  device row itself.</li>
-<li><code>public.sync_devices(tenant_id, branch_id, name, platform, token_hash,
-  invoice_prefix, last_seen_at, revoked_at)</code> — public schema so device auth is
-  self-resolving. Management routes (register/conflicts) still use JWT +
-  tenantResolver.</li>
-<li>Tenant-schema tables:</li>
-<li><code>sync_operations(op_id PK, device_id, type, payload jsonb, status, server_id, invoice_no, applied_at)</code></li>
-<li><code>sync_conflicts(id, op_id, device_id, type, detail jsonb, resolved_at, resolved_by, created_at)</code></li>
-<li>Pull queries filter <code>updated_at &gt; since OR deleted_at &gt; since</code>; require
-  <code>updated_at</code> index on every syncable table — audit schema before build.</li>
-<li>Push handler: per-op <code>for</code> loop, each op in its own transaction, calls the
-  existing service; wrap outcome into result row. Never let one op abort the
-  batch.</li>
-<li>Keep <code>sync_operations</code> for 90+ days for dedupe + audit.</li>
-</ul>
-<h2>11. Decisions</h2>
-<ul>
-<li><strong>New customers offline: allowed.</strong> Server merges by phone number; returns
-  existing <code>serverId</code> with <code>applied</code> if a match exists.</li>
-<li><strong>Offline login: dedicated counter PIN.</strong> <code>users</code> pull carries a <code>pinHash</code>
-  (bcrypt of a 4–6 digit POS PIN set from web Settings) — never the account
-  password hash. Device enforces local rate limiting (5 tries → 5 min lock).</li>
-<li><strong>One device = one branch</strong> for v1. Registration binds device to branch;
-  multi-branch counters deferred.</li>
-<li><strong>EMI sales are online-only.</strong> <code>sale.create</code> carrying <code>emi</code> is <code>rejected</code>
-  on push; the app blocks EMI checkout while offline.</li>
-<li><strong>Exchange/trade-in offline: allowed.</strong> It's just inventory intake +
-  sale-line value; replay-safe.</li>
-<li><strong>Stale price is final.</strong> The <code>unitPrice</code> captured at sale time applies —
-  server never overrides with current price.</li>
-<li><strong>Offline duration soft cap: 7 days.</strong> App shows a staleness warning but
-  keeps selling; no hard block.</li>
-<li><strong>Return window pull: last 30 days of <code>sales</code></strong>, tenant-configurable.</li>
-</ul>
-</div>
+(async () => {
+  const p = sessionStorage.getItem('docsPin');
+  if (p) try { await unlock(p); } catch(e) { sessionStorage.removeItem('docsPin'); }
+})();
+</script>
 </body>
 </html>
