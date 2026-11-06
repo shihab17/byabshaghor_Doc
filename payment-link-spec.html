@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Due Payment Link — Spec (MVP → Aggregator) — ব্যবসাঘর Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="glossary.css">
+<script src="glossary.js" defer></script>
+<style>
+  :root {
+    --bg-page: #050814;
+    --card-bg: rgba(16, 23, 44, 0.65);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-top: rgba(255, 255, 255, 0.14);
+    --accent: #00f2a9;
+    --accent-light: #34d399;
+    --accent-glow: rgba(0, 242, 169, 0.15);
+    --accent2: #38bdf8;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --line: rgba(255, 255, 255, 0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Anek Bangla', 'Hind Siliguri', sans-serif;
+    background-color: var(--bg-page);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(0, 242, 169, 0.08), transparent 50%),
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 28px 28px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .bar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(9, 14, 31, 0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line); padding: 13px 28px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  .brand {
+    font-weight: 700; color: #fff; font-size: 16.5px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .brand-dot {
+    width: 8px; height: 8px; background: var(--accent);
+    border-radius: 50%; box-shadow: 0 0 10px var(--accent);
+  }
+  .bar a {
+    color: var(--accent2); font-size: 13px; text-decoration: none;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;
+    transition: color 0.15s;
+  }
+  .bar a:hover { color: #bae6fd; text-decoration: underline; }
+  .bar button {
+    margin-left: auto; background: var(--accent); color: #04120a;
+    border: none; border-radius: 999px;
+    padding: 7px 16px; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 2px 10px var(--accent-glow); transition: all 0.2s;
+  }
+  .bar button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .content {
+    max-width: 940px; margin: 0 auto; padding: 44px 24px 90px;
+  }
+  h1 {
+    font-size: 36px; font-weight: 800; line-height: 1.25; margin: 0 0 20px;
+    background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    border-bottom: 1px solid var(--line); padding-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  h2 {
+    font-size: 24px; font-weight: 700; color: var(--accent2); margin: 36px 0 14px;
+    letter-spacing: -0.2px; display: flex; align-items: center; gap: 8px;
+  }
+  h3 { font-size: 18px; font-weight: 700; color: #f1f5f9; margin: 24px 0 10px; }
+  p, li { font-size: 16px; line-height: 1.75; color: #dbe4f0; }
+  p { margin: 12px 0; }
+  ul, ol { padding-left: 24px; margin: 12px 0; }
+  li { margin: 6px 0; }
+  blockquote {
+    border-left: 4px solid var(--accent);
+    background: rgba(0, 242, 169, 0.06);
+    padding: 16px 22px; border-radius: 0 12px 12px 0; margin: 18px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  blockquote p { color: #d1fae5; margin: 4px 0; font-size: 16px; }
+  table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    margin: 20px 0; font-size: 14.5px;
+    border: 1px solid var(--card-border); border-radius: 12px;
+    overflow: hidden; background: var(--card-bg); backdrop-filter: blur(12px);
+  }
+  th {
+    text-align: left; color: var(--accent); background: rgba(24, 34, 64, 0.85);
+    padding: 12px 16px; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  td {
+    padding: 11px 16px; border-bottom: 1px solid var(--line);
+    color: #e2e8f0; vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  code {
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2px 8px; border-radius: 6px; font-size: 13.5px; color: #fbbf24;
+    font-family: 'Plus Jakarta Sans', monospace;
+  }
+  pre {
+    background: #090e1f; border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px; overflow-x: auto; margin: 16px 0;
+  }
+  pre code { background: none; border: none; padding: 0; color: #e2e8f0; font-size: 13.5px; line-height: 1.6; }
+  a { color: var(--accent2); text-decoration: none; transition: color 0.15s; }
+  a:hover { color: #bae6fd; text-decoration: underline; }
+  hr { border: none; border-top: 1px solid var(--line); margin: 30px 0; }
+  strong { color: #fff; font-weight: 700; }
+  @media print {
+    .bar { display: none; }
+    body { background: #fff !important; color: #111 !important; }
+    .content { padding: 0; max-width: 100%; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color: #111 !important; }
+    td, th { border-color: #ccc !important; }
+    th { background: #eee !important; }
+    blockquote { background: #f5f5f5 !important; border-left-color: #047857 !important; }
+    a { color: #0369a1 !important; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand"><span class="brand-dot"></span>ব্যবসাঘর Docs</span>
+  <a href="viewer.html">← সব ডকের লিস্ট</a>
+  <a href="payment-link-spec.md">payment-link-spec.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>Due Payment Link — Spec (MVP → Aggregator)</h1>
+<blockquote>
+<p>বাকির কাস্টমারকে লিংক পাঠান → ওরা টাকা পাঠিয়ে TrxID দেয় → দোকানদার এক ট্যাপে কনফার্ম → বাকি ক্লিয়ার।
+পরে অ্যাগ্রিগেটর যোগ হলে TrxID বাদ, অটো-কনফার্ম। প্যাটার্ন: <code>job_public_tokens</code>-এর মতোই।</p>
+</blockquote>
+<h2>কেন এটা প্রথমে</h2>
+<ul>
+<li>অ্যাগ্রিগেটর/API key ছাড়াই চালু হয় — আজই</li>
+<li>দোকানদারের সরাসরি লাভ: বাকি আদায়ের জন্য লোক পাঠাতে হয় না</li>
+<li>পেমেন্ট-রেভেনিউর আগের ধাপ: দোকানদারকে "ডিজিটাল কালেকশন"-এর অভ্যাস দেয়, পরে পেমেন্ট রেলে টানা সহজ</li>
+</ul>
+<h2>ডেটা মডেল (tenant স্কিমা)</h2>
+<pre><code class="language-sql">due_payment_links
+  id, tenant_token UUID (public URL-এ), customer_id, sale_id NULL,
+  amount_due DECIMAL, note, status (open/submitted/confirmed/expired/cancelled),
+  submitted_trxid VARCHAR, submitted_method (bKash/Nagad/bank/cash),
+  submitted_at, confirmed_by, confirmed_at, expires_at, created_at
+</code></pre>
+<p>দোকানের পেমেন্ট নির্দেশনা <code>tenant_pos_settings</code> বা <code>payment_accounts</code>-এর নগদ/বিকাশ নম্বর থেকে দেখানো।</p>
+<h2>API</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>কাজ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/dues/:customerId/payment-link</code></td>
+<td>লিংক তৈরি (amount + মেয়াদ)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/dues/payment-links</code></td>
+<td>লিস্ট: open/submitted/confirmed — submitted আলাদা ব্যাজে</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/dues/payment-links/:id/confirm</code></td>
+<td>দোকানদার কনফার্ম → due allocation (আসল সার্ভিস পাথে)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/public/pay/&lt;token&gt;</code></td>
+<td><strong>পাবলিক</strong> — দোকানের নাম, বাকি, পেমেন্ট নির্দেশনা</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/public/pay/&lt;token&gt;/submit</code></td>
+<td><strong>পাবলিক</strong> — method + trxid সাবমিট → status=submitted</td>
+</tr>
+</tbody>
+</table>
+<p>পাবলিক রাউট auth নেই — টোকেনই অ্যাক্সেস (<code>job_public_tokens</code> প্যাটার্ন: URL-এ টোকেন, tenantResolver ছাড়া, catch-all-এর আগে মাউন্ট)।</p>
+<h2>UI</h2>
+<ul>
+<li><strong>অ্যাপ/web</strong>: কাস্টমার ডিউ পেজে "📨 পেমেন্ট লিংক পাঠান" → লিংক কপি/WhatsApp শেয়ার; ড্যাশবোর্ডে "submitted" কাউন্ট + কনফার্ম বাটন</li>
+<li><strong>পাবলিক পেজ</strong> (<code>/pay/&lt;token&gt;</code> web রুট): দোকানের নাম-লোগো, বাকি টাকা, পেমেন্ট নির্দেশনা (বিকাশ/নগদ নম্বর, ধাপ), TrxID ফর্ম → "জমা হয়েছে, দোকানদার কনফার্ম করবে"</li>
+</ul>
+<h2>Aggregator-এ যাওয়ার ধাপ (পরে)</h2>
+<ul>
+<li>লিংকে "এখনই পে করুন" বাটন → অ্যাগ্রিগেটর checkout → webhook-এ status=confirmed সরাসরি</li>
+<li>একই টেবিল/ফ্লো থাকে — শুধু submit ধাপ বদলায়</li>
+<li>তখন MDR শেয়ারের কথা অ্যাগ্রিগেটরের সাথে</li>
+</ul>
+<h2>নিয়ম</h2>
+<ul>
+<li>টোকেন ৩২+ ক্যারেক্টার র্যান্ডম, মেয়াদ ৭ দিন ডিফল্ট</li>
+<li>কনফার্ম শুধু দোকানদার — কাস্টমার কখনোই due ক্লিয়ার করতে পারে না</li>
+<li>প্রতিটা কনফার্মে অডিট ট্রেইল (confirmed_by)</li>
+</ul>
+</div>
+</body>
+</html>
