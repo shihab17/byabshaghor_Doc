@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview System — Internal Spec — ব্যবসাঘর Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="glossary.css">
+<script src="glossary.js" defer></script>
+<style>
+  :root {
+    --bg-page: #050814;
+    --card-bg: rgba(16, 23, 44, 0.65);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-top: rgba(255, 255, 255, 0.14);
+    --accent: #00f2a9;
+    --accent-light: #34d399;
+    --accent-glow: rgba(0, 242, 169, 0.15);
+    --accent2: #38bdf8;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --line: rgba(255, 255, 255, 0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Anek Bangla', 'Hind Siliguri', sans-serif;
+    background-color: var(--bg-page);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(0, 242, 169, 0.08), transparent 50%),
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 28px 28px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .bar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(9, 14, 31, 0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line); padding: 13px 28px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  .brand {
+    font-weight: 700; color: #fff; font-size: 16.5px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .brand-dot {
+    width: 8px; height: 8px; background: var(--accent);
+    border-radius: 50%; box-shadow: 0 0 10px var(--accent);
+  }
+  .bar a {
+    color: var(--accent2); font-size: 13px; text-decoration: none;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;
+    transition: color 0.15s;
+  }
+  .bar a:hover { color: #bae6fd; text-decoration: underline; }
+  .bar button {
+    margin-left: auto; background: var(--accent); color: #04120a;
+    border: none; border-radius: 999px;
+    padding: 7px 16px; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 2px 10px var(--accent-glow); transition: all 0.2s;
+  }
+  .bar button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .content {
+    max-width: 940px; margin: 0 auto; padding: 44px 24px 90px;
+  }
+  h1 {
+    font-size: 36px; font-weight: 800; line-height: 1.25; margin: 0 0 20px;
+    background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    border-bottom: 1px solid var(--line); padding-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  h2 {
+    font-size: 24px; font-weight: 700; color: var(--accent2); margin: 36px 0 14px;
+    letter-spacing: -0.2px; display: flex; align-items: center; gap: 8px;
+  }
+  h3 { font-size: 18px; font-weight: 700; color: #f1f5f9; margin: 24px 0 10px; }
+  p, li { font-size: 16px; line-height: 1.75; color: #dbe4f0; }
+  p { margin: 12px 0; }
+  ul, ol { padding-left: 24px; margin: 12px 0; }
+  li { margin: 6px 0; }
+  blockquote {
+    border-left: 4px solid var(--accent);
+    background: rgba(0, 242, 169, 0.06);
+    padding: 16px 22px; border-radius: 0 12px 12px 0; margin: 18px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  blockquote p { color: #d1fae5; margin: 4px 0; font-size: 16px; }
+  table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    margin: 20px 0; font-size: 14.5px;
+    border: 1px solid var(--card-border); border-radius: 12px;
+    overflow: hidden; background: var(--card-bg); backdrop-filter: blur(12px);
+  }
+  th {
+    text-align: left; color: var(--accent); background: rgba(24, 34, 64, 0.85);
+    padding: 12px 16px; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  td {
+    padding: 11px 16px; border-bottom: 1px solid var(--line);
+    color: #e2e8f0; vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  code {
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2px 8px; border-radius: 6px; font-size: 13.5px; color: #fbbf24;
+    font-family: 'Plus Jakarta Sans', monospace;
+  }
+  pre {
+    background: #090e1f; border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px; overflow-x: auto; margin: 16px 0;
+  }
+  pre code { background: none; border: none; padding: 0; color: #e2e8f0; font-size: 13.5px; line-height: 1.6; }
+  a { color: var(--accent2); text-decoration: none; transition: color 0.15s; }
+  a:hover { color: #bae6fd; text-decoration: underline; }
+  hr { border: none; border-top: 1px solid var(--line); margin: 30px 0; }
+  strong { color: #fff; font-weight: 700; }
+  @media print {
+    .bar { display: none; }
+    body { background: #fff !important; color: #111 !important; }
+    .content { padding: 0; max-width: 100%; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color: #111 !important; }
+    td, th { border-color: #ccc !important; }
+    th { background: #eee !important; }
+    blockquote { background: #f5f5f5 !important; border-left-color: #047857 !important; }
+    a { color: #0369a1 !important; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand"><span class="brand-dot"></span>ব্যবসাঘর Docs</span>
+  <a href="viewer.html">← সব ডকের লিস্ট</a>
+  <a href="interview-system-spec.md">interview-system-spec.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>Interview System — Internal Spec</h1>
+<blockquote>
+<p>দোকানদার ইন্টারভিউ রেকর্ড, অ্যানালাইজ আর রিপোর্টের জন্য ইন্টারনাল টুল।
+যেখানে বসবে: backend <code>public</code> স্কিমা (টিমের ডেটা, টেন্যান্টের না) + <code>/admin</code> UI।</p>
+</blockquote>
+<h2>লক্ষ্য</h2>
+<ul>
+<li>ডাইনামিক প্রশ্নের ব্যাংক — নতুন প্রশ্ন যোগ/এডিট/অফ করা যায়, কোড ছাড়া</li>
+<li>ইন্টারভিউ তৈরি — দোকানের তথ্য + প্রতি প্রশ্নের উত্তর + নোট</li>
+<li>রিপোর্ট ডাউনলোড — CSV + সারাংশ অ্যানালিটিক্স</li>
+<li>উদ্দেশ্য: metrics শিটের বদলে সিস্টেমেই ফিল্ড ডেটা — পিচে "২০টা ইন্টারভিউতে X% বলেছে Y" দেখানোর প্রুভ</li>
+</ul>
+<h2>ডেটা মডেল (public স্কিমা)</h2>
+<pre><code class="language-sql">interview_questions
+  id, text_bn, text_en, category (pain/behavior/budget/general),
+  target_segment (mobile/pharmacy/all), sort_order, active bool
+
+interviews
+  id, shop_name, owner_name, phone, area, shop_type (mobile/pharmacy/other),
+  uses_software (none/khata-app/pos/excel), willing_to_pay_bdt,
+  pilot_interest bool, status (draft/done), note, conducted_by (user id), created_at
+
+interview_responses
+  interview_id, question_id, answer_text, pain_flag bool
+</code></pre>
+<h2>API (নতুন <code>interview</code> মডিউল, super_admin রোল)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>কাজ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET/POST/PATCH/DELETE</td>
+<td><code>/api/v1/interview-questions</code></td>
+<td>প্রশ্নের CRUD</td>
+</tr>
+<tr>
+<td>GET/POST</td>
+<td><code>/api/v1/interviews</code></td>
+<td>লিস্ট + তৈরি (responses-এর সাথে)</td>
+</tr>
+<tr>
+<td>GET/PATCH</td>
+<td><code>/api/v1/interviews/:id</code></td>
+<td>দেখা/এডিট</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/interviews/report.csv</code></td>
+<td>সব ইন্টারভিউ+উত্তর CSV ডাউনলোড</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/interviews/stats</code></td>
+<td>অ্যানালিটিক্স: মোট, segment ভাগ, pain flag গণনা, willing_to_pay গড়, pilot_interest %</td>
+</tr>
+</tbody>
+</table>
+<h2>UI — <code>/admin/interviews</code> (shop-app-web)</h2>
+<ol start="১">
+<li><strong>Questions ট্যাব</strong>: তালিকা + "নতুন প্রশ্ন" ডায়ালগ (bn/en, category, segment, order, active toggle)</li>
+<li><strong>Interviews ট্যাব</strong>: লিস্ট (দোকান, এলাকা, টাইপ, তারিখ, willing_to_pay, pilot?) + নতুন ইন্টারভিউ ফর্ম — প্রশ্নগুলো অটো লোড (segment ফিল্টার), প্রতিটার নিচে টেক্সট উত্তর + pain চেকবক্স</li>
+<li><strong>Report ট্যাব</strong>: stats কার্ড (মোট ইন্টারভিউ, সেগমেন্ট ভাগ, top pains, গড় willing_to_pay, pilot আগ্রহ %) + "Download CSV" বাটন</li>
+</ol>
+<h2>স্পেক নিয়ম</h2>
+<ul>
+<li>উত্তর ফ্রি-টেক্সট (MCQ না — ফিল্ডে মুখের কথা লেখা যায়)</li>
+<li><code>pain_flag</code> চেকবক্স প্রতি উত্তরে — stats-এ "কোন ব্যথা কতবার উঠেছে" হিসাবের জন্য</li>
+<li>প্রশ্ন seed: sales-playbook.md-এর ১০+৩টা প্রশ্ন দিয়ে শুরু</li>
+<li>অ্যাক্সেস: শুধু super_admin (ফাউন্ডারদের অ্যাকাউন্ট) — দোকানদার দেখে না</li>
+</ul>
+<h2>বিল্ড অর্ডার</h2>
+<ol start="১">
+<li>Migration <code>public/0XX_interviews.ts</code> — ৩টা টেবিল + প্রশ্ন সিড</li>
+<li><code>modules/interview/</code> — schema/controller/service/routes</li>
+<li><code>app.ts</code>-এ রাউট মাউন্ট</li>
+<li>Admin UI পেজ + মেনু এন্ট্রি</li>
+<li>CSV/Stats এন্ডপয়েন্ট + Report ট্যাব</li>
+</ol>
+</div>
+</body>
+</html>
