@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MFS Agent / Flexiload Vertical — Spec — ব্যবসাঘর Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="glossary.css">
+<script src="glossary.js" defer></script>
+<style>
+  :root {
+    --bg-page: #050814;
+    --card-bg: rgba(16, 23, 44, 0.65);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-top: rgba(255, 255, 255, 0.14);
+    --accent: #00f2a9;
+    --accent-light: #34d399;
+    --accent-glow: rgba(0, 242, 169, 0.15);
+    --accent2: #38bdf8;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --line: rgba(255, 255, 255, 0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Anek Bangla', 'Hind Siliguri', sans-serif;
+    background-color: var(--bg-page);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(0, 242, 169, 0.08), transparent 50%),
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 28px 28px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .bar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(9, 14, 31, 0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line); padding: 13px 28px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  .brand {
+    font-weight: 700; color: #fff; font-size: 16.5px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .brand-dot {
+    width: 8px; height: 8px; background: var(--accent);
+    border-radius: 50%; box-shadow: 0 0 10px var(--accent);
+  }
+  .bar a {
+    color: var(--accent2); font-size: 13px; text-decoration: none;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;
+    transition: color 0.15s;
+  }
+  .bar a:hover { color: #bae6fd; text-decoration: underline; }
+  .bar button {
+    margin-left: auto; background: var(--accent); color: #04120a;
+    border: none; border-radius: 999px;
+    padding: 7px 16px; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 2px 10px var(--accent-glow); transition: all 0.2s;
+  }
+  .bar button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .content {
+    max-width: 940px; margin: 0 auto; padding: 44px 24px 90px;
+  }
+  h1 {
+    font-size: 36px; font-weight: 800; line-height: 1.25; margin: 0 0 20px;
+    background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    border-bottom: 1px solid var(--line); padding-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  h2 {
+    font-size: 24px; font-weight: 700; color: var(--accent2); margin: 36px 0 14px;
+    letter-spacing: -0.2px; display: flex; align-items: center; gap: 8px;
+  }
+  h3 { font-size: 18px; font-weight: 700; color: #f1f5f9; margin: 24px 0 10px; }
+  p, li { font-size: 16px; line-height: 1.75; color: #dbe4f0; }
+  p { margin: 12px 0; }
+  ul, ol { padding-left: 24px; margin: 12px 0; }
+  li { margin: 6px 0; }
+  blockquote {
+    border-left: 4px solid var(--accent);
+    background: rgba(0, 242, 169, 0.06);
+    padding: 16px 22px; border-radius: 0 12px 12px 0; margin: 18px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  blockquote p { color: #d1fae5; margin: 4px 0; font-size: 16px; }
+  table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    margin: 20px 0; font-size: 14.5px;
+    border: 1px solid var(--card-border); border-radius: 12px;
+    overflow: hidden; background: var(--card-bg); backdrop-filter: blur(12px);
+  }
+  th {
+    text-align: left; color: var(--accent); background: rgba(24, 34, 64, 0.85);
+    padding: 12px 16px; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  td {
+    padding: 11px 16px; border-bottom: 1px solid var(--line);
+    color: #e2e8f0; vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  code {
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2px 8px; border-radius: 6px; font-size: 13.5px; color: #fbbf24;
+    font-family: 'Plus Jakarta Sans', monospace;
+  }
+  pre {
+    background: #090e1f; border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px; overflow-x: auto; margin: 16px 0;
+  }
+  pre code { background: none; border: none; padding: 0; color: #e2e8f0; font-size: 13.5px; line-height: 1.6; }
+  a { color: var(--accent2); text-decoration: none; transition: color 0.15s; }
+  a:hover { color: #bae6fd; text-decoration: underline; }
+  hr { border: none; border-top: 1px solid var(--line); margin: 30px 0; }
+  strong { color: #fff; font-weight: 700; }
+  @media print {
+    .bar { display: none; }
+    body { background: #fff !important; color: #111 !important; }
+    .content { padding: 0; max-width: 100%; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color: #111 !important; }
+    td, th { border-color: #ccc !important; }
+    th { background: #eee !important; }
+    blockquote { background: #f5f5f5 !important; border-left-color: #047857 !important; }
+    a { color: #0369a1 !important; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand"><span class="brand-dot"></span>ব্যবসাঘর Docs</span>
+  <a href="viewer.html">← সব ডকের লিস্ট</a>
+  <a href="mfs-flexiload-spec.md">mfs-flexiload-spec.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>MFS Agent / Flexiload Vertical — Spec</h1>
+<blockquote>
+<p>কাস্টমার অ্যানালিসিসে ডিমান্ড প্রমাণিত — ফার্মেসির মতোই নতুন vertical।
+ফ্লেক্সিলোড = API দিয়ে পুরো অটো; MFS এজেন্ট = ফ্লোট ট্র্যাকিং + USSD সেমি-অটো।</p>
+</blockquote>
+<h2>BUSINESS_CATEGORIES-এ যোগ</h2>
+<p><code>MFS Agent / Flexiload</code> — <code>business-categories.ts</code>-এ নতুন ক্যাটাগরি (Service/Finance গ্রুপে)।</p>
+<h2>ডেটা মডেল (tenant স্কিমা)</h2>
+<pre><code class="language-sql">mfs_providers          -- bKash, Nagad, Rocket agent accounts
+  id, name, type ('bkash_agent'|'nagad_agent'|'rocket_agent'|'other'),
+  float_balance DECIMAL, commission_rate_pct DECIMAL(5,3),
+  agent_number VARCHAR(20), is_active
+
+agent_transactions     -- প্রতিটা ক্যাশ-ইন/আউট/সেন্ড
+  id, provider_id, txn_type ('cash_in'|'cash_out'|'send_money'|'bill_pay'),
+  customer_phone VARCHAR(20), amount DECIMAL, commission DECIMAL,
+  trxid VARCHAR(50), note, created_by, created_at
+
+flexiload_wallets      -- প্রতি অপারেটরে রিচার্জ ব্যালেন্স
+  id, operator ('GP'|'Robi'|'BL'|'Airtel'|'Teletalk'), balance DECIMAL, low_balance_alert DECIMAL
+
+flexiload_transactions
+  id, operator, phone, amount, package_id NULL, commission DECIMAL,
+  txn_id VARCHAR(50), status ('pending'|'success'|'failed'|'reversed'), ref_id, created_at
+</code></pre>
+<h2>ফ্লো</h2>
+<h3>MFS এজেন্ট (রেকর্ড + সেমি-অটো)</h3>
+<ul>
+<li>অ্যাপে "এজেন্ট লেনদেন": প্রোভাইডার সিলেক্ট → cash-in/out → কাস্টমার নম্বর+টাকা → TrxID (ঐচ্ছিক)</li>
+<li>ফ্লোট অটো-আপডেট: cash-in → float+amount, commission জমে; cash-out → float−amount</li>
+<li><strong>USSD ডিপ-লিংক</strong>: টাpan করলে <code>tel:*247#...</code> স্ট্রিং তৈরি হয় — এজেন্ট শুধু পিন দেয় (Android; iPhone-এ USSD স্কেম নেই — ম্যানুয়াল ফ্লো)</li>
+<li>দৈনিক সেটেলমেন্ট রিপোর্ট: প্রতি প্রোভাইডারে ফ্লোট, ওই দিনের কমিশন</li>
+</ul>
+<h3>ফ্লেক্সিলোড (API-অটো — পরে)</h3>
+<ul>
+<li>রিসেলার অ্যাকাউন্ট (Supayo/FlexiloadBD) → <code>api_key</code>+<code>secret</code> টেন্যান্ট সেটিংসে</li>
+<li>"রিচার্জ": অপারেটর+নম্বর+টাকা → API কল → txn_id সেভ → webhook/poll status</li>
+<li>ব্যালেন্স কমলে alert; প্রতিটা রিচার্জে কমিশন অটো-হিসাব</li>
+<li>এটা Phase-এ শেষ অংশ — আগে MFS রেকর্ডিংটা চালু</li>
+</ul>
+<h2>মেনু/রিপোর্ট</h2>
+<ul>
+<li>মেনু: "MFS &amp; Flexiload" গ্রুপ → Dashboard (ফ্লোটOverview), Transactions, Providers</li>
+<li>রিপোর্ট: দৈনিক কমিশন, ফ্লোট ব্যালেন্স, অপারেটরভেদে বিক্রি</li>
+</ul>
+<h2>সেফটি/নিয়ম</h2>
+<ul>
+<li>লেনদেন একবারই — <code>client_ref</code> idempotency (due-link প্যাটার্ন)</li>
+<li>ফ্লেক্সিলোডে ভুল নম্বর = টাকা গায়েব → submit-এর আগে নম্বর+অপরেটর কনফার্ম স্ক্রিন</li>
+<li>আমরা লেনদেন এক্সিকিউট করি না (MFS) — শুধু হিসাব+সাহায্য; টেক্সটে স্পষ্ট রাখা</li>
+</ul>
+<h2>রোডম্যাপ</h2>
+<ol>
+<li><strong>এখন</strong>: ক্যাটাগরি + টেবিল + এজেন্ট লেনদেন UI + ফ্লোট ট্র্যাকিং + দৈনিক রিপোর্ট</li>
+<li>পরে: USSD ডিপ-লিংক (Android)</li>
+<li>পরে: ফ্লেক্সিলোড অ্যাগ্রিগেটর ইন্টিগ্রেশন (রিসেলার সাইনআপ লাগে)</li>
+</ol>
+</div>
+</body>
+</html>

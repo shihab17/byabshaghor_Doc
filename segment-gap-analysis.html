@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segment Gap Analysis — Online Shop / Clothing / Jewelry / Retail-Wholesale — ব্যবসাঘর Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="glossary.css">
+<script src="glossary.js" defer></script>
+<style>
+  :root {
+    --bg-page: #050814;
+    --card-bg: rgba(16, 23, 44, 0.65);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-top: rgba(255, 255, 255, 0.14);
+    --accent: #00f2a9;
+    --accent-light: #34d399;
+    --accent-glow: rgba(0, 242, 169, 0.15);
+    --accent2: #38bdf8;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --line: rgba(255, 255, 255, 0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Anek Bangla', 'Hind Siliguri', sans-serif;
+    background-color: var(--bg-page);
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(0, 242, 169, 0.08), transparent 50%),
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 28px 28px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .bar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(9, 14, 31, 0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line); padding: 13px 28px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  .brand {
+    font-weight: 700; color: #fff; font-size: 16.5px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .brand-dot {
+    width: 8px; height: 8px; background: var(--accent);
+    border-radius: 50%; box-shadow: 0 0 10px var(--accent);
+  }
+  .bar a {
+    color: var(--accent2); font-size: 13px; text-decoration: none;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;
+    transition: color 0.15s;
+  }
+  .bar a:hover { color: #bae6fd; text-decoration: underline; }
+  .bar button {
+    margin-left: auto; background: var(--accent); color: #04120a;
+    border: none; border-radius: 999px;
+    padding: 7px 16px; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 2px 10px var(--accent-glow); transition: all 0.2s;
+  }
+  .bar button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .content {
+    max-width: 940px; margin: 0 auto; padding: 44px 24px 90px;
+  }
+  h1 {
+    font-size: 36px; font-weight: 800; line-height: 1.25; margin: 0 0 20px;
+    background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    border-bottom: 1px solid var(--line); padding-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  h2 {
+    font-size: 24px; font-weight: 700; color: var(--accent2); margin: 36px 0 14px;
+    letter-spacing: -0.2px; display: flex; align-items: center; gap: 8px;
+  }
+  h3 { font-size: 18px; font-weight: 700; color: #f1f5f9; margin: 24px 0 10px; }
+  p, li { font-size: 16px; line-height: 1.75; color: #dbe4f0; }
+  p { margin: 12px 0; }
+  ul, ol { padding-left: 24px; margin: 12px 0; }
+  li { margin: 6px 0; }
+  blockquote {
+    border-left: 4px solid var(--accent);
+    background: rgba(0, 242, 169, 0.06);
+    padding: 16px 22px; border-radius: 0 12px 12px 0; margin: 18px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  blockquote p { color: #d1fae5; margin: 4px 0; font-size: 16px; }
+  table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    margin: 20px 0; font-size: 14.5px;
+    border: 1px solid var(--card-border); border-radius: 12px;
+    overflow: hidden; background: var(--card-bg); backdrop-filter: blur(12px);
+  }
+  th {
+    text-align: left; color: var(--accent); background: rgba(24, 34, 64, 0.85);
+    padding: 12px 16px; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  td {
+    padding: 11px 16px; border-bottom: 1px solid var(--line);
+    color: #e2e8f0; vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  code {
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2px 8px; border-radius: 6px; font-size: 13.5px; color: #fbbf24;
+    font-family: 'Plus Jakarta Sans', monospace;
+  }
+  pre {
+    background: #090e1f; border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px; overflow-x: auto; margin: 16px 0;
+  }
+  pre code { background: none; border: none; padding: 0; color: #e2e8f0; font-size: 13.5px; line-height: 1.6; }
+  a { color: var(--accent2); text-decoration: none; transition: color 0.15s; }
+  a:hover { color: #bae6fd; text-decoration: underline; }
+  hr { border: none; border-top: 1px solid var(--line); margin: 30px 0; }
+  strong { color: #fff; font-weight: 700; }
+  @media print {
+    .bar { display: none; }
+    body { background: #fff !important; color: #111 !important; }
+    .content { padding: 0; max-width: 100%; }
+    h1, h2, h3, p, li, td, th, blockquote, blockquote p { color: #111 !important; }
+    td, th { border-color: #ccc !important; }
+    th { background: #eee !important; }
+    blockquote { background: #f5f5f5 !important; border-left-color: #047857 !important; }
+    a { color: #0369a1 !important; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand"><span class="brand-dot"></span>ব্যবসাঘর Docs</span>
+  <a href="viewer.html">← সব ডকের লিস্ট</a>
+  <a href="segment-gap-analysis.md">segment-gap-analysis.md (markdown)</a>
+  <button onclick="window.print()">🖨 Print / PDF</button>
+</div>
+<div class="content">
+<h1>Segment Gap Analysis — Online Shop / Clothing / Jewelry / Retail-Wholesale</h1>
+<blockquote>
+<p>কোন কোন সেগমেন্টে (অনলাইন শপ, ফ্যাশন/কাপড়, জুয়েলারি, খুচরা-পাইকার) আমাদের সিস্টেমে কী ফাঁক আছে — implementation plan-এর ভিত্তি হিসেবে।
+শেষ আপডেট: নভেম্বর ২০২৬
+নোট: প্রতিটা "আছে" আইটেমে কোড রেফারেন্স দেওয়া হয়েছে যাতে verify করা যায়; "নেই" বলতে grep-এ কোনো match পাওয়া যায়নি বোঝানো হয়েছে।</p>
+</blockquote>
+<h2>০. যা আগে থেকেই আছে (rebuild করবেন না)</h2>
+<table>
+<thead>
+<tr>
+<th>ক্ষমতা</th>
+<th>কোড রেফারেন্স</th>
+<th>নোট</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Variant matrix (size/color/attribute) + variant templates</td>
+<td><code>modules/variant/</code>, <code>042_variant_attributes.ts</code>, <code>168_variant_attribute_template_keys.ts</code></td>
+<td>কাপড়ের জন্য ready</td>
+</tr>
+<tr>
+<td>Tier prices (qty-based) + customer credit limit</td>
+<td><code>023_item_type_and_tier_prices.ts</code>, <code>172_customer_credit_limit.ts</code></td>
+<td>Wholesale-এর বেস</td>
+</tr>
+<tr>
+<td>Sale order + stock reservation (<code>reserved_quantity</code>)</td>
+<td><code>modules/sale-order/sale-order.service.ts</code></td>
+<td>Order দিলে স্টক hold হয়</td>
+</tr>
+<tr>
+<td>Order-এ advance payment</td>
+<td><code>sale-order.schema.ts</code> <code>advanceSaleOrderSchema</code></td>
+<td>COD-র অ্যাডভান্স অংশে reuse-যোগ্য</td>
+</tr>
+<tr>
+<td>Order-এ <code>delivery_address</code> + <code>delivery_charge</code></td>
+<td><code>sale-order.service.ts:513</code></td>
+<td>Partner API path-এ set হয়</td>
+</tr>
+<tr>
+<td>Order <code>source</code> field</td>
+<td><code>sale-order.schema.ts:74</code> — <code>manual/pos/pos_hold/quote/ecommerce/recurring</code></td>
+<td>Channel ট্র্যাকিংয়ের বেস</td>
+</tr>
+<tr>
+<td>Partner API: catalog feed + order create + signed webhooks</td>
+<td><code>modules/partner-api/</code> (openapi.ts, webhooks.ts)</td>
+<td>বাইরের e-commerce source-এর জন্য backbone ready</td>
+</tr>
+<tr>
+<td>Payment link, due link</td>
+<td><code>docs/payment-link-spec.md</code>, <code>modules/due-link/</code></td>
+<td>Online payment-এর অংশিক ভিত্তি</td>
+</tr>
+<tr>
+<td>WhatsApp/SMS gateway + message templates</td>
+<td><code>modules/whatsapp</code>, <code>modules/sms</code>, <code>messaging-gateway/</code></td>
+<td>Notification infra ready</td>
+</tr>
+<tr>
+<td>Variable-price product + "Today Prices" daily rate page</td>
+<td><code>products.is_variable_price</code>, <code>today-prices/page.tsx</code></td>
+<td>Jewelry/daily-rate-এর বেস</td>
+</tr>
+<tr>
+<td>UOM + conversion (carton↔piece, strip↔piece)</td>
+<td><code>modules/uom-conversion</code></td>
+<td>Wholesale + pharmacy</td>
+</tr>
+<tr>
+<td>Batch/expiry + FEFO + expiry alert</td>
+<td><code>product_batches</code>, <code>/reports/expiry-alert</code></td>
+<td>Pharmacy</td>
+</tr>
+<tr>
+<td>Exchange / sales return / purchase return</td>
+<td><code>modules/exchange</code>, <code>modules/sale-return</code></td>
+<td>Exchange mobile-shop-gated</td>
+</tr>
+<tr>
+<td>Due aging report (0-30/31-60/61-90/90+)</td>
+<td><code>/reports/due-aging</code>, <code>report.service.ts</code></td>
+<td>Wholesale receivable</td>
+</tr>
+<tr>
+<td>Stock aging, stock movement, party ledger</td>
+<td><code>modules/report/</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Salesman commission</td>
+<td><code>finance</code> module — <code>/commissions</code>, employee commission fields</td>
+<td>SR-কমিশনের বেস</td>
+</tr>
+<tr>
+<td>Free offers / promo rules</td>
+<td><code>modules/free-offer</code>, promo fields in order items</td>
+<td>Retail promo</td>
+</tr>
+<tr>
+<td>Barcode field + scanner</td>
+<td>product <code>barcode</code>, <code>barcode_scanner_dialog.dart</code></td>
+<td>Scan আছে, print নেই</td>
+</tr>
+<tr>
+<td>Offline-first multi-device sync</td>
+<td><code>modules/sync</code>, <code>docs/offline-sync-contract.md</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Business categories</td>
+<td><code>017_create_business_categories.ts</code></td>
+<td>"Online Shop" category নেই (gap)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>⚠️ Doc-vs-code mismatch:</strong> <code>websites/mobile_shop/</code> ফোল্ডার সম্পূর্ণ ফাঁকা — <code>competitor-analysis.md</code> ও pitch-এ "দোকানের নিজস্ব ওয়েবসাইট/কাস্টম ডোমেইন ✓" claim করা, কিন্তু কোডে feature-টা নেই। Demo/pitch-এর আগে doc ঠিক করা বা feature বানানো দরকার।</p>
+<hr />
+<h2>১. Online Shop / Facebook Seller — সবচেয়ে বড় গ্যাপ</h2>
+<p>BD-র FB/WhatsApp seller workflow: inbox-এ order → confirm → courier (Steadfast/Pathao/RedX) → COD collect → delivered/returned। এই chain-এর প্রায় কিছুই নেই।</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gap</th>
+<th>ব্যাখ্যা</th>
+<th>সম্ভাব্য implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.1</td>
+<td><strong>Courier integration নেই</strong></td>
+<td><code>steadfast\|pathao\|redx\|ecourier\|paperfly</code> — কোডে 0 match। Online seller-দের #1 চাহিদা।</td>
+<td>নতুন <code>modules/courier/</code> — provider abstraction (Steadfast আগে, সবচেয়ে জনপ্রিয়), parcel create/track, API key per-tenant settings</td>
+</tr>
+<tr>
+<td>1.2</td>
+<td><strong>Storefront নেই</strong></td>
+<td><code>websites/mobile_shop/</code> ফাঁকা; catalog page/cart/checkout কিছুই নেই। Smart Dokani ও Hishabee-র "অনলাইন শপ" এর বিপরীতে সরাসরি গ্যাপ।</td>
+<td>Storefront MVP: public catalog (tenant subdomain), product page, cart, checkout → <code>sale_order</code> <code>source='ecommerce'</code> (infra ready)</td>
+</tr>
+<tr>
+<td>1.3</td>
+<td><strong>Fulfillment pipeline নেই</strong></td>
+<td>Order status শুধু <code>open/invoiced/cancelled/held</code>। <code>confirmed→packed→courier-assigned→in-transit→delivered→returned(RTO)</code> নেই; partial delivery নেই।</td>
+<td><code>sale_orders</code>-এ fulfillment status + events table; status change webhook (<code>partner-api/webhooks.ts</code> reusable)</td>
+</tr>
+<tr>
+<td>1.4</td>
+<td><strong>COD lifecycle নেই</strong></td>
+<td>Advance নেওয়া যায়, কিন্তু বাকি amount courier-এর কাছে receivable হিসেবে ট্র্যাক হয় না; courier remittance reconciliation নেই।</td>
+<td>Order-এ <code>cod_amount</code>, <code>courier_name</code>, <code>consignment_id</code>, <code>courier_payment_status</code>; settlement match report</td>
+</tr>
+<tr>
+<td>1.5</td>
+<td><strong>"Online Shop" business category নেই</strong></td>
+<td><code>017_create_business_categories.ts</code>-এ Clothing Store/Jewelry Store আছে, FB seller-দের category নেই — ভুল category বেছে feature-gating-এ আটকে যাবে।</td>
+<td>Seed-এ 'Online Shop / Facebook Shop' category যোগ + ADVANCED_SHOP_CATS-এ include</td>
+</tr>
+<tr>
+<td>1.6</td>
+<td><strong>Fraud/risk check নেই</strong></td>
+<td>Steadfast fraud-check API দিয়ে phone-এর delivery success rate দেখা BD seller-দের চেনা ফিচার।</td>
+<td>Courier module-এর অংশ হিসেবে customer phone → risk score</td>
+</tr>
+<tr>
+<td>1.7</td>
+<td><strong>Channel-level tracking নেই</strong></td>
+<td><code>source</code> আছে কিন্তু FB page/WhatsApp/website-level channel + channel-wise sales report নেই।</td>
+<td><code>sale_orders.channel</code> (sub-source) + report filter</td>
+</tr>
+<tr>
+<td>1.8</td>
+<td><strong>Customer address book নেই</strong></td>
+<td>Order-এ <code>delivery_address</code> যায়, customer profile-এ multiple address + district/thana নেই (courier booking-এ must-have)।</td>
+<td><code>customer_addresses</code> table (district/thana/area, is_default)</td>
+</tr>
+<tr>
+<td>1.9</td>
+<td><strong>Order status auto-notification</strong></td>
+<td>WhatsApp/SMS infra আছে; order confirm/dispatch/deliver হুক-এ auto message আছে কিনা verify করা — মনে হয় নেই।</td>
+<td>Order status event → message template (existing templates module)</td>
+</tr>
+<tr>
+<td>1.10</td>
+<td><strong>Marketplace connectors নেই</strong></td>
+<td>Daraz/Shopify/WooCommerce/FB Commerce ready connector নেই; partner API দিয়ে বানাতে হবে।</td>
+<td>Partner API + webhooks আছে; connector-গুলো phase ২</td>
+</tr>
+</tbody>
+</table>
+<h2>২. Clothing / Apparel — মোটামুটি ready, ছোট গ্যাপ</h2>
+<p>✅ Variant/size/color/brand/stock-aging/exchange সব আছে।</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gap</th>
+<th>ব্যাখ্যা</th>
+<th>সম্ভাব্য implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.1</td>
+<td><strong>Barcode/price tag label printing নেই</strong></td>
+<td>কোডে শুধু "Print Invoice" আছে; label/sticker print কোথাও নেই। কাপড়ের দোকানে প্রতিটা আইটেমে price tag must।</td>
+<td>Label print template (size/price/SKU/barcode), thermal label printer support; templates module reuse</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td><strong>Exchange কেবল Mobile Shop-এর জন্য</strong></td>
+<td><code>menus.ts:196</code> — <code>categories: MOBILE_SHOP</code> + Premium। Clothing-এ exchange সবচেয়ে কমন।</td>
+<td>ADVANCED_SHOP_CATS-এ scope বাড়ানো (menu seed update; admin menu editor দিয়েও যায় কিন্তু default ঠিক করা ভালো)</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td><strong>Style/season/collection grouping নেই</strong></td>
+<td>স্টাইল নম্বর/সিজন অনুযায়ী stock ও sales view নেই।</td>
+<td>Product-এ <code>style_code</code>/<code>collection</code> field + filter; অথবা category hierarchy reuse</td>
+</tr>
+<tr>
+<td>2.4</td>
+<td><strong>Size-grid billing view নেই</strong></td>
+<td>Variant picker আছে, কিন্তু এক style-এর সব size একসাথে দেখে qty বসানোর matrix grid নেই।</td>
+<td>POS-এ matrix entry mode (size × qty grid) — wholesale clothing-এ খুব দরকারি</td>
+</tr>
+<tr>
+<td>2.5</td>
+<td><strong>Bundle/kit product নেই</strong></td>
+<td>Free offer আছে, "shirt+pant set" টাইপ kit নেই (sell হয় একসাথে, stock কাটে আলাদা)।</td>
+<td>Kit/bundle product type — parent SKU, component stock deduction</td>
+</tr>
+</tbody>
+</table>
+<h2>৩. Jewelry — functional depth সবচেয়ে কম</h2>
+<p>Jewelry Store category + variable price + Today Prices আছে — কিন্তু jewelry pricing model-ই আলাদা।</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gap</th>
+<th>ব্যাখ্যা</th>
+<th>সম্ভাব্য implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.1</td>
+<td><strong>Weight × rate pricing নেই</strong></td>
+<td><code>price = weight (vori/gram) × daily metal rate</code> অটো-ক্যালকুলেশন নেই।</td>
+<td>Product-এ pricing mode: <code>fixed | variable | weight_rate</code>; sale line-এ rate × weight compute</td>
+</tr>
+<tr>
+<td>3.2</td>
+<td><strong>Making charge + wastage নেই</strong></td>
+<td>দাম = metal value + making charge + wastage% — আলাদা price component নেই।</td>
+<td>Sale item-এ <code>making_charge</code>, <code>wastage_percent</code> fields; invoice template-এ breakdown</td>
+</tr>
+<tr>
+<td>3.3</td>
+<td><strong>Purity/karat নেই</strong></td>
+<td>22k/21k/18k + hallmark; attribute দিয়ে ট্যাগ যায় কিন্তু pricing-aware না।</td>
+<td>Metal type + purity attribute template; rate per purity</td>
+</tr>
+<tr>
+<td>3.4</td>
+<td><strong>Old gold exchange/buyback নেই</strong></td>
+<td>পুরনো গহনা ফেরত নিয়ে নতুন বিক্রি — jewelry sale-এর ৩০-৪০%; exchange module ফোন-কেন্দ্রিক।</td>
+<td>Exchange-এ jewelry mode: weight+purity দিয়ে buyback value; category gate খোলা</td>
+</tr>
+<tr>
+<td>3.5</td>
+<td><strong>Per-piece weight নেই</strong></td>
+<td>প্রতিটা piece-এর ভিন্ন ওজন (serialized variant দরকার)।</td>
+<td>Serialized unit-এ <code>weight</code> field (unit-level attribute)</td>
+</tr>
+<tr>
+<td>3.6</td>
+<td><strong>Live gold rate fetch নেই</strong></td>
+<td>Today Prices হাতে update; BAJUS rate auto-fetch নেই।</td>
+<td>Daily rate source config + scheduled fetch (scraping/API availability সীমিত — manual fallback রাখুন)</td>
+</tr>
+<tr>
+<td>3.7</td>
+<td><strong>Jewelry tag/memo print নেই</strong></td>
+<td>গহনার ছোট ট্যাগ + মেমো ফরম্যাট।</td>
+<td>Label print (2.1-এর সাথে) + jewelry invoice template</td>
+</tr>
+<tr>
+<td>3.8</td>
+<td><strong>Stock-by-weight report নেই</strong></td>
+<td>মোট কত ভরি/গ্রাম মাল আছে।</td>
+<td>Stock report-এ weight column (UOM-aware)</td>
+</tr>
+</tbody>
+</table>
+<h2>৪. Wholesale — ভালো অবস্থায়, distribution-side ফাঁক</h2>
+<p>✅ Tier prices, credit limit + over-limit confirm, due-aging, UOM conversion, party ledger, commission — সব আছে।</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gap</th>
+<th>ব্যাখ্যা</th>
+<th>সম্ভাব্য implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.1</td>
+<td><strong>Customer price group নেই</strong></td>
+<td><code>product_tier_prices</code> qty-based; customer-category অনুযায়ী আলাদা price list (A-dealer/B-dealer) নেই।</td>
+<td><code>customer_groups</code> + group-wise price list / discount%; sale-এ customer group দেখে price resolve</td>
+</tr>
+<tr>
+<td>4.2</td>
+<td><strong>Delivery challan নেই</strong></td>
+<td>Wholesale-এ order → challan → invoice/payment flow স্ট্যান্ডার্ড; challan document নেই।</td>
+<td>Sale order → challan document (templates module-এ নতুন doc type); partial challan ↔ invoice link</td>
+</tr>
+<tr>
+<td>4.3</td>
+<td><strong>SR/route/beat management নেই</strong></td>
+<td>Salesman commission আছে, কিন্তু route plan, area-wise order/collection, visit tracking নেই।</td>
+<td><code>routes</code>/<code>beats</code> + customer→route mapping; SR daily order/collection report</td>
+</tr>
+<tr>
+<td>4.4</td>
+<td><strong>Dispatch/delivery workflow নেই</strong></td>
+<td>Order → dispatched → delivered status নেই (1.3-এর সাথে linked)।</td>
+<td>Fulfillment pipeline-এর wholesale flavor</td>
+</tr>
+<tr>
+<td>4.5</td>
+<td><strong>MOQ/pack-size constraint নেই</strong></td>
+<td>UOM conversion দিয়ে case sell হয়, কিন্তু min order qty/case-only enforcement নেই।</td>
+<td>Product-এ <code>min_sale_qty</code>, <code>qty_step</code> (case multiples)</td>
+</tr>
+<tr>
+<td>4.6</td>
+<td><strong>Case-level scheme</strong></td>
+<td>Free offer engine আছে; "১০ কেসে ১ ফ্রি" verify করা দরকার UOM-level কাজ করে কিনা।</td>
+<td>Free offer rule-এ UOM scope check</td>
+</tr>
+</tbody>
+</table>
+<h2>৫. Cross-cutting (সব segment-এ লাগে)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gap</th>
+<th>ব্যাখ্যা</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.1</td>
+<td><strong>Loyalty/points/coupon/voucher শূন্য</strong></td>
+<td><code>loyalty\|reward\|points\|coupon\|voucher\|gift_card</code> — 0 match। Retail repeat-customer retention টুল নেই।</td>
+</tr>
+<tr>
+<td>5.2</td>
+<td><strong>Barcode label printing নেই</strong></td>
+<td>2.1 — সব রিটেইলে লাগে।</td>
+</tr>
+<tr>
+<td>5.3</td>
+<td><strong>Storefront absent</strong></td>
+<td>1.2 — docs-এ claim আছে কিন্তু কোডে নেই।</td>
+</tr>
+<tr>
+<td>5.4</td>
+<td><strong>Marketplace/social connectors নেই</strong></td>
+<td>FB page comment→order, Daraz/Shopify — phase ২, partner API দিয়ে।</td>
+</tr>
+<tr>
+<td>5.5</td>
+<td><strong>Multi-address customer</strong></td>
+<td>1.8 — online + wholesale দুটোতেই লাগে।</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>৬. Priority Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>কাজ</th>
+<th>Segment</th>
+<th>কেন</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P0</strong></td>
+<td>Courier integration (Steadfast আগে) + fulfillment status pipeline + COD tracking</td>
+<td>Online shop</td>
+<td>Online seller segment-এর entry ticket; BD-র সবচেয়ে বড় underserved ফানেল</td>
+</tr>
+<tr>
+<td><strong>P0</strong></td>
+<td>Storefront MVP (catalog + cart + checkout → sale_order <code>ecommerce</code>)</td>
+<td>Online shop</td>
+<td>Partner API + order infra ready — শুধু ফাঁকা folder পূরণ করা; competitor-দের বিপরীতে table-stakes</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>Barcode label printing</td>
+<td>সব retail</td>
+<td>দুই দিনের কাজ, সব segment-এ sellable</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>Exchange re-scope → Clothing Store (default menu)</td>
+<td>Clothing</td>
+<td>Config-level fix, আছে-ই feature</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>Customer price groups + delivery challan</td>
+<td>Wholesale</td>
+<td>Wholesale pitch সম্পূর্ণ করে</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>"Online Shop" business category + channel reporting</td>
+<td>Online shop</td>
+<td>Onboarding segmentation ঠিক করতে</td>
+</tr>
+<tr>
+<td><strong>P2</strong></td>
+<td>Jewelry mode (weight×rate, making charge, old gold buyback)</td>
+<td>Jewelry</td>
+<td>পুরো ভার্টিকাল — বড় কাজ, কিন্তু high ARPU + প্রতিযোগী কম</td>
+</tr>
+<tr>
+<td><strong>P2</strong></td>
+<td>Loyalty/coupon/voucher</td>
+<td>সব</td>
+<td>Retention feature</td>
+</tr>
+<tr>
+<td><strong>P2</strong></td>
+<td>Style/season + size-grid + bundle</td>
+<td>Clothing</td>
+<td>Clothing depth — পরে</td>
+</tr>
+<tr>
+<td><strong>P3</strong></td>
+<td>Marketplace connectors (Daraz/Shopify/FB)</td>
+<td>Online shop</td>
+<td>Partner API ready থাকলে partner-led</td>
+</tr>
+<tr>
+<td><strong>P3</strong></td>
+<td>SR route/beat management</td>
+<td>Wholesale</td>
+<td>বড় distributor-দের জন্য</td>
+</tr>
+</tbody>
+</table>
+<h2>৭. Feature-gating চেকলিস্ট (নতুন category যোগ করলে)</h2>
+<p>নতুন business category/feature যোগ করলে যেগুলো আপডেট করতে হয়:</p>
+<ul>
+<li><code>017_create_business_categories.ts</code> — category seed</li>
+<li><code>menus.ts</code> — <code>ADVANCED_SHOP_CATS</code> / <code>SERIALIZED_CATS</code> / <code>EXPIRY_TRACKING_CATS</code> / <code>MOBILE_SHOP</code> scope</li>
+<li><code>lib/product-field-config.ts</code> (web) — category-ভিত্তিক product fields</li>
+<li><code>database/seeds/category-templates.ts</code> — প্রিলোডেড category/product templates</li>
+<li><code>database/seeds/variant-attribute-templates.ts</code> — size/color templates</li>
+<li><code>database/seeds/expense-templates.ts</code> — business-type-wise খরচের আইটেম</li>
+</ul>
+<h2>৮. যাচাই করা বাকি (assume না করে)</h2>
+<ul>
+<li>[ ] Order status change-এ WhatsApp/SMS auto-notification আছে কিনা (sms.service.ts-এ hooks দেখা দরকার)</li>
+<li>[ ] Free offer rule case-UOM-level কাজ করে কিনা (wholesale scheme)</li>
+<li>[ ] Partner API দিয়ে storefront MVP কতটা cover হয় — public catalog endpoint ready আছে কিনা (<code>catalog:read</code> scope আছে — verify scope coverage)</li>
+<li>[ ] Flutter app-এ sale-order fulfillment UI আছে কিনা (orders screen আছে — status flow check)</li>
+<li>[ ] POS-এ decimal qty/weight-based sale support (UOM-এ gram হলে 0.500 qty যায় কিনা)</li>
+</ul>
+</div>
+</body>
+</html>
