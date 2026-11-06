@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Due Payment Link — Spec (MVP → Aggregator) — ব্যবসাঘর Docs</title>
+<title>Payment & Collection Roadmap — ByabshaGhor — ব্যবসাঘর Docs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -144,80 +144,106 @@
   <button onclick="window.print()">🖨 Print / PDF</button>
 </div>
 <div class="content">
-<h1>Due Payment Link — Spec (MVP → Aggregator)</h1>
+<h1>Payment &amp; Collection Roadmap — ByabshaGhor</h1>
 <blockquote>
-<p>বাকির কাস্টমারকে লিংক পাঠান → ওরা টাকা পাঠিয়ে TrxID দেয় → দোকানদার এক ট্যাপে কনফার্ম → বাকি ক্লিয়ার।
-পরে অ্যাগ্রিগেটর যোগ হলে TrxID বাদ, অটো-কনফার্ম। প্যাটার্ন: <code>job_public_tokens</code>-এর মতোই।</p>
+<p>বাকি আদায় → পেমেন্ট রেল → MFS/ফ্লেক্সিলোড vertical → BanglaQR।
+স্ট্যাটাস: ✅ বানানো | 🟡 পরিকল্পিত | 🔴 লাইসেন্স/পার্টনার লাগে</p>
 </blockquote>
-<h2>কেন এটা প্রথমে</h2>
+<hr />
+<h2>Phase 0 — Due Payment Link (✅ শিপড, লোকাল)</h2>
+<p>দোকানদার কাস্টমারকে লিংক পাঠায় → কাস্টমার বাকি দেখে টাকা পাঠিয়ে TrxID দেয় → দোকানদার কনফার্ম → <code>recordPayment</code> দিয়ে বাকি ক্লিয়ার।</p>
 <ul>
-<li>অ্যাগ্রিগেটর/API key ছাড়াই চালু হয় — আজই</li>
-<li>দোকানদারের সরাসরি লাভ: বাকি আদায়ের জন্য লোক পাঠাতে হয় না</li>
-<li>পেমেন্ট-রেভেনিউর আগের ধাপ: দোকানদারকে "ডিজিটাল কালেকশন"-এর অভ্যাস দেয়, পরে পেমেন্ট রেলে টানা সহজ</li>
+<li><code>public.due_payment_links</code> — token, tenant_id, স্ন্যাপশট (কাস্টমার নাম, due, দোকানের নাম, পেমেন্ট নির্দেশনা), status: open→submitted→confirmed/expired/cancelled, submitted_amount (<strong>partial payment সহ</strong>), মেয়াদ ৭ দিন</li>
+<li>API: টেন্যান্ট <code>/api/v1/due-links</code> (create/list/confirm/cancel) + পাবলিক <code>/api/v1/public/pay/:token</code> (GET info, POST submit)</li>
+<li>Web: <code>/pay/[token]</code> পাবলিক পেজ + কাস্টমার পেজে "Pay Link" বাটন (কপি/WhatsApp শেয়ার + submitted কনফার্ম)</li>
+<li>Idempotent: <code>client_ref = link.id</code> — ডাবল কনফার্মে দুইবার লেখা না</li>
 </ul>
-<h2>ডেটা মডেল (tenant স্কিমা)</h2>
-<pre><code class="language-sql">due_payment_links
-  id, tenant_token UUID (public URL-এ), customer_id, sale_id NULL,
-  amount_due DECIMAL, note, status (open/submitted/confirmed/expired/cancelled),
-  submitted_trxid VARCHAR, submitted_method (bKash/Nagad/bank/cash),
-  submitted_at, confirmed_by, confirmed_at, expires_at, created_at
-</code></pre>
-<p>দোকানের পেমেন্ট নির্দেশনা <code>tenant_pos_settings</code> বা <code>payment_accounts</code>-এর নগদ/বিকাশ নম্বর থেকে দেখানো।</p>
-<h2>API</h2>
+<h2>Phase 1 — লিংক অটোমেশন (🟡 সহজ, এখনই করা যায়)</h2>
+<ul>
+<li><strong>রিমাইন্ডারে লিংক</strong>: কাস্টমার পেজের Reminder বাটনে ক্লিক → ওপেন লিংক থাকলে সেটা, না থাকলে নতুন বানিয়ে WhatsApp মেসেজে বসায় — এক ক্লিকে কালেকশন চেষ্টা</li>
+<li><strong>বিক্রির পরে অটো-লিংক</strong>: due সহ sale হলে লিংক নিজে বানিয়ে ইনভয়েস/মেসেজে যোগ (feature flag)</li>
+<li><strong>শিডিউলড রিমাইন্ডার</strong>: cron — due ৭/১৪ দিন পুরনো বা লিংক মেয়াদ শেষের আগে অটো রিমাইন্ডার (sms/whatsapp মডিউল রিইউজ)</li>
+</ul>
+<h2>Phase 2 — অটো-ভেরিফাই (🟡→🔴 মার্চেন্ট অনবোর্ডিং লাগে)</h2>
+<p>রিসার্চ ফাইন্ডিং: <strong>bKash মার্চেন্ট API আছে</strong> (developer.bka.sh) — Tokenized Checkout, B2C Instant Payout, B2B Payout, <strong>Search Transaction by TrxID</strong>। Nagad-ও RSA-ভিত্তিক চেকআউট API দেয়।</p>
 <table>
 <thead>
 <tr>
-<th>Method</th>
-<th>Path</th>
+<th>উপায়</th>
 <th>কাজ</th>
+<th>লাগে</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>POST</td>
-<td><code>/api/v1/dues/:customerId/payment-link</code></td>
-<td>লিংক তৈরি (amount + মেয়াদ)</td>
+<td><strong>TrxID অটো-ভেরিফাই</strong></td>
+<td>কাস্টমার TrxID দিলে <code>searchTransaction</code> কলে মিলিয়ে সরাসরি confirmed</td>
+<td>দোকানের bKash মার্চেন্ট অ্যাকাউন্ট + আমাদের ইন্টিগ্রেশন — <strong>ছোট কাজ, বড় UX জয়</strong></td>
 </tr>
 <tr>
-<td>GET</td>
-<td><code>/api/v1/dues/payment-links</code></td>
-<td>লিস্ট: open/submitted/confirmed — submitted আলাদা ব্যাজে</td>
+<td><strong>Checkout বাটন</strong></td>
+<td>লিংকে "এখনই পে" → bKash/Nagad checkout → callback/webhook → অটো confirmed</td>
+<td>মার্চেন্ট onboarding + callback হ্যান্ডলিং — TrxID ধাপই বাদ</td>
 </tr>
 <tr>
-<td>POST</td>
-<td><code>/api/v1/dues/payment-links/:id/confirm</code></td>
-<td>দোকানদার কনফার্ম → due allocation (আসল সার্ভিস পাথে)</td>
-</tr>
-<tr>
-<td>GET</td>
-<td><code>/api/v1/public/pay/&lt;token&gt;</code></td>
-<td><strong>পাবলিক</strong> — দোকানের নাম, বাকি, পেমেন্ট নির্দেশনা</td>
-</tr>
-<tr>
-<td>POST</td>
-<td><code>/api/v1/public/pay/&lt;token&gt;/submit</code></td>
-<td><strong>পাবলিক</strong> — method + trxid সাবমিট → status=submitted</td>
+<td><strong>B2C Payout</strong></td>
+<td>দোকান → কাস্টমার রিফান্ড/ক্যাশব্যাক সরাসরি</td>
+<td>পরে</td>
 </tr>
 </tbody>
 </table>
-<p>পাবলিক রাউট auth নেই — টোকেনই অ্যাক্সেস (<code>job_public_tokens</code> প্যাটার্ন: URL-এ টোকেন, tenantResolver ছাড়া, catch-all-এর আগে মাউন্ট)।</p>
-<h2>UI</h2>
+<h2>Phase 3 — BanglaQR (🟡 স্ট্যান্ডার্ডে ফিট)</h2>
 <ul>
-<li><strong>অ্যাপ/web</strong>: কাস্টমার ডিউ পেজে "📨 পেমেন্ট লিংক পাঠান" → লিংক কপি/WhatsApp শেয়ার; ড্যাশবোর্ডে "submitted" কাউন্ট + কনফার্ম বাটন</li>
-<li><strong>পাবলিক পেজ</strong> (<code>/pay/&lt;token&gt;</code> web রুট): দোকানের নাম-লোগো, বাকি টাকা, পেমেন্ট নির্দেশনা (বিকাশ/নগদ নম্বর, ধাপ), TrxID ফর্ম → "জমা হয়েছে, দোকানদার কনফার্ম করবে"</li>
+<li><strong>এখন</strong>: পে লিংকে দোকানের BanglaQR ছবি দেখানো (payment_accounts-এ QR আপলোড ফিল্ড) → যেকোনো অ্যাপে স্ক্যান করে পে → TrxID জমা</li>
+<li><strong>পরে</strong>: চেকআউটে ডায়নামিক QR (পরিমাণ এমবেডড), রিসিপ্টে প্রিন্ট — acquirer ফরম্যাট জেনে জেনারেট</li>
+<li><strong>অটো-কনফার্ম</strong>: acquirer-এর webhook লাগে (BanglaQR নিজে জানায় না) — Phase 2-র সাথে একই জায়গায় পড়ে</li>
+<li>সেলস অ্যাঙ্গেল: "এক QR-ই সব অ্যাপ" — দোকানদারকে আলাদা আলাদা QR ছাপাতে হয় না</li>
 </ul>
-<h2>Aggregator-এ যাওয়ার ধাপ (পরে)</h2>
+<h2>Phase 4 — MFS/Flexiload Vertical (�→🟡 নতুন ভার্টিকাল)</h2>
+<p>দোকানদারের দ্বিতীয় ব্যবসা — এক অ্যাপে দুই খাতা। ডিমান্ড আগে ইন্টারভিউতে যাচাই।</p>
+<table>
+<thead>
+<tr>
+<th>কাজ</th>
+<th>সম্ভাবনা</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ফ্লেক্সিলোড পুরো অটো</td>
+<td>✅ <strong>অ্যাগ্রিগেটর API আছে</strong> — Supayo (flexiloadapi.com), FlexiloadBD, Success TopUp, iRechargeBD — এক ওয়ালেট, সব অপারেটর, রিসেলার কমিশন প্রকাশিত</td>
+</tr>
+<tr>
+<td>MFS এজেন্ট রেকর্ড+কমিশন</td>
+<td>✅ ফ্লোট অ্যাকাউন্ট ট্র্যাকিং + লেনদেন লগ + দৈনিক সেটেলমেন্ট রিপোর্ট</td>
+</tr>
+<tr>
+<td>MFS এজেন্ট লেনদেন এক্সিকিউট</td>
+<td>❌ <strong>API নেই</strong> — এজেন্ট USSD/অ্যাপেই করে; সেমি-অটো: <code>tel:*247#</code> ডিপ-লিংকে অ্যাপ নম্বর-টাকা ভরে দেয়, এজেন্ট শুধু পিন</td>
+</tr>
+<tr>
+<td>ধূসর "USSD API" প্রোভাইডার</td>
+<td>❌ বেটিং-সাইটমুখী, আইনি ঝুঁকি — না</td>
+</tr>
+</tbody>
+</table>
+<p>নতুন ক্যাটাগরি "MFS Agent / Flexiload" — ফার্মেসির মতোই vertical প্যাটার্ন।</p>
+<h2>Phase 5 — রেভেনিউ লেয়ার (🔴 পরে)</h2>
 <ul>
-<li>লিংকে "এখনই পে করুন" বাটন → অ্যাগ্রিগেটর checkout → webhook-এ status=confirmed সরাসরি</li>
-<li>একই টেবিল/ফ্লো থাকে — শুধু submit ধাপ বদলায়</li>
-<li>তখন MDR শেয়ারের কথা অ্যাগ্রিগেটরের সাথে</li>
+<li>MDR শেয়ার/রেফারেল: অ্যাগ্রিগেটর পার্টনার চুক্তি (PortWallet/aamarPay ছোটদের সাথে সহজ)</li>
+<li>ফ্লেক্সিলোড রিসেলার কমিশন — সরাসরি আয়, পেমেন্টের চেয়ে আগে আসতে পারে</li>
+<li>ডেটা → লেন্ডিং রেফারেল — দীর্ঘমেয়াদি</li>
+<li>Model B (নিজেরা টাকা ধরে স্প্লিট) = PayFac, লাইসেন্স লাগে — এড়িয়ে থাকুন</li>
 </ul>
-<h2>নিয়ম</h2>
-<ul>
-<li>টোকেন ৩২+ ক্যারেক্টার র্যান্ডম, মেয়াদ ৭ দিন ডিফল্ট</li>
-<li>কনফার্ম শুধু দোকানদার — কাস্টমার কখনোই due ক্লিয়ার করতে পারে না</li>
-<li>প্রতিটা কনফার্মে অডিট ট্রেইল (confirmed_by)</li>
-</ul>
+<hr />
+<h2>সিদ্ধান্তের ক্রম — কী আগে</h2>
+<ol>
+<li>✅ Phase 0 (শিপড) — deploy করে লাইভে দেওয়া</li>
+<li><strong>Phase 1 অটোমেশন</strong> — ছোট কাজ, সেলসে সাথে সাথে লাভ</li>
+<li><strong>Phase 2 TrxID অটো-ভেরিফাই</strong> — মার্চেন্ট অ্যাকাউন্ট থাকা দোকানে; UX লাফায়</li>
+<li><strong>Phase 3 QR শো</strong> — এক স্ক্রিনের কাজ</li>
+<li>Phase 4 ইন্টারভিউতে ডিমান্ড দেখে</li>
+</ol>
 </div>
 </body>
 </html>
