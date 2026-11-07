@@ -149,6 +149,84 @@
 <p>কাস্টমার অ্যানালিসিসে ডিমান্ড প্রমাণিত — ফার্মেসির মতোই নতুন vertical।
 ফ্লেক্সিলোড = API দিয়ে পুরো অটো; MFS এজেন্ট = ফ্লোট ট্র্যাকিং + USSD সেমি-অটো।</p>
 </blockquote>
+<h2>মার্কেট কনটেক্সট (verified)</h2>
+<ul>
+<li>দৈনিক রিচার্জ টার্নওভার <strong>~৳১০০ কোটি</strong>; মাসিক MFS-রিচার্জ <strong>৳১,০১৭ কোটি</strong> (BB, YoY +৩০%)</li>
+<li>ম্যানুয়াল এজেন্ট/রিটেইলার <strong>২৫ লাখ+</strong> — এদের অনেকে ইতিমধ্যে দোকানদার (মোবাইল শপ/কিরানা)</li>
+<li>এজেন্ট কমিশন ~২.৭৫-৩% (৳২৭.৫-৩০/হাজার); bKash-এ GP রিচার্জের ২৩% — ~৭০% এখনো manual/mix</li>
+<li><strong>আমরা সেল করি না — POS-এ ঢুকাই</strong>; commission ~০.৫-১% margin + সাবস্ক্রিপশন লক-ইন</li>
+<li>বিস্তারিত: <code>market-research.md</code> §২.৬</li>
+</ul>
+<h2>ফ্লেক্সিলোড প্রোভাইডার তুলনা</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Supayo</strong> (flexiloadapi.com)</th>
+<th><strong>FlexiloadBD</strong> (flexiloadbd.net)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>সাইনআপ</td>
+<td>ফ্রি, NID verification</td>
+<td>ড্যাশবোর্ড থেকে API token</td>
+</tr>
+<tr>
+<td>API</td>
+<td>REST + JSON, <code>api_key</code></td>
+<td><code>Authorization: Bearer</code> token</td>
+</tr>
+<tr>
+<td>Endpoint</td>
+<td><code>POST /api/recharge</code></td>
+<td><code>POST /api/gateway/v1/request</code> (একটাই — <code>type</code> ফিল্ডে সব)</td>
+</tr>
+<tr>
+<td>Rate limit</td>
+<td>—</td>
+<td>60/min lookup, <strong>30/min transactions</strong></td>
+</tr>
+<tr>
+<td>Balance/status</td>
+<td>balance রেসপন্সে ফেরত</td>
+<td><code>/balance</code>, <code>/status</code>, <code>/packages</code></td>
+</tr>
+<tr>
+<td>সেবাসমূহ</td>
+<td>সব অপারেটর + data packs + bill pay + MFS + international (১৫০+ দেশ)</td>
+<td>recharge/data/drive/MFS/bill</td>
+</tr>
+<tr>
+<td>Commission</td>
+<td>published tiered rates, volume-এ বাড়ে</td>
+<td>প্রতিটা package-এ <code>commission</code> ফিল্ড রেসপন্সে</td>
+</tr>
+<tr>
+<td>Failed txn</td>
+<td>instant auto-reversal</td>
+<td>auto-reversal</td>
+</tr>
+<tr>
+<td>Webhook</td>
+<td>হ্যাঁ</td>
+<td>status polling (<code>ref_id</code>)</td>
+</tr>
+<tr>
+<td>Bonus</td>
+<td>web panel + Android app (আমাদের ছাড়াই রিসেলার চালাতে পারে — fallback)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>আমাদের পছন্দ</strong>: Supayo প্রথমে (ফ্রি + documentation clean + international scope)। পরের provider swap সহজ রাখতে <code>flexiload_*</code> টেবিলে <code>provider</code> কলাম রাখি।</p>
+<h2>শেয়ারড ওয়ালেট মডেল</h2>
+<ul>
+<li><strong>আমাদের (কোম্পানির) একটা রিসেলার অ্যাকাউন্ট</strong> — সব টেন্যান্ট সেটা শেয়ার করে</li>
+<li>প্রতি রিচার্জে provider commission → আমরা টেন্যান্টকে face value-এ relay + ছোট margin</li>
+<li>Float: আমাদের prepaid balance — per-tenant float ledger টেবিলে Books করে (টেন্যান্ট "কত খরচ করেছে" দেখা যায়)</li>
+<li>বিকল্প (পরে): টেন্যান্ট নিজেদের provider account link করে — এ 경우 আমরা শুধু software fee নিই</li>
+</ul>
 <h2>BUSINESS_CATEGORIES-এ যোগ</h2>
 <p><code>MFS Agent / Flexiload</code> — <code>business-categories.ts</code>-এ নতুন ক্যাটাগরি (Service/Finance গ্রুপে)।</p>
 <h2>ডেটা মডেল (tenant স্কিমা)</h2>

@@ -258,6 +258,71 @@
 <blockquote>
 <p>ইনভেস্টর লাইন: <em>"৳৩২,০০০ কোটি মার্কেটের রিটেইল লেয়ারে ২.৬ লাখ+ দোকান, যেখানে চেইনরা ঢুকছে আর ডিজিটাল কমপ্লায়েন্স বাধ্যতামূলক হচ্ছে — আমরা ওই সময়েই এন্ট্রি নিচ্ছি।"</em></p>
 </blockquote>
+<h2>২.৬ Recharge / Flexiload Vertical মার্কেট</h2>
+<blockquote>
+<p>নতুন সেগমেন্ট — কাস্টমার অ্যানালিসিসে ডিমান্ড প্রমাণিত। বিস্তারিত spec: <code>mfs-flexiload-spec.md</code>।</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ডেটা</th>
+<th>সংখ্যা</th>
+<th>সোর্স</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>দৈনিক রিচার্জ টার্নওভার</td>
+<td><strong>~৳১০০ কোটি/দিন</strong></td>
+<td>অপারেটর/association ডেটা</td>
+</tr>
+<tr>
+<td>মাসিক MFS-দিয়ে রিচার্জ</td>
+<td><strong>৳১,০১৭ কোটি</strong> (প্রথমবার ১ হাজার কোটি ছাড়িয়েছে, YoY +৩০%)</td>
+<td>Bangladesh Bank / Daily Star</td>
+</tr>
+<tr>
+<td>MFS রিচার্জের ৫ বছরের গ্রোথ</td>
+<td>৳৩৭৫ → ৳১,০১৭ কোটি/মাস (~৩x)</td>
+<td>Bangladesh Bank</td>
+</tr>
+<tr>
+<td>মোট SIM</td>
+<td><strong>১৮.৫ কোটি</strong>; MFS অ্যাকাউন্ট ২৪ কোটি</td>
+<td>BTRC / BB</td>
+</tr>
+<tr>
+<td>ম্যানুয়াল এজেন্ট/রিটেইলার</td>
+<td><strong>২৫ লাখ+</strong> (~১৪ লাখ সরাসরি নিয়োজিত)</td>
+<td>Daily Star / association</td>
+</tr>
+<tr>
+<td>এজেন্ট কমিশন</td>
+<td><strong>৳২৭.৫–৩০ প্রতি হাজার</strong> (২.৭৫–৩%) — vendors ৳১০০/হাজার hike চায় (strike হুমকি)</td>
+<td>Prothom Alo / Daily Star</td>
+</tr>
+<tr>
+<td>bKash-এর GP রিচার্জ শেয়ার</td>
+<td>২৩% (Nagad ৪%, Rocket ১%) — মানে <strong>~৭০% এখনো agent/manual mix</strong></td>
+<td>Daily Star</td>
+</tr>
+<tr>
+<td>ফ্লেক্সিলোড API অ্যাগ্রিগেটর</td>
+<td>Supayo (flexiloadapi.com), FlexiloadBD, Success TopUp, iRechargeBD — ফ্রি সাইনআপ, REST API, auto-refund</td>
+<td><em>provider docs</em></td>
+</tr>
+</tbody>
+</table>
+<h3>কেন এটা আমাদের জন্য কাজের</h3>
+<ul>
+<li><strong>আমরা রিচার্জ সেল করি না — POS চালাই।</strong> ২৫ লাখ এজেন্টের মধ্যে অনেকে ইতিমধ্যে মোবাইল শপ/ফটোকপি/কিরানা — এদের POS-এ রিচার্জ ঢুকালে সাবস্ক্রিপশন স্টিকি হয়।</li>
+<li><strong>Commission পাস-থ্রু</strong>: রিসেলার rate ~২.৭৫-৩%; আমরা ~০.৫-১% margin রাখি — প্রতি txn কম, কিন্তু ১০০ দোকান × দিনে ২০ txn × ৳৫০০ = <strong>৳৫০ হাজার/দিন volume → ~৳২৫০-৫০০/দিন commission + সাবস্ক্রিপশন</strong>।</li>
+<li><strong>খরচ</strong>: prepaid float (৳২-৫ লাখ capital lock), ইন্টিগ্রেশন সময়। স্টার্ট ছোট — float per-tenant ট্র্যাক করা হবে।</li>
+<li><strong>মোয়েট</strong>: POS ইন্টিগ্রেশন + বাংলা UI + অফলাইন — Supayo-র নিজস্ব অ্যাপের সাথে প্রতিযোগিতা না করে এজেন্টদের <em>সামর্থ্য বাড়ানো</em>।</li>
+</ul>
+<blockquote>
+<p>ইনভেস্টর লাইন: <em>"৳১০০ কোটি/দিনের রিচার্জ মার্কেটে আমরা commission margins-এ খেলি না — আমরা ২৫ লাখ এজেন্ট-দোকানের POS-এ এটাই ঢুকিয়ে সাবস্ক্রিপশন লক করি। Flexiload retention hook, revenue নয়।"</em></p>
+</blockquote>
 <h3>দুটো বিচহেড নিচ — কেনো এদের</h3>
 <table>
 <thead>
